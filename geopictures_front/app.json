@@ -17,10 +17,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "scheme":"com.abonnet.geopictures",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.abonnet.geopictures",
+      "buildNumber": "1"
     },
     "android": {
+      "package": "com.abonnet.geopictures",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
