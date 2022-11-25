@@ -7,7 +7,7 @@ create table if not exists utilisateur
     updated  timestamp,
 
     email    varchar(255) not null unique,
-    passowrd varchar(255) unique,
+    password varchar(255) unique,
     role     varchar(255) not null,
     actif    boolean not null
     );
