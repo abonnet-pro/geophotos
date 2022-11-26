@@ -15,7 +15,7 @@ public class UtilisateurService implements IUtilisateurService {
     private HashPasswordService hashPasswordService;
 
     @Override
-    public Utilisateur getByEmail(String email) {
-        return utilisateurRepository.findByEmail(email);
+    public Utilisateur getByNom(String nom) {
+        return utilisateurRepository.findByNom(nom);
     }
 }

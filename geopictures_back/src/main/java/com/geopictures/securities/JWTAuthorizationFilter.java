@@ -54,10 +54,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(HEADER_STRING);
 
         if (token != null) {
-            String email = jwtService.getEmailByToken(token);
+            String nom = jwtService.getNomByToken(token);
 
-            if (email != null) {
-                Utilisateur utilisateur = utilisateurService.getByEmail(email);
+            if (nom != null) {
+                Utilisateur utilisateur = utilisateurService.getByNom(nom);
                 List<GrantedAuthority> grantedAuths = new ArrayList<>();
                 grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().getRole()));
                 return new UsernamePasswordAuthenticationToken(utilisateur, null, grantedAuths);

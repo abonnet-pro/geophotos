@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface IUtilisateurService {
-    Utilisateur getByEmail(String email);
+    Utilisateur getByNom(String nom);
 }
