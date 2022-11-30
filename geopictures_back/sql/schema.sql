@@ -6,6 +6,7 @@ create table if not exists utilisateur
     created  timestamp,
     updated  timestamp,
 
+    nom      varchar(255) not null unique,
     email    varchar(255) unique,
     password varchar(255),
     role     varchar(255) not null,
@@ -24,7 +25,6 @@ create table if not exists joueur
     updated timestamp,
 
     utilisateur_id bigint not null,
-    nom      varchar(255) not null unique,
     niveau int not null,
     experience int not null,
     prochain_niveau int not null,

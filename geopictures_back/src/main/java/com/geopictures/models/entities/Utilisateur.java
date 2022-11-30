@@ -24,6 +24,8 @@ public class Utilisateur {
     @Column(name="updated")
     private LocalDateTime updated;
 
+    @Column(name="nom")
+    private String nom;
     @Column(name="email")
     private String email;
     @Column(name="password")
