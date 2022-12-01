@@ -1,8 +1,8 @@
 import {Image, ImageBackground, View, StyleSheet} from "react-native";
-import {containerStyle, font, primary1} from "../../../commons/styles";
+import {commonsStyle, containerStyle, font} from "../../../commons/commons.style.js/styles";
 import {Button} from '@rneui/themed';
 
-export default function Authentification() {
+export default function Authentification({ navigation }) {
     return(
             <ImageBackground
                 source={require('../../../../assets/auth_background.jpg')}
@@ -13,12 +13,12 @@ export default function Authentification() {
                         style={style.logo}
                     />
                     <Button
-                        onPress={ () => {} }
+                        onPress={ () => navigation.navigate('accueil') }
                         title="JOUER"
                         raised={true}
                         radius={20}
                         titleStyle={ font(50, 'bold') }
-                        buttonStyle={ style.buttonPlayInvite }/>
+                        buttonStyle={ commonsStyle.boutonSuccess }/>
                 </View>
             </ImageBackground>
 )
@@ -29,11 +29,5 @@ const style = StyleSheet.create({
         width:'70%',
         height:'70%',
         resizeMode:'contain'
-    },
-    buttonPlayInvite: {
-        backgroundColor: primary1,
-        borderStyle: 'solid',
-        borderWidth: 4,
-        borderColor: 'white'
     }
 })
