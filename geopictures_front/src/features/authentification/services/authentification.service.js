@@ -7,5 +7,5 @@ export async function getUserData (accessToken, setUserInfo) {
     const userInfo = await userInfoReponse.json();
     setUserInfo(userInfo)
     await save(TOKEN_GOOGLE, accessToken);
-    await save(USER_GOOGLE, JSON.stringify(userInfo));
+    await save(USER_GOOGLE, userInfo);
   }

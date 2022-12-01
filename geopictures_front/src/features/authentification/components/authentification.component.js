@@ -1,18 +1,6 @@
 import {Image, ImageBackground, View, StyleSheet} from "react-native";
-import {commonsStyle, containerStyle, font} from "../../../commons/commons.style.js/styles";
-import {
-  Pressable,
-  Text,
-  TouchableOpacity,
-} from "react-native";
-import {
-  primary1,
-  primary2,
-} from "../../../commons/styles";
-import { Button, SocialIcon } from "@rneui/themed";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { getValueFor, TOKEN_GOOGLE } from "../../../utils/store.utils";
-import { color } from "@rneui/base";
+import {commonsStyle, containerStyle, font, primary1} from "../../../commons/commons.style.js/styles";
+import { Button } from "@rneui/themed";
 
 export default function Authentification({ navigation, accessToken, promptAsync, getUserData }) {
     return(
@@ -65,6 +53,6 @@ const style = StyleSheet.create({
         marginTop: 20,
     },
     textGoogleAuth: {
-        color: 'dark-grey'
+        color: 'grey'
     },
 });
