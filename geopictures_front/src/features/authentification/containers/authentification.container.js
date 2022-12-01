@@ -4,11 +4,11 @@ import {getValueFor, JOUEUR} from "../../../utils/store.utils";
 
 export default function AuthentificationContainer({ navigation }) {
 
-    // const checkAuthenticated = () => {
-    //     getValueFor(JOUEUR).then(r => r !== null ? navigation.navigate('accueil') : null);
-    // }
-    //
-    // useEffect(checkAuthenticated, []);
+    const checkAuthenticated = () => {
+        getValueFor(JOUEUR).then(r => r !== null ? navigation.navigate('accueil') : null);
+    }
+
+    useEffect(checkAuthenticated, []);
 
     return(
         <>
