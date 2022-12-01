@@ -1,10 +1,10 @@
 package com.geopictures.models.entities;
 
-import com.geopictures.models.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="utilisateur")
-public class Utilisateur {
-
+@Table(name="bordure")
+public class Bordure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -24,20 +23,18 @@ public class Utilisateur {
     @Column(name="updated")
     private LocalDateTime updated;
 
-    @Column(name="nom")
-    private String nom;
-    @Column(name="email")
-    private String email;
-    @Column(name="password")
-    private String password;
-    @Column(name="role")
-    @Enumerated(EnumType.STRING)
-    private Role role;
-    @Column(name="actif")
-    private boolean actif;
+    @Column(name="libelle")
+    private String libelle;
+    @Column(name="code")
+    private String code;
+    @Column(name="image")
+    private String image;
 
-    @OneToOne(mappedBy = "utilisateur")
-    private Joueur joueur;
+    @OneToMany(mappedBy = "bordureActif")
+    Set<Joueur> joueursActif;
+
+    @ManyToMany(mappedBy = "bordures")
+    Set<Joueur> joueurs;
 
     @PrePersist
     public void onPrePersit() {
