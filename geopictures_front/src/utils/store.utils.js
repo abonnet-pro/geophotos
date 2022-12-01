@@ -1,7 +1,9 @@
 import * as SecureStore from 'expo-secure-store';
 
+export const TOKEN_API = "TOKEN_API";
 export const TOKEN_GOOGLE = "TOKEN_GOOGLE";
 export const JOUEUR = "JOUEUR";
+export const USER_GOOGLE = "USER_GOOGLE";
 
 export async function save(key, value) {
     await SecureStore.setItemAsync(key, JSON.stringify(value));
