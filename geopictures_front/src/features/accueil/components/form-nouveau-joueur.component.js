@@ -1,11 +1,11 @@
 import {ImageBackground, View} from "react-native";
-import {commonsStyle, containerStyle, font} from "../../../commons/commons.style.js/styles";
+import {commonsStyle, containerStyle, font} from "../../../commons/styles/commons.styles";
 import {useState} from "react";
 import NomChooser from "./nom-chooser.component";
 import AvatarChooser from "./avatar-chooser.component";
 import {Button} from "@rneui/themed";
 
-export default function FormNouveauJoueur({ setResponseAvailable, responseAvailable, checkNomSaisi, handleCreateJoueur, avatars, bordure, background }) {
+export default function FormNouveauJoueur({ setResponseAvailable, responseAvailable, handleCreateJoueur, avatars, bordure, background }) {
 
     const [nom, setNom] = useState('');
     const [avatarChoisi, setAvatarChoisi] = useState('');
@@ -21,7 +21,7 @@ export default function FormNouveauJoueur({ setResponseAvailable, responseAvaila
                         nomSaisi ?
                             <AvatarChooser avatars={ avatars } avatarChoisi={ avatarChoisi } setAvatarChoisi={ setAvatarChoisi } bordure={ bordure } background={ background }/>
                             :
-                            <NomChooser setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } checkNomSaisi={ checkNomSaisi } nom={ nom } setNom={ setNom } setNomSaisi={ setNomSaisi } bordure={ bordure } background={ background }/>
+                            <NomChooser setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } nom={ nom } setNom={ setNom } setNomSaisi={ setNomSaisi } bordure={ bordure } background={ background }/>
                     }
                     {
                         avatarChoisi ?

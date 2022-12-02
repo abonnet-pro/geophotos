@@ -1,5 +1,5 @@
 import {Button, Text} from "@rneui/base";
-import {containerStyle} from "../../../commons/commons.style.js/styles";
+import {containerStyle} from "../../../commons/styles/commons.styles";
 import {deleteStore, JOUEUR} from "../../../utils/store.utils";
 
 export default function Accueil({ joueurInformations }) {

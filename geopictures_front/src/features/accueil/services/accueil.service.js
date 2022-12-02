@@ -29,3 +29,9 @@ export function createJoueur(data, setJoueurInformations, setRegistered) {
         })
         .catch(error => console.log(error))
 }
+
+export function checkNomSaisi(nom, setResponseAvailable) {
+    axios.post(`${URL_API}/authentification/check/nom/${nom}`)
+        .then(res => setResponseAvailable(res.data))
+        .catch(error => console.log(error))
+}

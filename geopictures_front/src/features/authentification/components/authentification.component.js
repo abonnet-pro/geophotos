@@ -1,5 +1,5 @@
 import {Image, ImageBackground, View, StyleSheet} from "react-native";
-import {commonsStyle, containerStyle, font, primary1} from "../../../commons/commons.style.js/styles";
+import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import { Button } from "@rneui/themed";
 
 export default function Authentification({ navigation, accessToken, promptAsync, getUserData }) {

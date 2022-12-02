@@ -1,9 +1,10 @@
 import {Button, Text} from "@rneui/themed";
-import {commonsStyle, font, primary1} from "../../../commons/commons.style.js/styles";
+import {commonsStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import {ActivityIndicator, ImageBackground, StyleSheet, TextInput, View} from "react-native";
 import {Icon} from "@rneui/base";
+import {checkNomSaisi} from "../services/accueil.service";
 
-export default function NomChooser({ setResponseAvailable, responseAvailable, checkNomSaisi, nom, setNom, setNomSaisi, bordure, background}) {
+export default function NomChooser({ setResponseAvailable, responseAvailable, nom, setNom, setNomSaisi, bordure, background}) {
 
     const changeText = (nom) => {
         setResponseAvailable(null)
@@ -30,7 +31,7 @@ export default function NomChooser({ setResponseAvailable, responseAvailable, ch
                                         onChangeText={changeText}
                                         placeholder={'Entrez votre nom d\'utilisateur'}
                                     />
-                                    <Button type="clear" onPress={ () => checkNomSaisi(nom) } buttonStyle={ style.async }><Icon name={responseAvailable && responseAvailable.available ? "check" : "sync"} /></Button>
+                                    <Button type="clear" onPress={ () => checkNomSaisi(nom, setResponseAvailable) } buttonStyle={ style.async }><Icon name={responseAvailable && responseAvailable.available ? "check" : "sync"} /></Button>
                                 </View>
 
                                 <Button

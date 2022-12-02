@@ -1,7 +1,7 @@
 import {ImageBackground, SafeAreaView, ScrollView, StyleSheet, View} from "react-native";
 import {URL_API} from "../../../utils/url.utils";
 import {Avatar, Text} from '@rneui/themed';
-import {font} from "../../../commons/commons.style.js/styles";
+import {font} from "../../../commons/styles/commons.styles";
 
 export default function AvatarChooser({ avatars, avatarChoisi, setAvatarChoisi, bordure, background }) {
 

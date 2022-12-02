@@ -3,8 +3,6 @@ import FormNouveauJoueur from "../components/form-nouveau-joueur.component";
 import {getRegister} from "../../../utils/authentification.utils";
 import Accueil from "../components/accueil.component";
 import {createJoueur, getAvatarsFree, loadJoueur} from "../services/accueil.service";
-import axios from "axios";
-import {URL_API} from "../../../utils/url.utils";
 
 export default function AccueilContainer() {
 
@@ -23,12 +21,6 @@ export default function AccueilContainer() {
         createJoueur(data, setJoueurInformations, setRegistered)
     }
 
-    const checkNomSaisi = (nom) => {
-        axios.post(`${URL_API}/authentification/check/nom/${nom}`)
-            .then(res => setResponseAvailable(res.data))
-            .catch(error => console.log(error))
-    }
-
     const init = () => {
         setBordure(require('../../../../assets/bordure_wood.jpg'))
         setBackground(require('../../../../assets/background_wood.jpg'))
@@ -45,7 +37,7 @@ export default function AccueilContainer() {
         <>
             {
                 !registered ?
-                    <FormNouveauJoueur setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } checkNomSaisi={ checkNomSaisi } handleCreateJoueur={ handleCreateJoueur } avatars={ avatars } bordure={ bordure } background={ background }/>
+                    <FormNouveauJoueur setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } handleCreateJoueur={ handleCreateJoueur } avatars={ avatars } bordure={ bordure } background={ background }/>
                     :
                     <Accueil joueurInformations={ joueurInformations }></Accueil>
             }
