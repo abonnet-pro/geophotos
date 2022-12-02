@@ -1,7 +1,7 @@
 import {ImageBackground, SafeAreaView, ScrollView, StyleSheet, View} from "react-native";
 import {URL_API} from "../../../utils/url.utils";
 import {Avatar, Text} from '@rneui/themed';
-import {font} from "../../../commons/styles/commons.styles";
+import {containerStyle, font} from "../../../commons/styles/commons.styles";
 
 export default function AvatarChooser({ avatars, avatarChoisi, setAvatarChoisi, bordure, background }) {
 
@@ -12,7 +12,7 @@ export default function AvatarChooser({ avatars, avatarChoisi, setAvatarChoisi, 
     return(
         <SafeAreaView style={style.container}>
                 <ImageBackground
-                    source={ bordure } style={ style.border } borderRadius={20}>
+                    source={ bordure } style={ containerStyle.formBorder } borderRadius={20}>
                     <ImageBackground source={ background } borderRadius={20}>
                         <View style={ style.textContainer }>
                             <Text style={ font(18, 'bold', 'center') }>Derniere étape !</Text>
@@ -43,10 +43,6 @@ export default function AvatarChooser({ avatars, avatarChoisi, setAvatarChoisi, 
 }
 
 const style = StyleSheet.create({
-    border : {
-        margin: 20,
-        padding: 5,
-    },
     textContainer: {
         marginTop: 10,
     },

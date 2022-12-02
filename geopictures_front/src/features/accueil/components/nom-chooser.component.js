@@ -1,5 +1,5 @@
 import {Button, Text} from "@rneui/themed";
-import {commonsStyle, font, primary1} from "../../../commons/styles/commons.styles";
+import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import {ActivityIndicator, ImageBackground, StyleSheet, TextInput, View} from "react-native";
 import {Icon} from "@rneui/base";
 import {checkNomSaisi} from "../services/accueil.service";
@@ -16,7 +16,7 @@ export default function NomChooser({ setResponseAvailable, responseAvailable, no
             {
                 bordure && background ?
                     <ImageBackground
-                        source={ bordure } style={ style.border } borderRadius={20}>
+                        source={ bordure } style={ containerStyle.formBorder } borderRadius={20}>
                         <ImageBackground source={ background } borderRadius={20}>
                             <View style={ style.form }>
                                 <Text style={ font(18, 'bold', 'center') }>Bienvenue dans geopictures !</Text>
@@ -63,10 +63,6 @@ const style = StyleSheet.create({
         padding: 10,
         backgroundColor: 'white',
         borderRadius: 20,
-    },
-    border : {
-        margin: 20,
-        padding: 5,
     },
     checkNom: {
         fontSize:8,

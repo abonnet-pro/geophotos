@@ -17,7 +17,11 @@ export const containerStyle = StyleSheet.create({
         width: '100%',
         height: '100%',
         flex: 1
-    }
+    },
+    formBorder : {
+        margin: 20,
+        padding: 5,
+    },
 });
 
 export const commonsStyle = StyleSheet.create({
