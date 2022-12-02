@@ -1,8 +1,9 @@
 import {Image, ImageBackground, View, StyleSheet} from "react-native";
 import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import { Button } from "@rneui/themed";
+import {getUserData} from "../services/authentification.service";
 
-export default function Authentification({ navigation, accessToken, promptAsync, getUserData }) {
+export default function Authentification({ navigation, accessToken, promptAsync }) {
     return(
             <ImageBackground
                 source={require('../../../../assets/auth_background.jpg')}

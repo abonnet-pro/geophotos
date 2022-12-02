@@ -10,7 +10,6 @@ WebBrowser.maybeCompleteAuthSession();
 export default function AuthentificationContainer({ navigation }) {
 
     const [accessToken, setAccessToken] = useState();
-    const [userInfo, setUserInfo] = useState();
 
     const [request, response, promptAsync] = Google.useAuthRequest({
         expoClientId: "549351708019-q9d71fkan3u185bfsg1b3j2svg9ccpob.apps.googleusercontent.com",
@@ -19,11 +18,9 @@ export default function AuthentificationContainer({ navigation }) {
     });
 
     const init = () => {
-        getValueFor(JOUEUR).then(r => r !== null ? navigation.navigate('accueil') : null);
-
         if (response?.type === 'success') {
             setAccessToken(response.authentication.accessToken)
-            accessToken && getUserData(accessToken, setUserInfo);
+            accessToken && getUserData(accessToken);
             navigation.navigate('accueil')
         }
     }
@@ -32,7 +29,7 @@ export default function AuthentificationContainer({ navigation }) {
 
     return(
         <>
-            <Authentification navigation={ navigation } accessToken={accessToken} promptAsync={promptAsync} getUserData={getUserData}/>
+            <Authentification navigation={ navigation } accessToken={accessToken} promptAsync={promptAsync}/>
         </>
     )
 }
