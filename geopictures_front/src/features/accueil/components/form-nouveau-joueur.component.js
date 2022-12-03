@@ -9,7 +9,6 @@ export default function FormNouveauJoueur({ setResponseAvailable, responseAvaila
 
     const [nom, setNom] = useState('');
     const [avatarChoisi, setAvatarChoisi] = useState('');
-    const [nomSaisi, setNomSaisi] = useState(false);
 
     return(
         <>
@@ -18,10 +17,10 @@ export default function FormNouveauJoueur({ setResponseAvailable, responseAvaila
                 style={ containerStyle.backgroundHover100 }>
                 <View style={ containerStyle.center }>
                     {
-                        nomSaisi ?
+                        responseAvailable && responseAvailable.available ?
                             <AvatarChooser avatars={ avatars } avatarChoisi={ avatarChoisi } setAvatarChoisi={ setAvatarChoisi } bordure={ bordure } background={ background }/>
                             :
-                            <NomChooser setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } nom={ nom } setNom={ setNom } setNomSaisi={ setNomSaisi } bordure={ bordure } background={ background }/>
+                            <NomChooser setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } nom={ nom } setNom={ setNom } bordure={ bordure } background={ background }/>
                     }
                     {
                         avatarChoisi ?

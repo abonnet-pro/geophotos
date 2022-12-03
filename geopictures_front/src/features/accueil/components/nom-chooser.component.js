@@ -1,10 +1,9 @@
 import {Button, Text} from "@rneui/themed";
 import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import {ActivityIndicator, ImageBackground, StyleSheet, TextInput, View} from "react-native";
-import {Icon} from "@rneui/base";
 import {checkNomSaisi} from "../services/accueil.service";
 
-export default function NomChooser({ setResponseAvailable, responseAvailable, nom, setNom, setNomSaisi, bordure, background}) {
+export default function NomChooser({ setResponseAvailable, responseAvailable, nom, setNom, bordure, background}) {
 
     const changeText = (nom) => {
         setResponseAvailable(null)
@@ -24,19 +23,16 @@ export default function NomChooser({ setResponseAvailable, responseAvailable, no
                                 {
                                     responseAvailable && !responseAvailable.available ? <Text style={ style.checkNom }>* Nom d'utilisateur déjà utilisé</Text> : <></>
                                 }
-                                <View style={ style.inline }>
-                                    <TextInput
-                                        style={ style.inputForm }
-                                        value={nom}
-                                        onChangeText={changeText}
-                                        placeholder={'Entrez votre nom d\'utilisateur'}
-                                    />
-                                    <Button type="clear" onPress={ () => checkNomSaisi(nom, setResponseAvailable) } buttonStyle={ style.async }><Icon name={responseAvailable && responseAvailable.available ? "check" : "sync"} /></Button>
-                                </View>
+                                <TextInput
+                                    style={ style.inputForm }
+                                    value={nom}
+                                    onChangeText={changeText}
+                                    placeholder={'Entrez votre nom d\'utilisateur'}
+                                />
 
                                 <Button
-                                    disabled={!responseAvailable ||  responseAvailable && !responseAvailable.available}
-                                    onPress={ () => setNomSaisi(true) }
+                                    disabled={nom === ''}
+                                    onPress={ () => checkNomSaisi(nom, setResponseAvailable) }
                                     title="Valider"
                                     raised={true}
                                     radius={20}
@@ -57,7 +53,6 @@ const style = StyleSheet.create({
         padding: 10,
     },
     inputForm: {
-        width:'90%',
         marginTop: 20,
         marginBottom: 20,
         padding: 10,
@@ -70,13 +65,5 @@ const style = StyleSheet.create({
         marginBottom: -10,
         marginTop: 10,
         marginStart:5
-    },
-    inline: {
-        flexDirection: 'row',
-        alignContent:'space-around',
-    },
-    async: {
-        flex:1,
-        justifyContent: 'flex-end'
     }
 })

@@ -4,7 +4,7 @@ import {getRegister} from "../../../utils/authentification.utils";
 import Accueil from "../components/accueil.component";
 import {createJoueur, getAvatarsFree, loadJoueur} from "../services/accueil.service";
 
-export default function AccueilContainer() {
+export default function AccueilContainer({ navigation }) {
 
     const [registered, setRegistered] = useState(false);
     const [avatars, setAvatars] = useState([]);
@@ -39,7 +39,7 @@ export default function AccueilContainer() {
                 !registered ?
                     <FormNouveauJoueur setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } handleCreateJoueur={ handleCreateJoueur } avatars={ avatars } bordure={ bordure } background={ background }/>
                     :
-                    <Accueil joueurInformations={ joueurInformations }></Accueil>
+                    <Accueil joueurInformations={ joueurInformations } navigation={ navigation }></Accueil>
             }
         </>
     )
