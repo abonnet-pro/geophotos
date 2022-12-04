@@ -36,6 +36,9 @@ public class Utilisateur {
     @Column(name="actif")
     private boolean actif;
 
+    @OneToOne(mappedBy = "utilisateur")
+    private Joueur joueur;
+
     @PrePersist
     public void onPrePersit() {
         setCreated(LocalDateTime.now());

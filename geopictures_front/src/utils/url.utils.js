@@ -1,0 +1,1 @@
+export const URL_API = 'https://my-localhost.loca.lt'

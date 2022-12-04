@@ -11,7 +11,7 @@ create table if not exists utilisateur
     password varchar(255),
     role     varchar(255) not null,
     actif    boolean not null
-    );
+);
 
 alter table utilisateur
     owner to postgres;
@@ -29,6 +29,9 @@ create table if not exists joueur
     experience int not null,
     prochain_niveau int not null,
     points_boutique int not null,
+    avatar_actif bigint,
+    bordure_actif bigint,
+    titre_actif bigint,
     constraint fk_joueur_utilisateur
     foreign key (utilisateur_id)
     references utilisateur(id)
@@ -45,9 +48,8 @@ create table if not exists avatar
     created timestamp,
     updated timestamp,
 
-    libelle varchar(255) NOT NULL,
-    code    varchar(255) not null,
-    image   varchar(255) NOT NULL
+    image   varchar(255) NOT NULL,
+    free boolean not null
 );
 
 alter table avatar
@@ -110,7 +112,6 @@ create table if not exists avatar_joueur
 
     joueur_id bigint not null,
     avatar_id bigint not null,
-    actif boolean not null,
     constraint fk_avatar_joueur_joueur
     foreign key (joueur_id)
     references joueur(id),
@@ -132,7 +133,6 @@ create table if not exists titre_joueur
 
     joueur_id bigint not null,
     titre_id bigint not null,
-    actif boolean not null,
     constraint fk_titre_joueur_joueur
     foreign key (joueur_id)
     references joueur(id),
@@ -154,7 +154,6 @@ create table if not exists bordure_joueur
 
     joueur_id bigint not null,
     bordure_id bigint not null,
-    actif boolean not null,
     constraint fk_bordure_joueur_joueur
     foreign key (joueur_id)
     references joueur(id),
