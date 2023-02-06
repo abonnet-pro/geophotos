@@ -195,7 +195,8 @@ create table if not exists region
     created timestamp,
     updated timestamp,
 
-    libelle varchar(255) NOT NULL
+    libelle varchar(255) NOT NULL,
+    code varchar(50) not null
 );
 
 alter table region

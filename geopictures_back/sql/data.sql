@@ -48,3 +48,18 @@ insert into avatar(created, image, free) values (now(), 'avatar_f47.png', true);
 insert into avatar(created, image, free) values (now(), 'avatar_f48.png', true);
 insert into avatar(created, image, free) values (now(), 'avatar_f49.png', true);
 insert into avatar(created, image, free) values (now(), 'avatar_f50.png', true);
+
+
+insert into region(created, code, libelle) values (now(), 'HDF', 'Hauts-de-France');
+insert into region(created, code, libelle) values (now(), 'GE', 'Grand-Est');
+insert into region(created, code, libelle) values (now(), 'IDF', 'Ile-de-France');
+insert into region(created, code, libelle) values (now(), 'NOR', 'Normandie');
+insert into region(created, code, libelle) values (now(), 'BRE', 'Bretagne');
+insert into region(created, code, libelle) values (now(), 'PDL', 'Pays de la loire');
+insert into region(created, code, libelle) values (now(), 'CVL', 'Centre Val de Loire');
+insert into region(created, code, libelle) values (now(), 'BFC', 'Bourgogne-Franche-Comté');
+insert into region(created, code, libelle) values (now(), 'ARA', 'Auverge-Rhône-Alpes');
+insert into region(created, code, libelle) values (now(), 'NAQ', 'Nouvelle-Aquitaine');
+insert into region(created, code, libelle) values (now(), 'OCC', 'Occitanie');
+insert into region(created, code, libelle) values (now(), 'PACA', 'Provence-Alpes-Côte d''Azur');
+insert into region(created, code, libelle) values (now(), 'COR', 'Corse');
