@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class JoueurDTO {
     private Long id;
-    private UtilisateurDTO utilisateur;
+    private String nom;
     private int niveau;
     private int experience;
     private int prochainNiveau;

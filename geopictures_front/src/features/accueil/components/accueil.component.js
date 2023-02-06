@@ -7,7 +7,7 @@ export default function Accueil({ joueurInformations, navigation }) {
         <>
             <Button containerStyle={ containerStyle.center } title="reset" onPress={ () => deleteStore(JOUEUR) }></Button>
             <Button containerStyle={ containerStyle.center } title="Select region" onPress={ () => navigation.navigate('selectRegion') }></Button>
-            <Text style={ containerStyle.center }>Bonjour {joueurInformations?.utilisateur?.nom}</Text>
+            <Text style={ containerStyle.center }>Bonjour {joueurInformations?.nom}</Text>
         </>
     )
 }

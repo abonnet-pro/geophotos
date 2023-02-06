@@ -66,7 +66,7 @@ const style = StyleSheet.create({
     },
     avatarChoosen: {
         borderStyle: "solid",
-        borderColor: 'gold',
+        borderColor: 'white',
         borderWidth: 4
     }
 })

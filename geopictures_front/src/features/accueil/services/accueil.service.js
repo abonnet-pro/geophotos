@@ -12,22 +12,18 @@ export function getAvatarsFree(setAvatars) {
 export function loadJoueur(setJoueurInformations) {
     getValueFor(JOUEUR)
         .then(joueur => {
-            axios.get(`${URL_API}/joueur/${joueur.id}`, header(joueur.token))
+            console.log(joueur)
+            axios.get(`${URL_API}/accueil`, header(joueur.token))
                 .then(async res => {
+                    console.log(res.data)
                     setJoueurInformations(res.data)
                 })
                 .catch(error => console.log(error))
         })
 }
 
-export function createJoueur(data, setJoueurInformations, setRegistered) {
-    axios.post(`${URL_API}/authentification/create`, data)
-        .then(async res => {
-            await save(JOUEUR, {id: res.data.id, token: res.data.utilisateur.token})
-            setJoueurInformations(res.data)
-            setRegistered(true)
-        })
-        .catch(error => console.log(error))
+export function createJoueur(data) {
+    return axios.post(`${URL_API}/authentification/create`, data);
 }
 
 export function checkNomSaisi(nom, setResponseAvailable) {

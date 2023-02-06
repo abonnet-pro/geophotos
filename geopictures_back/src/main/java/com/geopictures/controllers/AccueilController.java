@@ -24,17 +24,14 @@ public class JoueurController {
 
     @GetMapping("{id}")
     public JoueurDTO getJoueur(@PathVariable("id") Long id) throws Exception {
-        Joueur joueur = joueurService.getJoueur(id);
 
-        UtilisateurDTO utilisateurDTO = UtilisateurDTO.builder()
-                .id(joueur.getUtilisateur().getId())
-                .nom(joueur.getUtilisateur().getNom())
-                .token(jwtService.generateToken(joueur.getUtilisateur().getNom()))
-                .build();
+        
+
+        Joueur joueur = joueurService.getJoueur(id);
 
         return JoueurDTO.builder()
                 .id(joueur.getId())
-                .utilisateur(utilisateurDTO)
+                .nom(joueur.getUtilisateur().getNom())
                 .niveau(joueur.getNiveau())
                 .experience(joueur.getExperience())
                 .prochainNiveau(joueur.getProchainNiveau())
