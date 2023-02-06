@@ -1,6 +1,6 @@
 package com.geopictures.models.mappers;
 
-import com.geopictures.models.dtos.joueur.JoueurDTO;
+import com.geopictures.models.dtos.accueil.AccueilDTO;
 import com.geopictures.models.entities.Joueur;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -9,5 +9,5 @@ import org.mapstruct.factory.Mappers;
 public interface JoueurMapper {
     JoueurMapper INSTANCE = Mappers.getMapper( JoueurMapper.class );
 
-    JoueurDTO joueurToDto(Joueur entity);
+    AccueilDTO joueurToDto(Joueur entity);
 }

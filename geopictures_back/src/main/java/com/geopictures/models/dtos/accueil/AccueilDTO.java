@@ -1,7 +1,6 @@
-package com.geopictures.models.dtos.joueur;
+package com.geopictures.models.dtos.accueil;
 
 import com.geopictures.models.dtos.avatar.AvatarDTO;
-import com.geopictures.models.dtos.utilisateur.UtilisateurDTO;
 import lombok.*;
 
 @Builder
@@ -9,7 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JoueurDTO {
+public class AccueilDTO {
     private Long id;
     private String nom;
     private int niveau;
