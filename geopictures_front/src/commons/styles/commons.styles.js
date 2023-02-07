@@ -11,7 +11,7 @@ export const containerStyle = StyleSheet.create({
     center: {
         marginTop: 'auto',
         marginBottom: 'auto',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     backgroundHover100: {
         width: '100%',
@@ -22,9 +22,15 @@ export const containerStyle = StyleSheet.create({
         margin: 20,
         padding: 5,
     },
+    flex: {
+        flex: 1
+    }
 });
 
 export const commonsStyle = StyleSheet.create({
+    p1: {
+        padding: 10
+    },
     mt1: {
         marginTop: 10
     },
