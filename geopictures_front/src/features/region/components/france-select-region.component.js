@@ -1,6 +1,6 @@
 import * as React from "react"
 import Svg, { G, Path } from "react-native-svg"
-import {Text} from "@rneui/base";
+import {Button, Text} from "@rneui/base";
 import {ImageBackground, StyleSheet, View} from "react-native";
 import {containerStyle, primary1} from "../../../commons/styles/commons.styles";
 import {Region, RegionLibelle} from "../enums/regions.enum";
@@ -28,7 +28,7 @@ export default function FranceSelectRegion({ regionSelected, setRegionSelected }
             </ImageBackground>
             <Text style={ style.region }>{RegionLibelle(regionSelected)}</Text>
             <Svg
-                style={{marginTop:-100}}
+                style={{maxHeight: "50%"}}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="-5.139 41.362 1000 960"
                 width='90%'
@@ -157,6 +157,7 @@ const style = StyleSheet.create({
     region: {
         fontSize: 25,
         color: primary1,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginBottom: 30
     }
 });

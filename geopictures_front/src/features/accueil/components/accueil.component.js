@@ -18,14 +18,14 @@ export default function Accueil({ joueurInformations, navigation }) {
                 <View style={ style.boutique }>
                     <AntDesign style={ style.plus } name="pluscircleo" color="white" />
                     <Text style={ style.points }>{ joueurInformations?.pointsBoutique }</Text>
-                    <Image style={ style.gold } source={{ uri: gold }}></Image>
+                    <Image style={ style.gold } source={require('../../../../assets/gold.png')}></Image>
                 </View>
             </View>
             <View>
             </View>
             <View style={ containerStyle.center }>
                 <View style={ style.experience }>
-                    <ImageBackground style={ style.star } source={{ uri: stars }}>
+                    <ImageBackground style={ style.star } source={require('../../../../assets/star.png')}>
                         <Text style={ style.niveau }>{ joueurInformations?.niveau }</Text>
                     </ImageBackground>
                     <ExperienceBarre experience={ joueurInformations?.experience} prochainNiveau={ joueurInformations?.prochainNiveau }></ExperienceBarre>

@@ -1,5 +1,5 @@
 import {BackHandler, Image, ImageBackground, StyleSheet, View} from "react-native";
-import {containerStyle, primary1} from "../../commons/styles/commons.styles";
+import {containerStyle} from "../../commons/styles/commons.styles";
 import {Text} from "@rneui/base";
 import {useEffect} from "react";
 import {getValueFor, JOUEUR} from "../../utils/store.utils";

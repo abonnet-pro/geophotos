@@ -4,6 +4,7 @@ import {getRegister} from "../../../utils/authentification.utils";
 import Accueil from "../components/accueil.component";
 import {createJoueur, getAvatarsFree, loadAccueil} from "../services/accueil.service";
 import {JOUEUR, save} from "../../../utils/store.utils";
+import {BackHandler} from "react-native";
 
 export default function AccueilContainer({ navigation }) {
 
@@ -31,6 +32,7 @@ export default function AccueilContainer({ navigation }) {
     }
 
     const init = () => {
+        BackHandler.addEventListener("hardwareBackPress", () => true)
         setBordure(require('../../../../assets/bordure_wood.jpg'));
         setBackground(require('../../../../assets/background_wood.jpg'));
 

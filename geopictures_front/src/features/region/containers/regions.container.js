@@ -2,18 +2,25 @@ import FranceSelectRegion from "../components/france-select-region.component";
 import {Image, ImageBackground, StyleSheet, TouchableWithoutFeedback, View} from "react-native";
 import {back} from "../../../utils/uri.utils";
 import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
-import {Button} from "@rneui/base";
+import {Button, Text} from "@rneui/base";
 import {useState} from "react";
+import {loadZonesByCode} from "../../zone/services/zone.service";
+import LoadingView from "../../../commons/component/loading.component";
 
 export default function RegionsContainer({ navigation }) {
 
     const [regionSelected, setRegionSelected] = useState();
+    const [loading, setLoading] = useState(false);
 
-    const goToZones = () => {
-        console.log(regionSelected)
-        // navigation.navigate("zones", {
-        //     regionCode: regionSelected
-        // })
+    const goToZones = async () => {
+
+        setLoading(true);
+        const zones = await loadZonesByCode(regionSelected);
+        setLoading(false);
+
+        navigation.navigate("zones", {
+            zones: zones.data
+        })
     }
 
     return(
@@ -22,41 +29,53 @@ export default function RegionsContainer({ navigation }) {
             style={ containerStyle.backgroundHover100 }>
             <View style={ style.backContainer }>
                 <TouchableWithoutFeedback onPress={ () => navigation.goBack() }>
-                    <Image style={ style.back } source={{ uri: back }}></Image>
+                    <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
                 </TouchableWithoutFeedback>
             </View>
-            <View style={ style.select }>
+            <View style={ style.franceContainer }>
                 <FranceSelectRegion regionSelected={ regionSelected } setRegionSelected={ setRegionSelected }/>
             </View>
             {
-                regionSelected ? <Button
-                    onPress={goToZones}
-                    title="Valider"
-                    raised={true}
-                    titleStyle={ style.valid }
-                    buttonStyle={ commonsStyle.boutonSuccess }/> : null
+                regionSelected ?
+                    <>
+                        {
+                            loading ?
+                                <View style={style.containerValid}>
+                                    <LoadingView/>
+                                </View>
+                                :
+                                <Button onPress={() => goToZones()}
+                                                                  title="Valider"
+                                                                  raised={true}
+                                                                  radius={20}
+                                                                  titleStyle={ font(35, 'bold') }
+                                                                  buttonStyle={ commonsStyle.boutonSuccess }
+                                                                  containerStyle={ style.containerValid }
+                                                                  disabled={loading}/>
+                        }
+                    </>
+                    : null
             }
+
         </ImageBackground>
     )
 }
 
 const style = StyleSheet.create({
     backContainer: {
-      marginLeft: 10
+      marginLeft: 10,
     },
     back: {
         width: 50,
         height: 50
     },
-    valid: {
-        padding: 20,
-        backgroundColor: primary1,
-        borderStyle: 'solid',
-        borderWidth: 2,
-        borderColor: 'white',
-        borderRadius: 20,
-        fontWeight: 'bold',
-        fontSize: 35,
-        marginTop: -200
+    franceContainer: {
+        marginTop: 40,
+    },
+    containerValid: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 'auto',
+        marginTop: -200,
     }
 });
