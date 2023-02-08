@@ -1,32 +1,34 @@
 import * as React from "react"
 import Svg, { G, Path } from "react-native-svg"
 import {Text} from "@rneui/base";
-import {View} from "react-native";
-import {containerStyle} from "../styles/commons.styles";
-import {useState} from "react";
+import {ImageBackground, StyleSheet, View} from "react-native";
+import {containerStyle, primary1} from "../../../commons/styles/commons.styles";
 import {Region, RegionLibelle} from "../enums/regions.enum";
 
-export default function FranceSelectRegion() {
-
-    const [regionSelected, setRegionSelected] = useState('Veuillez sélectionner une région')
-
+export default function FranceSelectRegion({ regionSelected, setRegionSelected }) {
     const handlePressRegion = (region) => {
         if(region === regionSelected) {
-            setRegionSelected('Veuillez sélectionner une région');
+            setRegionSelected(null);
         } else {
             setRegionSelected(region);
         }
     }
 
     const getStyle = (region) => {
-        return region === regionSelected ? '#000000' : '#FFFFFF';
+        return region === regionSelected ? primary1 : '#EAEAEA';
     }
 
     return(
         <View style={containerStyle.center}>
-            <Text style={{marginTop:50}}>{RegionLibelle(regionSelected)}</Text>
+            <ImageBackground
+                source={ require('../../../../assets/bordure_wood.jpg') } style={ containerStyle.formBorder } borderRadius={20}>
+                <ImageBackground source={ require('../../../../assets/background_wood.jpg') } borderRadius={20}>
+                    <Text style={ style.choose }>Choisis ta région !</Text>
+                </ImageBackground>
+            </ImageBackground>
+            <Text style={ style.region }>{RegionLibelle(regionSelected)}</Text>
             <Svg
-                style={{marginTop:-50}}
+                style={{marginTop:-100}}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="-5.139 41.362 1000 960"
                 width='90%'
@@ -145,3 +147,16 @@ export default function FranceSelectRegion() {
         </View>
     )
 }
+
+const style = StyleSheet.create({
+    choose: {
+        margin: 10,
+        fontSize: 30,
+        fontWeight: "bold"
+    },
+    region: {
+        fontSize: 25,
+        color: primary1,
+        fontWeight: "bold"
+    }
+});
