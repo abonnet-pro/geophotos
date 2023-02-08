@@ -211,6 +211,7 @@ create table if not exists zone
     updated timestamp,
 
     libelle varchar(255) NOT NULL,
+    image varchar(255) not null,
     region_id bigint not null,
     constraint fk_zone_region
     foreign key (region_id)
