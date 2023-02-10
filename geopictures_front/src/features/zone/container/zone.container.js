@@ -1,15 +1,18 @@
 import {useEffect, useState} from "react";
-import {Image, ImageBackground, StyleSheet, TouchableWithoutFeedback, View} from "react-native";
+import {Image, ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import {containerStyle} from "../../../commons/styles/commons.styles";
 import * as React from "react";
 import ZoneList from "../component/zone-list.component";
 import ZoneRecherche from "../component/zone-recherche.component";
+import {loadPhotoByZone} from "../../photo/services/photo.service";
+import Toast from "react-native-root-toast";
 
 
 export default function ZoneContainer({ navigation, route }) {
 
     const [zones, setZones] = useState(null);
     const [recherche, setRecherche] = useState(null);
+    const [loadingPhotos, setLoadingPhotos] = useState(false);
 
     const init = () => {
         const zones = route.params.zones
@@ -23,6 +26,21 @@ export default function ZoneContainer({ navigation, route }) {
         return zones?.filter(zone => zone.libelle.toLowerCase().includes(recherche.toLowerCase()));
     }
 
+    const handleGoListePhoto = async (zoneId) => {
+        setLoadingPhotos(true);
+        const photos = await loadPhotoByZone(zoneId);
+        setLoadingPhotos(false);
+
+        if(!photos.data) {
+            Toast.show("Erreur veuillez réessayer plus tard");
+            return;
+        }
+
+        navigation.navigate("photos", {
+            photos: photos.data
+        })
+    }
+
     useEffect(init, []);
 
     return(
@@ -31,13 +49,13 @@ export default function ZoneContainer({ navigation, route }) {
                 source={require('../../../../assets/auth_background.jpg')}
                 style={ containerStyle.backgroundHover100 }>
                 <View style={ style.backContainer }>
-                    <TouchableWithoutFeedback onPress={ () => navigation.goBack() }>
+                    <TouchableOpacity onPress={ () => navigation.goBack() }>
                         <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </View>
                 <View style={ style.zonesContainer }>
                     {
-                        filterZones(recherche) ? <ZoneList zones={filterZones(recherche)}/> : null
+                        filterZones(recherche) ? <ZoneList loadingPhotos={ loadingPhotos } handleGoListePhoto={ handleGoListePhoto } zones={filterZones(recherche)}/> : null
                     }
                 </View>
                 <View style={{ flex: 1 }}>

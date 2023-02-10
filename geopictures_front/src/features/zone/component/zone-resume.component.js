@@ -1,11 +1,12 @@
-import {Image, StyleSheet, View} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
 import * as React from "react";
 import {URL_API} from "../../../utils/url.utils";
 import {Divider, Text} from "@rneui/base";
 import {useState} from "react";
 import LoadingView from "../../../commons/component/loading.component";
+import {Image} from "@rneui/themed";
 
-export default function ZoneResume({ zone, last }) {
+export default function ZoneResume({ loadingPhotos, zone, last, handleGoListePhoto }) {
 
     const [loading, setLoading] = useState(false);
 
@@ -23,11 +24,9 @@ export default function ZoneResume({ zone, last }) {
                 <View style={ style.image }>
                     <Image resizeMode={"contain"}
                            style={ style.image }
+                           PlaceholderContent={ <LoadingView/>}
                            source={getUri()}
-                           onLoadStart={() => setLoading(true)}
-                           onLoadEnd={() => setLoading(false)}
                     />
-                    {loading && <LoadingView/>}
                 </View>
                 <View style={ style.descriptionContainer }>
                     <Text style={ style.nomZone }>{zone.libelle}</Text>
@@ -38,12 +37,19 @@ export default function ZoneResume({ zone, last }) {
                         </View>
                         <View style={ style.nombrePhotosContainer }>
                             <Image style={{ width: 30, height: 30}} source={require('../../../../assets/tick_success.png')}></Image>
-                            <Text style={ style.nombrePhotos }>{zone.nombrePhotosReussis}</Text>
+                            <Text style={ style.nombrePhotos }>{zone.nombrePhotosJoues}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={ style.chevronContainer }>
-                    <Image style={{ width: 30, height: 30}} source={require('../../../../assets/chevron-droit.png')}></Image>
+                    {
+                        loadingPhotos ?
+                            <LoadingView/>
+                            :
+                            <TouchableOpacity onPress={ () => handleGoListePhoto(zone.id) }>
+                                <Image style={{ width: 30, height: 30}} source={require('../../../../assets/chevron-droit.png')}></Image>
+                            </TouchableOpacity>
+                    }
                 </View>
             </View>
             {

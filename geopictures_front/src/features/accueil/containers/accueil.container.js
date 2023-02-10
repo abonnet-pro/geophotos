@@ -8,8 +8,6 @@ import {BackHandler} from "react-native";
 export default function AccueilContainer({ navigation, route }) {
 
     const [avatars, setAvatars] = useState([]);
-    const [bordure, setBordure] = useState(null);
-    const [background, setBackground] = useState(null);
     const [joueurInformations, setJoueurInformations] = useState(null);
     const [responseAvailable, setResponseAvailable] = useState(null);
     const [loadingCreateJoueur, setLoadingCreateJoueur] = useState(false);
@@ -36,8 +34,6 @@ export default function AccueilContainer({ navigation, route }) {
 
     const init = () => {
         BackHandler.addEventListener("hardwareBackPress", () => true)
-        setBordure(require('../../../../assets/bordure_wood.jpg'));
-        setBackground(require('../../../../assets/background_wood.jpg'));
 
         const joueur = route.params.joueurInformations;
         setJoueurInformations(joueur);
@@ -57,9 +53,7 @@ export default function AccueilContainer({ navigation, route }) {
                                        loadingCreateJoueur={ loadingCreateJoueur }
                                        responseAvailable={ responseAvailable }
                                        handleCreateJoueur={ handleCreateJoueur }
-                                       avatars={ avatars }
-                                       bordure={ bordure }
-                                       background={ background }>
+                                       avatars={ avatars }>
                     </FormNouveauJoueur>
                     :
                     <Accueil joueurInformations={ joueurInformations }

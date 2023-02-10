@@ -2,13 +2,14 @@ import {BackHandler, Image, ImageBackground, StyleSheet, View} from "react-nativ
 import {containerStyle} from "../../commons/styles/commons.styles";
 import {Text} from "@rneui/base";
 import {useEffect} from "react";
-import {getValueFor, JOUEUR} from "../../utils/store.utils";
+import {getValueFor, JOUEUR, loadBackgroundView} from "../../utils/store.utils";
 import {loadAccueil} from "../accueil/services/accueil.service";
 
 export default function ChargementContainer({ navigation }) {
 
     const init = () => {
-        BackHandler.addEventListener("hardwareBackPress", () => true)
+        BackHandler.addEventListener("hardwareBackPress", () => true);
+        loadBackgroundView();
         getValueFor(JOUEUR).then(joueur => {
             if(joueur) {
                 loadAccueil(joueur.token)

@@ -4,7 +4,6 @@ import {Image, ImageBackground, StyleSheet, View} from "react-native";
 import {URL_API} from "../../../utils/url.utils";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ExperienceBarre from "./experienceBarre.component";
-import {deleteStore, JOUEUR} from "../../../utils/store.utils";
 
 export default function Accueil({ joueurInformations, navigation }) {
     return(

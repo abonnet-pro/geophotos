@@ -6,7 +6,7 @@ import AvatarChooser from "./avatar-chooser.component";
 import {Button} from "@rneui/themed";
 import LoadingView from "../../../commons/component/loading.component";
 
-export default function FormNouveauJoueur({ setResponseAvailable, loadingCreateJoueur, responseAvailable, handleCreateJoueur, avatars, bordure, background }) {
+export default function FormNouveauJoueur({ setResponseAvailable, loadingCreateJoueur, responseAvailable, handleCreateJoueur, avatars }) {
 
     const [nom, setNom] = useState('');
     const [avatarChoisi, setAvatarChoisi] = useState('');
@@ -19,9 +19,9 @@ export default function FormNouveauJoueur({ setResponseAvailable, loadingCreateJ
                 <View style={ containerStyle.center }>
                     {
                         responseAvailable && responseAvailable.available ?
-                            <AvatarChooser avatars={ avatars } avatarChoisi={ avatarChoisi } setAvatarChoisi={ setAvatarChoisi } bordure={ bordure } background={ background }/>
+                            <AvatarChooser avatars={ avatars } avatarChoisi={ avatarChoisi } setAvatarChoisi={ setAvatarChoisi }/>
                             :
-                            <NomChooser setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } nom={ nom } setNom={ setNom } bordure={ bordure } background={ background }/>
+                            <NomChooser setResponseAvailable={ setResponseAvailable } responseAvailable={ responseAvailable } nom={ nom } setNom={ setNom }/>
                     }
                     {
                         avatarChoisi ?
