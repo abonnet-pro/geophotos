@@ -7,3 +7,4 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/fr/icones-gratuites/camera" title="caméra icônes">Caméra icônes créées par Good Ware - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/chevron-droit" title="chevron droit icônes">Chevron droit icônes créées par iconmas - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/traverser" title="traverser icônes">Traverser icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/gps" title="gps icônes">Gps icônes créées par DinosoftLabs - Flaticon</a>  
