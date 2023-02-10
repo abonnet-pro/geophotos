@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,7 +30,7 @@ public class Titre {
     private String code;
 
     @OneToMany(mappedBy = "titreActif")
-    Set<Joueur> joueursActif;
+    Set<Joueur> joueursActif = new HashSet<>();
 
     @ManyToMany(mappedBy = "titres")
     Set<Joueur> joueurs;

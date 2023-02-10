@@ -210,7 +210,7 @@ create table if not exists zone
     created timestamp,
     updated timestamp,
 
-    libelle varchar(255) NOT NULL,
+    libelle varchar(255) NOT NULL UNIQUE,
     image varchar(255) not null,
     region_id bigint not null,
     constraint fk_zone_region
@@ -233,7 +233,10 @@ create table if not exists photo
     joueur_id bigint not null,
     image varchar(255) not null,
     difficulte varchar(255) not null,
-    date_publication date not null,
+    date_publication timestamp not null,
+    coordonnees varchar(255) not null,
+    titre varchar(255) not null,
+    indice varchar(255),
     constraint fk_photo_zone
         foreign key (zone_id)
             references zone(id),

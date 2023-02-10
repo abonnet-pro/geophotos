@@ -15,13 +15,16 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("zone")
-public class ZoneController {
+public class ZoneController extends UtilisateurHolder {
 
     @Autowired
     private ZoneService zoneService;
 
+    @Autowired
+    private ZoneMapper zoneMapper;
+
     @GetMapping("region/{code}")
     public List<ZoneDTO> getAllZoneByRegion(@PathVariable("code") String code) throws Exception {
-        return zoneService.getAllZoneByRegionCode(code).stream().map(ZoneMapper.INSTANCE::zoneToDto).collect(Collectors.toList());
+        return zoneService.getAllZoneByRegionCode(code).stream().map(zone -> zoneMapper.zoneToDto(zone, utilisateur().getJoueur())).collect(Collectors.toList());
     }
 }
