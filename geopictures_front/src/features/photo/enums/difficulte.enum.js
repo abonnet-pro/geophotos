@@ -1,4 +1,5 @@
 export const Difficulte = {
+    TOUTES: "TOUTES",
     FACILE : "FACILE",
     NORMAL : "NORMAL",
     DIFFICILE : "DIFFICILE",
@@ -7,6 +8,7 @@ export const Difficulte = {
 
 export function getDifficulteLibelle(difficulte) {
     switch (difficulte) {
+        case Difficulte.TOUTES: return 'Toutes';
         case Difficulte.FACILE: return 'Facile';
         case Difficulte.NORMAL: return 'Normal';
         case Difficulte.DIFFICILE: return 'Difficile';

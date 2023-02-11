@@ -10,6 +10,7 @@
   "dependencies": {
     "@expo/ngrok": "^2.5.0",
     "@react-native-google-signin/google-signin": "^8.2.1",
+    "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.4.3",
     "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.4",

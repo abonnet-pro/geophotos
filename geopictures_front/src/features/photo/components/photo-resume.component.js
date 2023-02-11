@@ -78,7 +78,6 @@ export default function PhotoResume({ photo, handlePressPhoto }) {
                             :
                             null
                     }
-
                 </ImageBackground>
             </ImageBackground>
         </>
