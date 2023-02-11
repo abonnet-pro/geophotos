@@ -15,7 +15,7 @@ export default function PhotoFiltre({ selectedJoues, selectedDifficulte, setSele
     }
 
     return(
-        <View style={ style.pickers }>
+        <>
             <View style={ style.pickerJouesContainer}>
                 <Picker selectedValue={selectedJoues}
                         onValueChange={handleSelectedJoues}>
@@ -34,7 +34,7 @@ export default function PhotoFiltre({ selectedJoues, selectedDifficulte, setSele
                     <Picker.Item style={ style.itemPicker } label="Extrême" value={Difficulte.EXTREME} />
                 </Picker>
             </View>
-        </View>
+        </>
     )
 }
 
@@ -53,11 +53,5 @@ const style = StyleSheet.create({
     },
     itemPicker: {
 
-    },
-    pickers: {
-        flex:1,
-        flexDirection: "row",
-        marginLeft: 10,
-        marginRight: 10
     },
 });

@@ -71,12 +71,13 @@ export default function PhotoContainer({ navigation, route }) {
                     <TouchableOpacity onPress={ () => navigation.goBack() }>
                         <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
                     </TouchableOpacity>
-                    {/*<View style={ style.pickers }>*/}
+                    <View style={ style.pickers }>
                         <PhotoFiltre selectedDifficulte={ selectedDifficulte }
                                      selectedJoues={ selectedJoues }
                                      setSelectedJoues={ setSelectedJoues }
-                                     setSelectedDifficulte={ setSelectedDifficulte }/>
-                    {/*</View>*/}
+                                     setSelectedDifficulte={ setSelectedDifficulte }>
+                        </PhotoFiltre>
+                    </View>
                 </View>
                 <ScrollView>
                     <PhotoList handlePressPhoto={ handlePressPhoto } photos={ getPhotosFiltered() }/>
