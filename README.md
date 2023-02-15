@@ -8,3 +8,9 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/fr/icones-gratuites/chevron-droit" title="chevron droit icônes">Chevron droit icônes créées par iconmas - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/traverser" title="traverser icônes">Traverser icônes créées par Freepik - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/gps" title="gps icônes">Gps icônes créées par DinosoftLabs - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/position" title="position icônes">Position icônes créées par Lizel Arina - Flaticon</a>  
+<a href="https://www.flaticon.com/free-icons/distance" title="distance icons">Distance icons created by Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/boussole" title="boussole icônes">Boussole icônes créées par Slidicon - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/trophee" title="trophée icônes">Trophée icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/numero-un" title="numéro un icônes">Numéro un icônes créées par Vector Stall - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/mystere" title="mystère icônes">Mystère icônes créées par Freepik - Flaticon</a>  
