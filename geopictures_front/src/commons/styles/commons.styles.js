@@ -28,6 +28,9 @@ export const containerStyle = StyleSheet.create({
 });
 
 export const commonsStyle = StyleSheet.create({
+    flex1: {
+      flex:1
+    },
     p1: {
         padding: 10
     },
@@ -59,5 +62,11 @@ export const font = (size, weight, align) => {
         fontWeight: weight,
         fontSize: size,
         alignSelf: align
+    }
+}
+
+export const flex = (flex) => {
+    return {
+        flex: flex
     }
 }

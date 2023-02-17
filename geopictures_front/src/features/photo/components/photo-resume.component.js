@@ -1,5 +1,5 @@
 import {BACKGROUND_VIEW} from "../../../utils/store.utils";
-import {ImageBackground, StyleSheet, View} from "react-native";
+import {ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {Image} from "@rneui/themed";
 import LoadingView from "../../../commons/component/loading.component";
 import * as React from "react";
@@ -7,23 +7,12 @@ import {URL_API} from "../../../utils/url.utils";
 import {Text} from "@rneui/base";
 import {getDifficulteColor, getDifficulteLibelle} from "../enums/difficulte.enum";
 import PercentageCircle from "../../../commons/component/percentage-circle.component";
+import {getColorByScore} from "../../../commons/consts/photo.const";
 
-export default function PhotoResume({ photo, handlePressPhoto }) {
+export default function PhotoResume({ photo, handlePressPhoto, handlePressImage }) {
 
     function getSuccesGps() {
         return photo.succesGps ? require('../../../../assets/gps_valid.png') : require('../../../../assets/gps_wrong.png')
-    }
-
-    function getColorProgress() {
-        if(photo.score > 80) {
-            return "#1d9500";
-        }
-
-        if(photo.score > 50) {
-            return "#e58d19";
-        }
-
-        return "#950016";
     }
 
     return(
@@ -31,53 +20,55 @@ export default function PhotoResume({ photo, handlePressPhoto }) {
             <ImageBackground
                 source={ BACKGROUND_VIEW.bordure } style={{ padding:5 }} borderRadius={20}>
                 <ImageBackground source={ BACKGROUND_VIEW.background }  borderRadius={20}>
-                    <View style={ style.topContainer }>
-                        <View style={ style.imageContainer }>
-                            <Image
-                                   onPress={ () => handlePressPhoto(photo) }
-                                   style={ style.image }
-                                   PlaceholderContent={ <LoadingView/>}
-                                   source={{ uri: `${URL_API}/images/${photo.image}` }}
-                            />
-                        </View>
-                        <View style={ style.DescritpionContainer }>
-                            <View style={ style.titreCcontainer }>
-                                <Text style={ style.titre }>{ photo.titre }</Text>
-                                <Text style={{...style.difficulte, color: getDifficulteColor(photo.difficulte)}} >{ getDifficulteLibelle(photo.difficulte) }</Text>
+                    <TouchableOpacity onPress={ () => handlePressPhoto(photo) }>
+                        <View style={ style.photoContainer }>
+                            <View style={ style.imageContainer }>
+                                <Image
+                                    onPress={ () => handlePressImage(photo.image) }
+                                    style={ style.image }
+                                    PlaceholderContent={ <LoadingView/>}
+                                    source={{ uri: `${URL_API}/images/${photo.image}` }}
+                                />
                             </View>
-
-                            <View style={ style.publicationContainer }>
-                                <Text>Publié le : { new Date(photo.datePublication).toLocaleDateString() }</Text>
-                                <Text>Par : { photo.titulaire }</Text>
-                            </View>
-                        </View>
-                    </View>
-                    {
-                        photo.score ?
-                            <View style={ style.bottomContainer }>
-                                <View style={ style.scoreContainer }>
-                                    <Text style={ style.scoreText }>Score</Text>
-                                    <View style={style.progressContainer}>
-                                        <PercentageCircle size={50}
-                                                          percentage={photo.score}
-                                                          colorProgress={getColorProgress()}>
-                                        </PercentageCircle>
-                                    </View>
+                            <View style={ style.DescritpionContainer }>
+                                <View style={ style.titreCcontainer }>
+                                    <Text style={ style.titre }>{ photo.titre }</Text>
+                                    <Text style={{...style.difficulte, color: getDifficulteColor(photo?.difficulte)}} >{ getDifficulteLibelle(photo?.difficulte) }</Text>
                                 </View>
-                                <View style={ style.succesContainer }>
-                                    <Text style={ style.succesText }>Succès GPS</Text>
-                                    <View style={ style.imageGpsContainer }>
-                                        <Image
-                                            style={ style.imageGps }
-                                            source={getSuccesGps()}
-                                        />
-                                    </View>
 
+                                <View style={ style.publicationContainer }>
+                                    <Text>Publié le : { new Date(photo.datePublication).toLocaleDateString() }</Text>
+                                    <Text>Par : { photo.titulaire }</Text>
                                 </View>
                             </View>
-                            :
-                            null
-                    }
+                        </View>
+                        {
+                            photo.score ?
+                                <View style={ style.bottomContainer }>
+                                    <View style={ style.scoreContainer }>
+                                        <Text style={ style.scoreText }>Score</Text>
+                                        <View style={style.progressContainer}>
+                                            <PercentageCircle size={50}
+                                                              percentage={photo.score}
+                                                              colorProgress={getColorByScore(photo?.score)}>
+                                            </PercentageCircle>
+                                        </View>
+                                    </View>
+                                    <View style={ style.succesContainer }>
+                                        <Text style={ style.succesText }>Succès GPS</Text>
+                                        <View style={ style.imageGpsContainer }>
+                                            <Image
+                                                style={ style.imageGps }
+                                                source={getSuccesGps()}
+                                            />
+                                        </View>
+
+                                    </View>
+                                </View>
+                                :
+                                null
+                        }
+                    </TouchableOpacity>
                 </ImageBackground>
             </ImageBackground>
         </>
@@ -93,7 +84,7 @@ const style = StyleSheet.create({
     imageContainer: {
         margin: 10,
     },
-    topContainer: {
+    photoContainer: {
         flexDirection: "row",
     },
     DescritpionContainer: {

@@ -29,40 +29,43 @@ export default function RegionsContainer({ navigation }) {
     }
 
     return(
-        <ImageBackground
-            source={require('../../../../assets/auth_background.jpg')}
-            style={ containerStyle.backgroundHover100 }>
-            <View style={ style.backContainer }>
-                <TouchableOpacity onPress={ () => navigation.goBack() }>
-                    <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
-                </TouchableOpacity>
-            </View>
-            <View style={ style.franceContainer }>
-                <FranceSelectRegion regionSelected={ regionSelected } setRegionSelected={ setRegionSelected }/>
-            </View>
-            {
-                regionSelected ?
-                    <>
-                        {
-                            loading ?
-                                <View style={style.containerValid}>
-                                    <LoadingView/>
-                                </View>
-                                :
-                                <Button onPress={() => goToZones()}
-                                                                  title="Valider"
-                                                                  raised={true}
-                                                                  radius={20}
-                                                                  titleStyle={ font(35, 'bold') }
-                                                                  buttonStyle={ commonsStyle.boutonSuccess }
-                                                                  containerStyle={ style.containerValid }
-                                                                  disabled={loading}/>
-                        }
-                    </>
-                    : null
-            }
+        <>
+            <ImageBackground
+                source={require('../../../../assets/auth_background.jpg')}
+                style={ containerStyle.backgroundHover100 }>
+                <View style={ style.backContainer }>
+                    <TouchableOpacity onPress={ () => navigation.goBack() }>
+                        <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
+                    </TouchableOpacity>
+                </View>
+                <View style={ style.franceContainer }>
+                    <FranceSelectRegion regionSelected={ regionSelected } setRegionSelected={ setRegionSelected }/>
+                </View>
+                {
+                    regionSelected ?
+                        <>
+                            {
+                                loading ?
+                                    <View style={style.containerValid}>
+                                        <LoadingView/>
+                                    </View>
+                                    :
+                                    <Button onPress={() => goToZones()}
+                                            title="Valider"
+                                            raised={true}
+                                            radius={20}
+                                            titleStyle={ font(35, 'bold') }
+                                            buttonStyle={ commonsStyle.boutonSuccess }
+                                            containerStyle={ style.containerValid }
+                                            disabled={loading}/>
+                            }
+                        </>
+                        : null
+                }
 
-        </ImageBackground>
+            </ImageBackground>
+        </>
+
     )
 }
 
