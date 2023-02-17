@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class PhotoDTO {
     private Long id;
     private String image;
+    private String imageJouee;
     private Difficulte difficulte;
     private LocalDateTime datePublication;
     private String titulaire;
