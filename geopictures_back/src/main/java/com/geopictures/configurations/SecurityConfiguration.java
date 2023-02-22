@@ -40,6 +40,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authentification/**").permitAll()
                 .antMatchers("/avatar/free").permitAll()
                 .antMatchers("/images/**").permitAll()
+                .antMatchers("/photos/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), utilisateurService, jwtService))

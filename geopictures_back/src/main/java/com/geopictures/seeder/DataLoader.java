@@ -11,13 +11,11 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 
 @Component
-public class PhotoDataLoader implements CommandLineRunner {
+public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private UtilisateurRepository utilisateurRepository;
@@ -31,8 +29,15 @@ public class PhotoDataLoader implements CommandLineRunner {
     @Autowired
     private ZoneRepository zoneRepository;
 
+    @Autowired
+    private RegionRepository regionRepository;
+
     @Override
     public void run(String... args) {
+        if(zoneRepository.count() == 0) {
+            initZones();
+        }
+
         if(utilisateurRepository.findByNom("Geopictures") == null) {
             initUtilisateur();
         }
@@ -40,6 +45,33 @@ public class PhotoDataLoader implements CommandLineRunner {
         if(photoRepository.count() == 0) {
             initPhotos();
         }
+    }
+
+    private void initZones() {
+        Region region = regionRepository.findByCode(RegionCode.PROVENCE_ALPE_COTE_AZUR.getCode());
+
+        Zone zone1 = Zone.builder()
+                .libelle("Marseille")
+                .image("marseille.jpg")
+                .region(region)
+                .build();
+
+        zoneRepository.save(zone1);
+
+        Zone zone2 = Zone.builder()
+                .libelle("Esimed")
+                .image("esimed.png")
+                .region(region)
+                .build();
+
+        zoneRepository.save(zone2);
+
+        Zone zone3 = Zone.builder()
+                .libelle("Nice")
+                .region(region)
+                .build();
+
+        zoneRepository.save(zone3);
     }
 
     private void initUtilisateur() {

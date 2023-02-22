@@ -3,6 +3,7 @@ package com.geopictures.models.dtos.photo;
 import com.geopictures.models.enums.Difficulte;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Builder
@@ -18,7 +19,7 @@ public class PhotoDTO {
     private LocalDateTime datePublication;
     private String titulaire;
     private String titre;
-    private Integer score;
+    private BigDecimal score;
     private Boolean succesGps;
     private Boolean succesGlobale;
 }

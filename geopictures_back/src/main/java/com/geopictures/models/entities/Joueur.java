@@ -68,11 +68,11 @@ public class Joueur {
             inverseJoinColumns = @JoinColumn(name = "avatar_id"))
     private Set<Avatar> avatars;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
     private Set<PhotoJoueur> photosJoues  = new HashSet<>();
 
     @OneToMany(mappedBy = "titulaire", cascade = CascadeType.REMOVE)
-    private Set<Photo> photos  = new HashSet<>();
+    private Set<Photo> photoCollaboration  = new HashSet<>();
 
     @PrePersist
     public void onPrePersit() {

@@ -32,4 +32,19 @@ public class PhotoMapper {
                 .succesGlobale(photoJoueurOpt.map(PhotoJoueur::getSuccesGlobale).orElse(null))
                 .build();
     }
+
+    public PhotoDTO toDtoWithPhotoJoueur(Photo entity, PhotoJoueur photoJoueur) {
+        return PhotoDTO.builder()
+                .titulaire(entity.getTitulaire().getUtilisateur().getNom())
+                .datePublication(entity.getDatePublication())
+                .titre(entity.getTitre())
+                .id(entity.getId())
+                .score(photoJoueur.getScore())
+                .difficulte(entity.getDifficulte())
+                .image(entity.getImage())
+                .imageJouee(photoJoueur.getImageJoue())
+                .succesGps(photoJoueur.getSuccesGps())
+                .succesGlobale(photoJoueur.getSuccesGlobale())
+                .build();
+    }
 }
