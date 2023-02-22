@@ -16,3 +16,5 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/free-icons/question" title="question icons">Question icons created by Vector Stall - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/podium" title="podium icônes">Podium icônes créées par Pixel perfect - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/rejouer" title="rejouer icônes">Rejouer icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/jaccepte" title="j'accepte icônes">J'accepte icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/free-icons/wrong" title="wrong icons">Wrong icons created by Freepik - Flaticon</a>  
