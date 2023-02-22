@@ -1,9 +1,14 @@
 import {ActivityIndicator, View, StyleSheet} from "react-native";
 
-export default function LoadingView() {
+export default function LoadingView({ color }) {
+
+    function getColor() {
+        return color ? color : "#000000";
+    }
+
     return (
         <View style={styles.container}>
-            <ActivityIndicator size={"large"} color="#000000"/>
+            <ActivityIndicator size={"large"} color={getColor()}/>
         </View>
     );
 }

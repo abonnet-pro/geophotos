@@ -24,7 +24,7 @@ export default function JeuImageDetail({ photo, handlePressImage}) {
                                 onPress={ () => handlePressImage(photo?.image) }
                                 style={ style.image }
                                 PlaceholderContent={ <LoadingView/>}
-                                source={{ uri: `${URL_API}/images/${photo?.image}` }}
+                                source={{ uri: `${URL_API}/photos/${photo?.image}` }}
                             />
                         </View>
                     </ImageBackground>
@@ -47,17 +47,17 @@ const style = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
-        borderRadius: 20,
+        borderBottomLeftRadius:20,
+        borderBottomRightRadius:20
     },
     containerTopTitre: {
         flex: 1,
         flexDirection:"row",
         justifyContent: "space-between",
         paddingLeft: 10,
-        paddingRight:10
+        paddingRight:10,
     },
     containerTopImage: {
         flex: 6,
-        padding:5
     }
 })

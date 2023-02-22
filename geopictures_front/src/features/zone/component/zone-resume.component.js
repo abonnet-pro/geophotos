@@ -9,7 +9,7 @@ export default function ZoneResume({ loadingPhotos, zone, last, handleGoListePho
 
     function getUri() {
         if(zone.image) {
-            return { uri: `${URL_API}/images/${zone.image}` }
+            return { uri: `${URL_API}/photos/${zone.image}` }
         } else {
             return require('../../../../assets/geopictures_logo_1.png');
         }

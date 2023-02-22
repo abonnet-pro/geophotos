@@ -14,12 +14,14 @@ import {StatusBar} from "expo-status-bar";
 import { ModalProvider, createModalStack } from 'react-native-modalfy';
 import  ModalInfoSuccessGps  from "./src/commons/modals/modal-info-success-gps.component";
 import  ModalInfoSuccessGlobale  from "./src/commons/modals/modal-info-success-global.component";
+import ModalInfoDroitCamera from "./src/commons/modals/modal-info-droit-camera.component";
 
 const Stack = createNativeStackNavigator();
 
 const modalConfig = {
   ModalInfoSuccessGps,
-  ModalInfoSuccessGlobale
+  ModalInfoSuccessGlobale,
+  ModalInfoDroitCamera
 }
 
 const stack = createModalStack(modalConfig, {backdropOpacity: 0.6});

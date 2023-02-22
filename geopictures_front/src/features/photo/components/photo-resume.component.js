@@ -27,7 +27,7 @@ export default function PhotoResume({ photo, handlePressPhoto, handlePressImage 
                                     onPress={ () => handlePressImage(photo.image) }
                                     style={ style.image }
                                     PlaceholderContent={ <LoadingView/>}
-                                    source={{ uri: `${URL_API}/images/${photo.image}` }}
+                                    source={{ uri: `${URL_API}/photos/${photo.image}` }}
                                 />
                             </View>
                             <View style={ style.DescritpionContainer }>

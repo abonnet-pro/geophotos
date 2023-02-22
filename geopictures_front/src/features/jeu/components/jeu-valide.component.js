@@ -5,7 +5,7 @@ import {Image} from "@rneui/themed";
 import LoadingView from "../../../commons/component/loading.component";
 import {URL_API} from "../../../utils/url.utils";
 
-export default function JeuValide({photo}) {
+export default function JeuValide({photo, handlePressImage}) {
     return(
         <>
             <ImageBackground
@@ -13,11 +13,12 @@ export default function JeuValide({photo}) {
                 <View style={{padding: 5}}>
                     <ImageBackground source={BACKGROUND_VIEW.background} style={{width: "100%", height: '100%'}}
                                      borderRadius={20}>
-                        <View style={{padding:5}}>
+                        <View>
                             <Image
+                                onPress={() => handlePressImage(photo?.imageJouee)}
                                 style={ style.image }
                                 PlaceholderContent={ <LoadingView/>}
-                                source={{ uri: `${URL_API}/images/${photo?.imageJouee}` }}
+                                source={{ uri: `${URL_API}/photos/${photo?.imageJouee}` }}
                             />
                         </View>
                     </ImageBackground>

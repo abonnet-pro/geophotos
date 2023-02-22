@@ -8,10 +8,17 @@ import JeuGadgets from "../components/jeu-gadgets.component";
 import JeuNonValide from "../components/jeu-non-valide.component";
 import JeuValide from "../components/jeu-valide.component";
 import JeuScoreDetail from "../components/jeu-score-detail.component";
+import {Camera} from "expo-camera";
+import {modalfy} from "react-native-modalfy";
+import {sendPhotoJouee} from "../services/jeu.service";
+import LoadingGeneral from "../../../commons/component/loading-general.component";
 
 export default function JeuContainer({route, navigation}) {
 
     const [photo, setPhoto] = useState(null);
+    const [permission, setPermission] = useState(null);
+    const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
+    const [loadingSendPhoto, setLoadingSendPhoto] = useState(false);
 
     const init = () => {
         const photo = route.params.photo;
@@ -24,6 +31,21 @@ export default function JeuContainer({route, navigation}) {
         });
     }
 
+    const handlePressJouer = async () => {
+        const cameraPermission  = await Camera.requestCameraPermissionsAsync();
+        setPermission(cameraPermission);
+        if(cameraPermission.status !== 'granted') {
+            openModal("ModalInfoDroitCamera");
+        }
+    }
+
+    const handleSendPhoto = async (photoPrise) => {
+        setLoadingSendPhoto(true);
+        const photoJoue = await sendPhotoJouee(photo.id, photoPrise.uri);
+        setLoadingSendPhoto(false);
+        setPhoto(photoJoue.data);
+    }
+
     useEffect(init, []);
 
     return (
@@ -31,6 +53,7 @@ export default function JeuContainer({route, navigation}) {
             <ImageBackground
                 source={require('../../../../assets/auth_background.jpg')}
                 style={containerStyle.backgroundHover100}>
+                { loadingSendPhoto && <LoadingGeneral titre={"Calcul du score en cours ..."}></LoadingGeneral>}
                 <View style={style.backContainer}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image style={style.back} source={require('../../../../assets/back.png')}></Image>
@@ -41,12 +64,18 @@ export default function JeuContainer({route, navigation}) {
                 </View>
                 <View style={style.containerMiddle}>
                     {
-                        photo?.score ? <JeuScoreDetail photo={photo}/> : <JeuGadgets/>
+                        photo?.score ?
+                            <JeuScoreDetail photo={photo}/>
+                            :
+                            <JeuGadgets/>
                     }
                 </View>
                 <View style={style.containerBottom}>
                     {
-                        photo?.score ? <JeuValide photo={photo}/> : <JeuNonValide/>
+                        photo?.score ?
+                            <JeuValide photo={photo} handlePressImage={ handlePressImage }/>
+                            :
+                            <JeuNonValide permission={permission} handlePressJouer={ handlePressJouer } handleSendPhoto={ handleSendPhoto }/>
                     }
                 </View>
             </ImageBackground>
