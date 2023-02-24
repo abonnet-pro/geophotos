@@ -4,7 +4,7 @@ import * as React from "react";
 import {Text} from "@rneui/base";
 import {BACKGROUND_VIEW} from "../../../utils/store.utils";
 
-export default function ZoneList({ loadingPhotos, zones, handleGoListePhoto }) {
+export default function ZoneList({ zones, handleGoListePhoto }) {
     return(
         <ImageBackground
             source={ BACKGROUND_VIEW.bordure } style={{ width: "100%", height:"100%"}} borderRadius={20}>
@@ -16,7 +16,7 @@ export default function ZoneList({ loadingPhotos, zones, handleGoListePhoto }) {
                                 zones.length > 0 ? zones.map((zone, index) => {
                                     return(
                                         <View key={ zone.id }>
-                                            <ZoneResume loadingPhotos={ loadingPhotos } handleGoListePhoto={ handleGoListePhoto } zone={zone} last={ index === zones.length - 1 }/>
+                                            <ZoneResume handleGoListePhoto={ handleGoListePhoto } zone={zone} last={ index === zones.length - 1 }/>
                                         </View>
                                     )
                                 }) :

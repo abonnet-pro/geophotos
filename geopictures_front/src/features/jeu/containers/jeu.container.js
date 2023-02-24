@@ -12,6 +12,7 @@ import {Camera} from "expo-camera";
 import {modalfy} from "react-native-modalfy";
 import {sendPhotoJouee} from "../services/jeu.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
+import {CommonActions} from "@react-navigation/native";
 
 export default function JeuContainer({route, navigation}) {
 
@@ -46,6 +47,13 @@ export default function JeuContainer({route, navigation}) {
         setPhoto(photoJoue.data);
     }
 
+    const goBack = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'photos', params: {zoneId: photo.zoneId} }],
+        });
+    }
+
     useEffect(init, []);
 
     return (
@@ -55,7 +63,7 @@ export default function JeuContainer({route, navigation}) {
                 style={containerStyle.backgroundHover100}>
                 { loadingSendPhoto && <LoadingGeneral titre={"Calcul du score en cours ..."}></LoadingGeneral>}
                 <View style={style.backContainer}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={() => goBack()}>
                         <Image style={style.back} source={require('../../../../assets/back.png')}></Image>
                     </TouchableOpacity>
                 </View>

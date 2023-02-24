@@ -15,6 +15,7 @@ import { ModalProvider, createModalStack } from 'react-native-modalfy';
 import  ModalInfoSuccessGps  from "./src/commons/modals/modal-info-success-gps.component";
 import  ModalInfoSuccessGlobale  from "./src/commons/modals/modal-info-success-global.component";
 import ModalInfoDroitCamera from "./src/commons/modals/modal-info-droit-camera.component";
+import CreationContainer from "./src/features/creation/containers/creation.container";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ export default function App() {
             <Stack.Navigator screenOptions={{ headerShown: false, navigationBarHidden: true }} initialRouteName="chargement">
               <Stack.Screen name="chargement" component={ChargementContainer} />
               <Stack.Screen name="authentification" component={AuthentificationContainer} />
+              <Stack.Screen name="creation" component={CreationContainer} />
               <Stack.Screen name="accueil" component={AccueilContainer} />
               <Stack.Screen name="selectRegion" component={RegionsContainer} />
               <Stack.Screen name="zones" component={ZoneContainer} />

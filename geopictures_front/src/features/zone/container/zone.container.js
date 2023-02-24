@@ -1,22 +1,35 @@
 import {useEffect, useState} from "react";
-import {Image, ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
+import {Image, ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {containerStyle} from "../../../commons/styles/commons.styles";
 import * as React from "react";
 import ZoneList from "../component/zone-list.component";
 import ZoneRecherche from "../component/zone-recherche.component";
-import {loadPhotoByZone} from "../../photo/services/photo.service";
-import Toast from "react-native-root-toast";
+import {loadZonesByCode} from "../services/zone.service";
+import LoadingGeneral from "../../../commons/component/loading-general.component";
 
 
 export default function ZoneContainer({ navigation, route }) {
 
     const [zones, setZones] = useState(null);
     const [recherche, setRecherche] = useState(null);
-    const [loadingPhotos, setLoadingPhotos] = useState(false);
+    const [loadingZones, setLoadingZone] = useState(false);
 
     const init = () => {
-        const zones = route.params.zones
-        setZones(zones);
+        const regionCode = route.params.regionCode;
+        setLoadingZone(true);
+        loadZonesByCode(regionCode)
+            .then(zones => {
+                setZones(zones.data);
+                setLoadingZone(false);
+            })
+            .catch(err => console.log(err));
+    }
+
+    const goBack = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'selectRegion' }],
+        });
     }
 
     const filterZones = (recherche) => {
@@ -27,17 +40,8 @@ export default function ZoneContainer({ navigation, route }) {
     }
 
     const handleGoListePhoto = async (zoneId) => {
-        setLoadingPhotos(true);
-        const photos = await loadPhotoByZone(zoneId);
-        setLoadingPhotos(false);
-
-        if(!photos.data) {
-            Toast.show("Erreur veuillez réessayer plus tard");
-            return;
-        }
-
         navigation.navigate("photos", {
-            photos: photos.data
+            zoneId: zoneId
         })
     }
 
@@ -48,19 +52,25 @@ export default function ZoneContainer({ navigation, route }) {
             <ImageBackground
                 source={require('../../../../assets/auth_background.jpg')}
                 style={ containerStyle.backgroundHover100 }>
-                <View style={ style.backContainer }>
-                    <TouchableOpacity onPress={ () => navigation.goBack() }>
-                        <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
-                    </TouchableOpacity>
-                </View>
-                <View style={ style.zonesContainer }>
-                    {
-                        filterZones(recherche) ? <ZoneList loadingPhotos={ loadingPhotos } handleGoListePhoto={ handleGoListePhoto } zones={filterZones(recherche)}/> : null
-                    }
-                </View>
-                <View style={{ flex: 1, marginBottom:5 }}>
-                    <ZoneRecherche recherche={ recherche } setRecherche={ setRecherche }/>
-                </View>
+                {
+                    loadingZones ? <LoadingGeneral titre={"Chargement en cours ..."}></LoadingGeneral>
+                        :
+                        <>
+                            <View style={ style.backContainer }>
+                                <TouchableOpacity onPress={ () => goBack() }>
+                                    <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={ style.zonesContainer }>
+                                {
+                                    filterZones(recherche) ? <ZoneList handleGoListePhoto={ handleGoListePhoto } zones={filterZones(recherche)}/> : null
+                                }
+                            </View>
+                            <View style={{ flex: 1, marginBottom:5 }}>
+                                <ZoneRecherche recherche={ recherche } setRecherche={ setRecherche }/>
+                            </View>
+                        </>
+                }
             </ImageBackground>
         </>
     )

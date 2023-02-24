@@ -5,7 +5,7 @@ import {Divider, Text} from "@rneui/base";
 import LoadingView from "../../../commons/component/loading.component";
 import {Image} from "@rneui/themed";
 
-export default function ZoneResume({ loadingPhotos, zone, last, handleGoListePhoto }) {
+export default function ZoneResume({ zone, last, handleGoListePhoto }) {
 
     function getUri() {
         if(zone.image) {
@@ -39,14 +39,9 @@ export default function ZoneResume({ loadingPhotos, zone, last, handleGoListePho
                     </View>
                 </View>
                 <View style={ style.chevronContainer }>
-                    {
-                        loadingPhotos ?
-                            <LoadingView/>
-                            :
-                            <TouchableOpacity style={zone.nombrePhotosDisponibles === 0 ? {opacity:0.5} : null} disabled={ zone.nombrePhotosDisponibles === 0 } onPress={ () => handleGoListePhoto(zone.id) }>
-                                <Image style={{ width: 30, height: 30}} source={require('../../../../assets/chevron-droit.png')}></Image>
-                            </TouchableOpacity>
-                    }
+                    <TouchableOpacity style={zone.nombrePhotosDisponibles === 0 ? {opacity:0.5} : null} disabled={ zone.nombrePhotosDisponibles === 0 } onPress={ () => handleGoListePhoto(zone.id) }>
+                        <Image style={{ width: 30, height: 30}} source={require('../../../../assets/chevron-droit.png')}></Image>
+                    </TouchableOpacity>
                 </View>
             </View>
             {

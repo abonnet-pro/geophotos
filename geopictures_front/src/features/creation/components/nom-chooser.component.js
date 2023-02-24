@@ -1,10 +1,10 @@
 import {Button, Text} from "@rneui/themed";
-import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
-import {ActivityIndicator, ImageBackground, StyleSheet, TextInput, View} from "react-native";
-import {checkNomSaisi} from "../services/accueil.service";
+import {commonsStyle, containerStyle, font} from "../../../commons/styles/commons.styles";
+import {ImageBackground, StyleSheet, TextInput, View} from "react-native";
 import {useState} from "react";
 import LoadingView from "../../../commons/component/loading.component";
 import {BACKGROUND_VIEW} from "../../../utils/store.utils";
+import {checkNomSaisi} from "../services/creation.service";
 
 export default function NomChooser({ setResponseAvailable, responseAvailable, nom, setNom }) {
 

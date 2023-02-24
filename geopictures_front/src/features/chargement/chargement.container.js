@@ -3,7 +3,6 @@ import {containerStyle} from "../../commons/styles/commons.styles";
 import {Text} from "@rneui/base";
 import {useEffect} from "react";
 import {getValueFor, JOUEUR, loadBackgroundView} from "../../utils/store.utils";
-import {loadAccueil} from "../accueil/services/accueil.service";
 
 export default function ChargementContainer({ navigation }) {
 
@@ -12,9 +11,7 @@ export default function ChargementContainer({ navigation }) {
         loadBackgroundView();
         getValueFor(JOUEUR).then(joueur => {
             if(joueur) {
-                loadAccueil(joueur.token)
-                    .then(joueurInformations => navigation.navigate('accueil', {joueurInformations: joueurInformations.data}))
-                    .catch(err => console.log(err))
+                navigation.navigate('accueil');
             } else {
                 navigation.navigate('authentification');
             }
