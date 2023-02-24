@@ -22,10 +22,6 @@ public class UploaderService {
         byte[] bytes = file.getBytes();
         File dir = new File(pathToUpload);
 
-        if(!initDirPhotoJoueur()) {
-            throw new Exception("Initialisation de la structure des fichiers impossible");
-        }
-
         File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
 
         BufferedOutputStream stream = new BufferedOutputStream(Files.newOutputStream(serverFile.toPath()));
@@ -33,16 +29,5 @@ public class UploaderService {
         stream.close();
 
         return file.getOriginalFilename();
-    }
-
-    private boolean initDirPhotoJoueur() {
-        File dirUpload = new File(pathToUpload);
-        boolean success = true;
-
-        if(!dirUpload.exists()) {
-            success = dirUpload.mkdir();
-        }
-
-        return success;
     }
 }

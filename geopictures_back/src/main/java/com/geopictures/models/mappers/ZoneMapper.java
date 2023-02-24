@@ -30,6 +30,7 @@ public class ZoneMapper {
 
         return ZoneDTO.builder()
                 .id(entity.getId())
+                .regionCode(entity.getRegion().getCode())
                 .image(entity.getImage())
                 .libelle(entity.getLibelle())
                 .nombrePhotosDisponibles(photoRepository.countAllByZone(entity))

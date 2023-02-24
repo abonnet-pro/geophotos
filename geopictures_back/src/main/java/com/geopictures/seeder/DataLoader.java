@@ -6,16 +6,28 @@ import com.geopictures.models.enums.RegionCode;
 import com.geopictures.models.enums.Role;
 import com.geopictures.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 
 @Component
 public class DataLoader implements CommandLineRunner {
+
+    @Autowired
+    ResourceLoader resourceLoader;
+
+    @Value("${upload.files}")
+    private String pathToUpload;
 
     @Autowired
     private UtilisateurRepository utilisateurRepository;
@@ -33,7 +45,9 @@ public class DataLoader implements CommandLineRunner {
     private RegionRepository regionRepository;
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws IOException {
+        initDirPhotoJoueur();
+
         if(zoneRepository.count() == 0) {
             initZones();
         }
@@ -93,7 +107,7 @@ public class DataLoader implements CommandLineRunner {
     private void initPhotos() {
         Zone marseille = zoneRepository.findByLibelle("Marseille");
         Utilisateur admin = utilisateurRepository.findByNom("Geopictures");
-        Optional<Joueur> joueurOpt = joueurRepository.findById(36L);
+        Optional<Joueur> joueurOpt = joueurRepository.findById(40L);
 
         if(!joueurOpt.isPresent()) {
             return;
@@ -206,5 +220,34 @@ public class DataLoader implements CommandLineRunner {
         photo6.getPhotosJoues().add(photoJoueur6);
 
         photoRepository.save(photo6);
+    }
+
+    private void initDirPhotoJoueur() throws IOException {
+        File dirUpload = new File(pathToUpload);
+        boolean success = true;
+
+        if(!dirUpload.exists()) {
+            success = dirUpload.mkdir();
+        }
+
+        if(success) {
+            File zoneEsimed = resourceLoader.getResource("classpath:/seeder/esimed.png").getFile();
+            File zoneMarseille = resourceLoader.getResource("classpath:/seeder/marseille.jpg").getFile();
+            File photoJeuTest = resourceLoader.getResource("classpath:/seeder/test_1.jpg").getFile();
+
+            uploadFile(zoneEsimed);
+            uploadFile(zoneMarseille);
+            uploadFile(photoJeuTest);
+        }
+    }
+
+    private void uploadFile(File file) throws IOException {
+        byte[] bytes = Files.readAllBytes(file.toPath());
+        File dir = new File(pathToUpload);
+        File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getName());
+
+        BufferedOutputStream stream = new BufferedOutputStream(Files.newOutputStream(serverFile.toPath()));
+        stream.write(bytes);
+        stream.close();
     }
 }

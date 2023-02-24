@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PhotoDTO {
     private Long id;
+    private Long zoneId;
+    private String regionCode;
     private String image;
     private String imageJouee;
     private Difficulte difficulte;
