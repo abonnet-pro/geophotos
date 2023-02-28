@@ -31,9 +31,12 @@ export default function Accueil({ loadingAccueil, joueurInformations, navigation
                         </View>
                         <View style={ containerStyle.center }>
                             <View style={ style.experience }>
-                                <ImageBackground style={ style.star } source={require('../../../../assets/star.png')}>
-                                    <Text style={ style.niveau }>{ joueurInformations?.niveau }</Text>
-                                </ImageBackground>
+                                <View style={ style.niveauContainer }>
+                                    <ImageBackground style={ style.star } source={require('../../../../assets/star.png')}>
+                                        <Text style={ style.niveau }>{ joueurInformations?.niveau }</Text>
+                                    </ImageBackground>
+                                </View>
+
                                 <ExperienceBarre experience={ joueurInformations?.experience} prochainNiveau={ joueurInformations?.prochainNiveau }></ExperienceBarre>
                             </View>
                             <Image
@@ -94,9 +97,8 @@ const style = StyleSheet.create({
         height:20
     },
     star: {
-        margin:10,
-        width: 40,
-        height:40,
+        width: "100%",
+        height:"100%",
     },
     plus: {
         fontSize: 20
@@ -106,8 +108,14 @@ const style = StyleSheet.create({
         alignItems: "center",
     },
     niveau: {
-        padding:10,
         alignSelf: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginTop:'auto',
+        marginBottom:'auto'
+    },
+    niveauContainer : {
+        width: 50,
+        height:50,
+        margin: 5
     }
 });

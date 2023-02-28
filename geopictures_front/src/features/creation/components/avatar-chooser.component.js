@@ -2,7 +2,7 @@ import {ImageBackground, SafeAreaView, ScrollView, StyleSheet, View} from "react
 import {URL_API} from "../../../utils/url.utils";
 import {Avatar, Text} from '@rneui/themed';
 import {containerStyle, font} from "../../../commons/styles/commons.styles";
-import {BACKGROUND_VIEW} from "../../../utils/store.utils";
+import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 
 export default function AvatarChooser({ avatars, avatarChoisi, setAvatarChoisi }) {
 
@@ -13,8 +13,8 @@ export default function AvatarChooser({ avatars, avatarChoisi, setAvatarChoisi }
     return(
         <SafeAreaView style={style.container}>
                 <ImageBackground
-                    source={ BACKGROUND_VIEW.bordure } style={ containerStyle.formBorder } borderRadius={20}>
-                    <ImageBackground source={ BACKGROUND_VIEW.background } borderRadius={20}>
+                    source={ BACKGROUND_ASSETS.bordure } style={ containerStyle.formBorder } borderRadius={20}>
+                    <ImageBackground source={ BACKGROUND_ASSETS.background } borderRadius={20}>
                         <View style={ style.textContainer }>
                             <Text style={ font(18, 'bold', 'center') }>Derniere étape !</Text>
                             <Text style={ font(18, 'bold', 'center') }>Veuillez choisir un avatar</Text>

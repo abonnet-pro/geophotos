@@ -1,4 +1,4 @@
-import {BACKGROUND_VIEW} from "../../../utils/store.utils";
+import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {Image} from "@rneui/themed";
 import LoadingView from "../../../commons/component/loading.component";
@@ -18,8 +18,8 @@ export default function PhotoResume({ photo, handlePressPhoto, handlePressImage 
     return(
         <>
             <ImageBackground
-                source={ BACKGROUND_VIEW.bordure } style={{ padding:5 }} borderRadius={20}>
-                <ImageBackground source={ BACKGROUND_VIEW.background }  borderRadius={20}>
+                source={ BACKGROUND_ASSETS.bordure } style={{ padding:5 }} borderRadius={20}>
+                <ImageBackground source={ BACKGROUND_ASSETS.background } borderRadius={20}>
                     <TouchableOpacity onPress={ () => handlePressPhoto(photo) }>
                         <View style={ style.photoContainer }>
                             <View style={ style.imageContainer }>

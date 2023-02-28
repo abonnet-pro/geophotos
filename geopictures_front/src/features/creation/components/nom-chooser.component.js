@@ -3,7 +3,7 @@ import {commonsStyle, containerStyle, font} from "../../../commons/styles/common
 import {ImageBackground, StyleSheet, TextInput, View} from "react-native";
 import {useState} from "react";
 import LoadingView from "../../../commons/component/loading.component";
-import {BACKGROUND_VIEW} from "../../../utils/store.utils";
+import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {checkNomSaisi} from "../services/creation.service";
 
 export default function NomChooser({ setResponseAvailable, responseAvailable, nom, setNom }) {
@@ -24,8 +24,8 @@ export default function NomChooser({ setResponseAvailable, responseAvailable, no
 
     return(
         <ImageBackground
-            source={ BACKGROUND_VIEW.bordure } style={ containerStyle.formBorder } borderRadius={20}>
-            <ImageBackground source={ BACKGROUND_VIEW.background } borderRadius={20}>
+            source={ BACKGROUND_ASSETS.bordure } style={ containerStyle.formBorder } borderRadius={20}>
+            <ImageBackground source={ BACKGROUND_ASSETS.background } borderRadius={20}>
                 <View style={ style.form }>
                     <Text style={ font(18, 'bold', 'center') }>Bienvenue dans geopictures !</Text>
                     <Text style={ font(18, 'bold', 'center') }>Veuillez choisir un nom d'utilisateur</Text>

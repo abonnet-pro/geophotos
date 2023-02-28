@@ -11,10 +11,14 @@ import PhotoContainer from "./src/features/photo/containers/photo.container";
 import ImageZoom from "./src/commons/component/image-zoom.component";
 import JeuContainer from "./src/features/jeu/containers/jeu.container";
 import {StatusBar} from "expo-status-bar";
+import {useEffect} from "react";
+import {BackHandler} from "react-native";
+import ModalUseGadgetGps from "./src/commons/modals/modal-use-gadget-gps.component";
 import { ModalProvider, createModalStack } from 'react-native-modalfy';
 import  ModalInfoSuccessGps  from "./src/commons/modals/modal-info-success-gps.component";
 import  ModalInfoSuccessGlobale  from "./src/commons/modals/modal-info-success-global.component";
 import ModalInfoDroitCamera from "./src/commons/modals/modal-info-droit-camera.component";
+import ModalInfoDroitLocation from "./src/commons/modals/modal-info-droit-location.component";
 import CreationContainer from "./src/features/creation/containers/creation.container";
 
 const Stack = createNativeStackNavigator();
@@ -22,12 +26,20 @@ const Stack = createNativeStackNavigator();
 const modalConfig = {
   ModalInfoSuccessGps,
   ModalInfoSuccessGlobale,
-  ModalInfoDroitCamera
+  ModalInfoDroitCamera,
+  ModalInfoDroitLocation,
+  ModalUseGadgetGps
 }
 
 const stack = createModalStack(modalConfig, {backdropOpacity: 0.6});
 
 export default function App() {
+
+  const init = () => {
+    BackHandler.addEventListener("hardwareBackPress", () => true);
+  }
+
+  useEffect(init, []);
 
     return (
     <RootSiblingParent>

@@ -1,12 +1,12 @@
 import {Image, ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
-import {BACKGROUND_VIEW} from "../../../utils/store.utils";
+import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {Button} from "@rneui/base";
 import {commonsStyle, font} from "../../../commons/styles/commons.styles";
 import * as React from "react";
 import {Camera} from "expo-camera";
 import {useState} from "react";
 
-export default function JeuNonValide({ handlePressJouer, permission, handleSendPhoto }) {
+export default function JeuNonValide({ handlePressJouer, permission, handleSendPhoto, location }) {
 
     let camera;
     const [photoPrise, setPhotoPrise] = useState(null);
@@ -21,12 +21,12 @@ export default function JeuNonValide({ handlePressJouer, permission, handleSendP
     return(
         <>
             <ImageBackground
-                source={BACKGROUND_VIEW.bordure} style={{width: "100%", height: '100%'}} borderRadius={20}>
+                source={BACKGROUND_ASSETS.bordure} style={{width: "100%", height: '100%'}} borderRadius={20}>
                 <View style={{padding: 5}}>
-                    <ImageBackground source={BACKGROUND_VIEW.background} style={{width: "100%", height: '100%'}}
+                    <ImageBackground source={BACKGROUND_ASSETS.background} style={{width: "100%", height: '100%'}}
                                      borderRadius={20}>
                         {
-                            permission && permission.status === "granted" ?
+                            permission && location && location.status === "granted" && permission.status === "granted" ?
                                 <View style={ style.containerCamera }>
                                     {
                                         photoPrise ?

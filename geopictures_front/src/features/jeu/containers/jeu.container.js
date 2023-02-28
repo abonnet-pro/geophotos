@@ -12,12 +12,13 @@ import {Camera} from "expo-camera";
 import {modalfy} from "react-native-modalfy";
 import {sendPhotoJouee} from "../services/jeu.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
-import {CommonActions} from "@react-navigation/native";
+import * as Location from 'expo-location';
 
 export default function JeuContainer({route, navigation}) {
 
     const [photo, setPhoto] = useState(null);
     const [permission, setPermission] = useState(null);
+    const [location, setLocation] = useState(null);
     const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
     const [loadingSendPhoto, setLoadingSendPhoto] = useState(false);
 
@@ -38,11 +39,18 @@ export default function JeuContainer({route, navigation}) {
         if(cameraPermission.status !== 'granted') {
             openModal("ModalInfoDroitCamera");
         }
+
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+        }
     }
 
     const handleSendPhoto = async (photoPrise) => {
         setLoadingSendPhoto(true);
-        const photoJoue = await sendPhotoJouee(photo.id, photoPrise.uri);
+        const location = await Location.getCurrentPositionAsync({});
+        const photoJoue = await sendPhotoJouee(photo.id, photoPrise.uri, location);
         setLoadingSendPhoto(false);
         setPhoto(photoJoue.data);
     }
@@ -83,7 +91,7 @@ export default function JeuContainer({route, navigation}) {
                         photo?.score ?
                             <JeuValide photo={photo} handlePressImage={ handlePressImage }/>
                             :
-                            <JeuNonValide permission={permission} handlePressJouer={ handlePressJouer } handleSendPhoto={ handleSendPhoto }/>
+                            <JeuNonValide location={location} permission={permission} handlePressJouer={ handlePressJouer } handleSendPhoto={ handleSendPhoto }/>
                     }
                 </View>
             </ImageBackground>
