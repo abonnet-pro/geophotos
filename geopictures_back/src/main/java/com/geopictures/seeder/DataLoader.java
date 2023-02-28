@@ -86,6 +86,20 @@ public class DataLoader implements CommandLineRunner {
                 .build();
 
         zoneRepository.save(zone3);
+
+        Zone zone4 = Zone.builder()
+                .libelle("Maison Anthony")
+                .region(region)
+                .build();
+
+        zoneRepository.save(zone4);
+
+        Zone zone5 = Zone.builder()
+                .libelle("Maison Florian")
+                .region(region)
+                .build();
+
+        zoneRepository.save(zone5);
     }
 
     private void initUtilisateur() {
@@ -106,6 +120,7 @@ public class DataLoader implements CommandLineRunner {
 
     private void initPhotos() {
         Zone marseille = zoneRepository.findByLibelle("Marseille");
+        Zone maisonAnthony = zoneRepository.findByLibelle("Maison Anthony");
         Utilisateur admin = utilisateurRepository.findByNom("Geopictures");
         Optional<Joueur> joueurOpt = joueurRepository.findById(40L);
 
@@ -118,7 +133,8 @@ public class DataLoader implements CommandLineRunner {
                 .image("test_1.jpg")
                 .difficulte(Difficulte.DIFFICILE)
                 .datePublication(LocalDateTime.now())
-                .coordonnees("43.338084,5.406201")
+                .latitude("43.338084")
+                .longitude("5.406201")
                 .zone(marseille)
                 .titulaire(admin.getJoueur())
                 .photosJoues(new HashSet<>())
@@ -142,7 +158,8 @@ public class DataLoader implements CommandLineRunner {
                 .image("test_1.jpg")
                 .difficulte(Difficulte.FACILE)
                 .datePublication(LocalDateTime.now())
-                .coordonnees("43.338084,5.406201")
+                .latitude("43.338084")
+                .longitude("5.406201")
                 .zone(marseille)
                 .titulaire(admin.getJoueur())
                 .build();
@@ -154,7 +171,8 @@ public class DataLoader implements CommandLineRunner {
                 .image("test_1.jpg")
                 .difficulte(Difficulte.NORMAL)
                 .datePublication(LocalDateTime.now())
-                .coordonnees("43.338084,5.406201")
+                .latitude("43.338084")
+                .longitude("5.406201")
                 .zone(marseille)
                 .titulaire(admin.getJoueur())
                 .photosJoues(new HashSet<>())
@@ -178,7 +196,8 @@ public class DataLoader implements CommandLineRunner {
                 .image("test_1.jpg")
                 .difficulte(Difficulte.DIFFICILE)
                 .datePublication(LocalDateTime.now())
-                .coordonnees("43.338084,5.406201")
+                .latitude("43.338084")
+                .longitude("5.406201")
                 .zone(marseille)
                 .titulaire(admin.getJoueur())
                 .build();
@@ -190,7 +209,8 @@ public class DataLoader implements CommandLineRunner {
                 .image("test_1.jpg")
                 .difficulte(Difficulte.EXTREME)
                 .datePublication(LocalDateTime.now())
-                .coordonnees("43.338084,5.406201")
+                .latitude("43.338084")
+                .longitude("5.406201")
                 .zone(marseille)
                 .titulaire(admin.getJoueur())
                 .build();
@@ -202,7 +222,8 @@ public class DataLoader implements CommandLineRunner {
                 .image("test_1.jpg")
                 .difficulte(Difficulte.DIFFICILE)
                 .datePublication(LocalDateTime.now())
-                .coordonnees("43.338084,5.406201")
+                .latitude("43.338084")
+                .longitude("5.406201")
                 .zone(marseille)
                 .titulaire(admin.getJoueur())
                 .photosJoues(new HashSet<>())
@@ -220,6 +241,84 @@ public class DataLoader implements CommandLineRunner {
         photo6.getPhotosJoues().add(photoJoueur6);
 
         photoRepository.save(photo6);
+
+        Photo photo7 = Photo.builder()
+                .titre("Mandala")
+                .image("antho_1.jpg")
+                .difficulte(Difficulte.FACILE)
+                .datePublication(LocalDateTime.now())
+                .latitude("52.9497586")
+                .longitude("6.8170329")
+                .zone(maisonAnthony)
+                .titulaire(admin.getJoueur())
+                .build();
+
+        photoRepository.save(photo7);
+
+        Photo photo8 = Photo.builder()
+                .titre("Espace")
+                .image("antho_2.jpg")
+                .difficulte(Difficulte.NORMAL)
+                .datePublication(LocalDateTime.now())
+                .latitude("52.9497586")
+                .longitude("6.8170329")
+                .zone(maisonAnthony)
+                .titulaire(admin.getJoueur())
+                .build();
+
+        photoRepository.save(photo8);
+
+        Photo photo9 = Photo.builder()
+                .titre("Ca tourne")
+                .image("antho_3.jpg")
+                .difficulte(Difficulte.EXTREME)
+                .datePublication(LocalDateTime.now())
+                .latitude("43.9497556")
+                .longitude("4.8170224")
+                .zone(maisonAnthony)
+                .titulaire(admin.getJoueur())
+                .build();
+
+        photoRepository.save(photo9);
+
+        Photo photo10 = Photo.builder()
+                .titre("Vue chat")
+                .image("antho_4.jpg")
+                .difficulte(Difficulte.FACILE)
+                .datePublication(LocalDateTime.now())
+                .latitude("43.9497586")
+                .longitude("4.8170329")
+                .zone(maisonAnthony)
+                .titulaire(admin.getJoueur())
+                .build();
+
+        photoRepository.save(photo10);
+
+        Photo photo11 = Photo.builder()
+                .titre("Contraste")
+                .image("antho_5.jpg")
+                .difficulte(Difficulte.DIFFICILE)
+                .datePublication(LocalDateTime.now())
+                .latitude("43.9497586")
+                .longitude("4.8170329")
+                .zone(maisonAnthony)
+                .titulaire(admin.getJoueur())
+                .build();
+
+        photoRepository.save(photo11);
+
+        Photo photo12 = Photo.builder()
+                .titre("Carreaux")
+                .image("antho_6.jpg")
+                .difficulte(Difficulte.NORMAL)
+                .datePublication(LocalDateTime.now())
+                .latitude("43.9497586")
+                .longitude("4.8170329")
+                .zone(maisonAnthony)
+                .titulaire(admin.getJoueur())
+                .build();
+
+        photoRepository.save(photo12);
     }
 
     private void initDirPhotoJoueur() throws IOException {
@@ -235,9 +334,23 @@ public class DataLoader implements CommandLineRunner {
             File zoneMarseille = resourceLoader.getResource("classpath:/seeder/marseille.jpg").getFile();
             File photoJeuTest = resourceLoader.getResource("classpath:/seeder/test_1.jpg").getFile();
 
+            File antho1 = resourceLoader.getResource("classpath:/seeder/antho_1.jpg").getFile();
+            File antho2 = resourceLoader.getResource("classpath:/seeder/antho_2.jpg").getFile();
+            File antho3 = resourceLoader.getResource("classpath:/seeder/antho_3.jpg").getFile();
+            File antho4 = resourceLoader.getResource("classpath:/seeder/antho_4.jpg").getFile();
+            File antho5 = resourceLoader.getResource("classpath:/seeder/antho_5.jpg").getFile();
+            File antho6 = resourceLoader.getResource("classpath:/seeder/antho_6.jpg").getFile();
+
             uploadFile(zoneEsimed);
             uploadFile(zoneMarseille);
             uploadFile(photoJeuTest);
+
+            uploadFile(antho1);
+            uploadFile(antho2);
+            uploadFile(antho3);
+            uploadFile(antho4);
+            uploadFile(antho5);
+            uploadFile(antho6);
         }
     }
 

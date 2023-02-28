@@ -1,5 +1,6 @@
 package com.geopictures.models.entities;
 
+import com.geopictures.models.pojos.Coordonnees;
 import lombok.*;
 
 import javax.persistence.*;

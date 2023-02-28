@@ -234,7 +234,8 @@ create table if not exists photo
     image varchar(255) not null,
     difficulte varchar(255) not null,
     date_publication timestamp not null,
-    coordonnees varchar(255) not null,
+    latitude varchar(255) not null,
+    longitude varchar(255) not null,
     titre varchar(255) not null,
     indice varchar(255),
     constraint fk_photo_zone

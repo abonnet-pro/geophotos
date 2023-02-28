@@ -6,6 +6,7 @@ import com.geopictures.models.entities.Photo;
 import com.geopictures.models.entities.PhotoJoueur;
 import com.geopictures.models.entities.Utilisateur;
 import com.geopictures.models.mappers.PhotoMapper;
+import com.geopictures.models.pojos.Coordonnees;
 import com.geopictures.repositories.PhotoRepository;
 import com.geopictures.services.resemble.analysis.ResembleAnalysis;
 import com.geopictures.services.resemble.analysis.ResembleAnalysisOptions;
@@ -29,6 +30,9 @@ import java.util.Optional;
 @Service
 public class JeuService extends UtilisateurHolder {
 
+    private final int DISTANCE_VALIDATION_SUCCES_GPS = 50;
+    private final Double SCORE_VALIDATION_SUCCES_GLOBALE = 80D;
+
     @Autowired
     private UploaderService uploaderService;
 
@@ -41,7 +45,10 @@ public class JeuService extends UtilisateurHolder {
     @Autowired
     private PhotoMapper photoMapper;
 
-    public PhotoDTO getRessemblance(MultipartFile file, Long photoId) throws Exception {
+    @Autowired
+    private JoueurService joueurService;
+
+    public PhotoDTO getRessemblance(MultipartFile file, Long photoId, Coordonnees coordonnees) throws Exception {
         Optional<Photo> photoOpt = photoRepository.findById(photoId);
         Utilisateur utilisateur = utilisateur();
 
@@ -62,6 +69,8 @@ public class JeuService extends UtilisateurHolder {
         }
 
         PhotoJoueur photoJoueur = calculScore(photo, photoJouee);
+        calculSuccess(photoJoueur, coordonnees);
+        joueurService.updateJoueurInformations(photoJoueur, utilisateur().getJoueur());
 
         photo.getPhotosJoues().add(photoJoueur);
         photo = photoRepository.save(photo);
@@ -77,7 +86,7 @@ public class JeuService extends UtilisateurHolder {
         BufferedImage img1 = ImageUtils.readImage(imgFile1);
         BufferedImage img2 = ImageUtils.readImage(imgFile2);
 
-        ResembleAnalysisOptions options = ResembleAnaylsisOptionsTemplates.ignoringLess();
+        ResembleAnalysisOptions options = ResembleAnaylsisOptionsTemplates.ignoringAntialiasing();
         ResembleAnalysisResults results = new ResembleAnalysis(options).analyseImages(img1, img2);
         ResembleParserData dataResult = ResembleParser.parse(results.getOutputImage());
 
@@ -89,5 +98,14 @@ public class JeuService extends UtilisateurHolder {
                 .succesGps(false)
                 .succesGlobale(false)
                 .build();
+    }
+
+    private void calculSuccess(PhotoJoueur photoJoueur, Coordonnees coordonnees) {
+        Coordonnees coordonneesPhoto = photoJoueur.getPhoto().getCoordonnes();
+
+        Double distanceMetre = Coordonnees.getDistanceEnMetre(coordonneesPhoto, coordonnees);
+
+        photoJoueur.setSuccesGps(distanceMetre.intValue() <= DISTANCE_VALIDATION_SUCCES_GPS);
+        photoJoueur.setSuccesGlobale(photoJoueur.getSuccesGps() && photoJoueur.getScore().doubleValue() >= SCORE_VALIDATION_SUCCES_GLOBALE);
     }
 }
