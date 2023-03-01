@@ -18,3 +18,4 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/fr/icones-gratuites/rejouer" title="rejouer icônes">Rejouer icônes créées par Freepik - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/jaccepte" title="j'accepte icônes">J'accepte icônes créées par Freepik - Flaticon</a>  
 <a href="https://www.flaticon.com/free-icons/wrong" title="wrong icons">Wrong icons created by Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/free-icons/copy-link" title="copy link icons">Copy link icons created by Ahmad Zalat - Flaticon</a>  
