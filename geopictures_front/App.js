@@ -20,6 +20,8 @@ import  ModalInfoSuccessGlobale  from "./src/commons/modals/modal-info-success-g
 import ModalInfoDroitCamera from "./src/commons/modals/modal-info-droit-camera.component";
 import ModalInfoDroitLocation from "./src/commons/modals/modal-info-droit-location.component";
 import CreationContainer from "./src/features/creation/containers/creation.container";
+import ModalUseGadgetDistance from "./src/commons/modals/modal-use-gadget-distance.component";
+import ModalUseGadgetDirection from "./src/commons/modals/modal-use-gadget-direction.component";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +30,9 @@ const modalConfig = {
   ModalInfoSuccessGlobale,
   ModalInfoDroitCamera,
   ModalInfoDroitLocation,
-  ModalUseGadgetGps
+  ModalUseGadgetGps,
+  ModalUseGadgetDistance,
+  ModalUseGadgetDirection
 }
 
 const stack = createModalStack(modalConfig, {backdropOpacity: 0.6});

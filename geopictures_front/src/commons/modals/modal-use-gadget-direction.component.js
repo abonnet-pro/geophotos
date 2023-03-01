@@ -1,39 +1,41 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
-import {Button, Image, StyleSheet, TouchableOpacity, View} from "react-native";
-import {getGadget, useGadget} from "../../features/jeu/services/jeu.service";
+import {Button, Image, StyleSheet, View} from "react-native";
+import {getGadgetLocation, useGadgetLocation} from "../../features/jeu/services/jeu.service";
 import {Gadget} from "../../features/jeu/enums/gadget.enum";
 import LoadingView from "../component/loading.component";
-import * as Clipboard from 'expo-clipboard';
+import Compas from "../component/compas.component";
 
-const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
+const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const init = () => {
-        const photoId = getParam('photoId', null);
         setLoading(true);
-        getGadget(Gadget.GPS, photoId)
+        const photoId = getParam('photoId', null);
+        const location = getParam('location', null);
+
+        getGadgetLocation(Gadget.DIRECTION, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressUseGadgetGps = async () => {
+    const handlePressUseGadgetDistance = async () => {
         setLoading(true);
         const photoId = getParam('photoId', null);
-        useGadget(Gadget.GPS, photoId)
+        const location = getParam('location', null);
+
+        useGadgetLocation(Gadget.DIRECTION, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressClipboard = async () => {
-        await Clipboard.setStringAsync(gadget.reponse);
-    }
-
-    useEffect(init, []);
+    useEffect(() => {
+        init();
+    }, []);
 
     return(
         <>
@@ -42,25 +44,24 @@ const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Gps</Text>
+                        <Text style={style.title}>Gadget Direction</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_gps.png')}></Image>
+                            <Image style={style.image} source={require('../../../assets/gadget_cardinal.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
                             gadget?.reponse ?
                                 <View style={style.reponseContainer}>
-                                    <Text style={style.reponse}>{gadget.reponse}</Text>
-                                    <TouchableOpacity onPress={handlePressClipboard}>
-                                        <Image style={style.copyImage} source={require('../../../assets/copy.png')}/>
-                                    </TouchableOpacity>
+                                    <View style={{flex:1}}>
+                                        <Compas angleDiffByNord={gadget.reponse}></Compas>
+                                    </View>
                                 </View>
                                 :
                                 <>
                                 {
                                     gadget?.quantite > 0 ?
-                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetGps}></Button>
+                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetDistance}></Button>
                                         :
                                         <Button title={"Acheter"} color={"green"}></Button>
                                 }
@@ -79,6 +80,8 @@ const style = StyleSheet.create({
         padding: 20,
         borderRadius: 20,
         borderWidth:2,
+        maxWidth:"95%",
+        alignSelf:'center'
     },
     title: {
         color: "white",
@@ -115,12 +118,7 @@ const style = StyleSheet.create({
     reponse: {
         color:"white",
         fontWeight:'bold',
-    },
-    copyImage: {
-        width:20,
-        height:20,
-        marginLeft: 10,
     }
 })
 
-export default ModalUseGadgetGps;
+export default ModalUseGadgetDirection;

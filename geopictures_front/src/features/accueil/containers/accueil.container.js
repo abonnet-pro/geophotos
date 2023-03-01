@@ -13,13 +13,10 @@ export default function AccueilContainer({ navigation }) {
 
         setLoadingAccuil(true);
         loadAccueil()
-            .then(joueurInformations => {
-                setJoueurInformations(joueurInformations.data)
-                setLoadingAccuil(false);
-            })
+            .then(joueurInformations => setJoueurInformations(joueurInformations.data))
             .catch(err => console.log(err))
+            .finally(() => setLoadingAccuil(false))
     }
-
     useEffect(init, []);
 
     return(

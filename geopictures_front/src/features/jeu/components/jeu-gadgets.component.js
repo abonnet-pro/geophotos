@@ -1,10 +1,10 @@
-import {ImageBackground, StyleSheet, View} from "react-native";
+import {ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {Image} from "@rneui/themed";
 import * as React from "react";
 import {primary1} from "../../../commons/styles/commons.styles";
 
-export default function JeuGadgets() {
+export default function JeuGadgets({ handlePressGadgetGps, handlePressGadgetDistance, handlePressGadgetDirection }) {
     return(
         <>
             <ImageBackground
@@ -13,21 +13,21 @@ export default function JeuGadgets() {
                     <ImageBackground source={BACKGROUND_ASSETS.background} style={{width: "100%", height: '100%'}}
                                      borderRadius={20}>
                         <View style={ style.containerGadgets }>
-                            <View style={ style.containerGadget }>
+                            <TouchableOpacity onPress={handlePressGadgetGps} style={ style.containerGadget }>
                                 <View style={ style.containerImageGadget }>
                                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_gps.png')}/>
                                 </View>
-                            </View>
-                            <View style={ style.containerGadget }>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handlePressGadgetDistance} style={ style.containerGadget }>
                                 <View style={ style.containerImageGadget }>
                                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_distance.png')}/>
                                 </View>
-                            </View>
-                            <View style={ style.containerGadget }>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handlePressGadgetDirection} style={ style.containerGadget }>
                                 <View style={ style.containerImageGadget }>
                                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_cardinal.png')}/>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                             <View style={ style.containerGadget }>
                                 <View style={ style.containerImageGadget }>
                                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_success.png')}/>

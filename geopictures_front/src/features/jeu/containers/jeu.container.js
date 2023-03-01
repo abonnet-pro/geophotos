@@ -10,9 +10,10 @@ import JeuValide from "../components/jeu-valide.component";
 import JeuScoreDetail from "../components/jeu-score-detail.component";
 import {Camera} from "expo-camera";
 import {modalfy} from "react-native-modalfy";
-import {sendPhotoJouee} from "../services/jeu.service";
+import {getGadget, sendPhotoJouee} from "../services/jeu.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 import * as Location from 'expo-location';
+import {Gadget} from "../enums/gadget.enum";
 
 export default function JeuContainer({route, navigation}) {
 
@@ -62,6 +63,36 @@ export default function JeuContainer({route, navigation}) {
         });
     }
 
+    const handlePressGadgetGps = async () => {
+        openModal("ModalUseGadgetGps", {photoId: photo.id});
+    }
+
+    const handlePressGadgetDistance = async () => {
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
+        const location = await Location.getCurrentPositionAsync({});
+        openModal("ModalUseGadgetDistance", {photoId: photo.id, location: location});
+    }
+
+    const handlePressGadgetDirection = async () => {
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
+        const location = await Location.getCurrentPositionAsync({});
+        openModal("ModalUseGadgetDirection", {photoId: photo.id, location: location});
+    }
+
     useEffect(init, []);
 
     return (
@@ -83,7 +114,9 @@ export default function JeuContainer({route, navigation}) {
                         photo?.score ?
                             <JeuScoreDetail photo={photo}/>
                             :
-                            <JeuGadgets/>
+                            <JeuGadgets handlePressGadgetGps={handlePressGadgetGps}
+                                        handlePressGadgetDistance={handlePressGadgetDistance}
+                                        handlePressGadgetDirection={handlePressGadgetDirection}/>
                     }
                 </View>
                 <View style={style.containerBottom}>
