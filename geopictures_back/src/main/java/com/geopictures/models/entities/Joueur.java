@@ -69,9 +69,15 @@ public class Joueur {
     private Set<Avatar> avatars;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
+    private Set<GadgetPhotoJoueur> gadgetsUtilisesPhotos  = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
     private Set<PhotoJoueur> photosJoues  = new HashSet<>();
 
-    @OneToMany(mappedBy = "titulaire", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
+    private Set<GadgetJoueur> mesGadgets  = new HashSet<>();
+
+    @OneToMany(mappedBy = "titulaire", cascade = CascadeType.ALL)
     private Set<Photo> photoCollaboration  = new HashSet<>();
 
     @PrePersist

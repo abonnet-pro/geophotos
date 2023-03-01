@@ -54,6 +54,9 @@ public class Photo {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
     private Set<PhotoJoueur> photosJoues = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    private Set<GadgetPhotoJoueur> gadgetsUtilisesPhoto = new HashSet<>();
+
     public Coordonnees getCoordonnes() {
         return Coordonnees.builder()
                 .latitude(new BigDecimal(this.latitude))

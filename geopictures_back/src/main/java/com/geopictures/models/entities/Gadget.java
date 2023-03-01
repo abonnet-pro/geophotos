@@ -1,10 +1,12 @@
 package com.geopictures.models.entities;
 
+import com.geopictures.models.enums.GadgetCode;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -12,8 +14,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="photo_joueur")
-public class PhotoJoueur {
+@Table(name="gadget")
+public class Gadget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -23,21 +25,17 @@ public class PhotoJoueur {
     @Column(name="updated")
     private LocalDateTime updated;
 
-    @ManyToOne
-    @JoinColumn(name="joueur_id")
-    private Joueur joueur;
-    @ManyToOne
-    @JoinColumn(name="photo_id")
-    private Photo photo;
+    @Column(name="libelle")
+    private String libelle;
+    @Column(name="code")
+    @Enumerated(EnumType.STRING)
+    private GadgetCode code;
 
-    @Column(name="image")
-    private String imageJoue;
-    @Column(name="score")
-    private BigDecimal score;
-    @Column(name="succes_gps")
-    private Boolean succesGps;
-    @Column(name="succes_globale")
-    private Boolean succesGlobale;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gadget")
+    private Set<GadgetJoueur> gadgetDetenus = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gadget")
+    private Set<GadgetPhotoJoueur> gadgetUtilisePhotos = new HashSet<>();
 
     @PrePersist
     public void onPrePersit() {
