@@ -1,43 +1,50 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
-import {Button, Image, StyleSheet, View} from "react-native";
-import {getGadgetLocation, useGadgetLocation} from "../../features/jeu/services/jeu.service";
+import {Button, Image, StyleSheet, TouchableOpacity, View} from "react-native";
+import {getGadget, useGadget} from "../../features/jeu/services/jeu.service";
 import {Gadget} from "../../features/jeu/enums/gadget.enum";
 import LoadingView from "../component/loading.component";
-import FlecheDirectionAzimute from "../../features/jeu/components/fleche-direction-azimute.component";
+import * as Clipboard from 'expo-clipboard';
 
-const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
+const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const init = () => {
-        setLoading(true);
         const photoId = getParam('photoId', null);
-        const location = getParam('location', null);
-
-        if(!location) return;
-
-        getGadgetLocation(Gadget.DIRECTION, photoId, location)
+        setLoading(true);
+        getGadget(Gadget.TOP_1, photoId)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressUseGadgetDistance = async () => {
+    const handlePressUseGadgetTop1 = async () => {
         setLoading(true);
         const photoId = getParam('photoId', null);
-        const location = getParam('location', null);
-
-        useGadgetLocation(Gadget.DIRECTION, photoId, location)
-            .then(res => setGadget(res.data))
+        useGadget(Gadget.TOP_1, photoId)
+            .then(res => {
+                setGadget(res.data);
+                const navigation = getParam('navigation', null);
+                navigation.navigate("imageZoom", {
+                    image: gadget.reponse
+                });
+            })
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    useEffect(() => {
-        init();
-    }, []);
+    const handlePressVoirPhoto = () => {
+        closeModal();
+        const navigation = getParam('navigation', null);
+
+        navigation.navigate("imageZoom", {
+            image: gadget.reponse
+        });
+    }
+
+    useEffect(init, []);
 
     return(
         <>
@@ -46,24 +53,29 @@ const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Direction</Text>
+                        <Text style={style.title}>Gadget Top 1</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_cardinal.png')}></Image>
+                            <Image style={style.image} source={require('../../../assets/gadget_premier.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
-                            gadget?.reponse ?
-                                <View style={style.reponseContainer}>
-                                    <View style={{flex:1}}>
-                                        <FlecheDirectionAzimute angleDiffByNord={gadget.reponse}></FlecheDirectionAzimute>
-                                    </View>
-                                </View>
+                            gadget?.reponse != null ?
+                                <>
+                                {
+                                    gadget.reponse ?
+                                        <Button title={"Voir la photo"} color={"green"} onPress={handlePressVoirPhoto}></Button>
+                                        :
+                                        <View style={style.reponseContainer}>
+                                            <Text style={style.reponse}>La photo n'a pas encore été jouée</Text>
+                                        </View>
+                                }
+                                </>
                                 :
                                 <>
                                 {
                                     gadget?.quantite > 0 ?
-                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetDistance}></Button>
+                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetTop1}></Button>
                                         :
                                         <Button title={"Acheter"} color={"green"}></Button>
                                 }
@@ -82,8 +94,6 @@ const style = StyleSheet.create({
         padding: 20,
         borderRadius: 20,
         borderWidth:2,
-        maxWidth:"95%",
-        alignSelf:'center'
     },
     title: {
         color: "white",
@@ -120,7 +130,7 @@ const style = StyleSheet.create({
     reponse: {
         color:"white",
         fontWeight:'bold',
-    }
+    },
 })
 
-export default ModalUseGadgetDirection;
+export default ModalUseGadgetTop1;

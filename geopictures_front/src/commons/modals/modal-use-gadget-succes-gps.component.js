@@ -1,12 +1,12 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
-import {Button, Image, StyleSheet, View} from "react-native";
-import {getGadgetLocation, useGadgetLocation} from "../../features/jeu/services/jeu.service";
+import {Button, Image, StyleSheet, TouchableOpacity, View} from "react-native";
+import {getGadget, getGadgetLocation, useGadget, useGadgetLocation} from "../../features/jeu/services/jeu.service";
 import {Gadget} from "../../features/jeu/enums/gadget.enum";
 import LoadingView from "../component/loading.component";
-import FlecheDirectionAzimute from "../../features/jeu/components/fleche-direction-azimute.component";
+import * as Clipboard from 'expo-clipboard';
 
-const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
+const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -18,26 +18,23 @@ const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
 
         if(!location) return;
 
-        getGadgetLocation(Gadget.DIRECTION, photoId, location)
+        getGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressUseGadgetDistance = async () => {
+    const handlePressUseGadgetSuccessGps = async () => {
         setLoading(true);
         const photoId = getParam('photoId', null);
         const location = getParam('location', null);
-
-        useGadgetLocation(Gadget.DIRECTION, photoId, location)
+        useGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    useEffect(() => {
-        init();
-    }, []);
+    useEffect(init, []);
 
     return(
         <>
@@ -46,24 +43,22 @@ const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Direction</Text>
+                        <Text style={style.title}>Gadget Success Gps</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_cardinal.png')}></Image>
+                            <Image style={style.image} source={require('../../../assets/gadget_success.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
                             gadget?.reponse ?
                                 <View style={style.reponseContainer}>
-                                    <View style={{flex:1}}>
-                                        <FlecheDirectionAzimute angleDiffByNord={gadget.reponse}></FlecheDirectionAzimute>
-                                    </View>
+                                    <Text style={style.reponse}>Zone succes GPS : <Text style={{fontWeight:'bold',color: gadget.reponse === "OUI" ? "darkgreen" : "darkred"}}>{gadget.reponse}</Text></Text>
                                 </View>
                                 :
                                 <>
                                 {
                                     gadget?.quantite > 0 ?
-                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetDistance}></Button>
+                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetSuccessGps}></Button>
                                         :
                                         <Button title={"Acheter"} color={"green"}></Button>
                                 }
@@ -82,8 +77,6 @@ const style = StyleSheet.create({
         padding: 20,
         borderRadius: 20,
         borderWidth:2,
-        maxWidth:"95%",
-        alignSelf:'center'
     },
     title: {
         color: "white",
@@ -119,8 +112,7 @@ const style = StyleSheet.create({
     },
     reponse: {
         color:"white",
-        fontWeight:'bold',
-    }
+    },
 })
 
-export default ModalUseGadgetDirection;
+export default ModalUseGadgetSuccesGps;

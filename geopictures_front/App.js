@@ -22,6 +22,11 @@ import ModalInfoDroitLocation from "./src/commons/modals/modal-info-droit-locati
 import CreationContainer from "./src/features/creation/containers/creation.container";
 import ModalUseGadgetDistance from "./src/commons/modals/modal-use-gadget-distance.component";
 import ModalUseGadgetDirection from "./src/commons/modals/modal-use-gadget-direction.component";
+import ModalUseGadgetSuccesGps from "./src/commons/modals/modal-use-gadget-succes-gps.component";
+import ModalLoading from "./src/commons/modals/modal-loading.component";
+import ModalUseGadgetTop1 from "./src/commons/modals/modal-use-gadget-top-1.component";
+import ModalUseGadgetIndice from "./src/commons/modals/modal-use-gadget-indice.component";
+import ModalChoixValid from "./src/commons/modals/modal-choix-valid.component";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,7 +37,12 @@ const modalConfig = {
   ModalInfoDroitLocation,
   ModalUseGadgetGps,
   ModalUseGadgetDistance,
-  ModalUseGadgetDirection
+  ModalUseGadgetDirection,
+  ModalUseGadgetSuccesGps,
+  ModalLoading,
+  ModalUseGadgetTop1,
+  ModalUseGadgetIndice,
+  ModalChoixValid: ModalChoixValid
 }
 
 const stack = createModalStack(modalConfig, {backdropOpacity: 0.6});

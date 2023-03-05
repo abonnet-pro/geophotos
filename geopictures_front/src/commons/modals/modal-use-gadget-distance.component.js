@@ -4,7 +4,7 @@ import {Button, Image, StyleSheet, View} from "react-native";
 import {getGadgetLocation, useGadgetLocation} from "../../features/jeu/services/jeu.service";
 import {Gadget} from "../../features/jeu/enums/gadget.enum";
 import LoadingView from "../component/loading.component";
-import Compas from "../component/compas.component";
+import Compas from "../../features/jeu/components/fleche-direction-azimute.component";
 
 const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
 
@@ -15,6 +15,8 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
         setLoading(true);
         const photoId = getParam('photoId', null);
         const location = getParam('location', null);
+
+        if(!location) return;
 
         getGadgetLocation(Gadget.DISTANCE, photoId, location)
             .then(res => setGadget(res.data))

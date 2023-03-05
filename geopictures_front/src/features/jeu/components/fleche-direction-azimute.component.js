@@ -3,7 +3,7 @@ import { Image, View} from 'react-native';
 import { Magnetometer } from 'expo-sensors';
 
 
-export default function Compas({ angleDiffByNord }) {
+export default function FlecheDirectionAzimute({ angleDiffByNord }) {
 
     const [subscription, setSubscription] = useState(null);
     const [magnetometer, setMagnetometer] = useState(0);
@@ -56,7 +56,7 @@ export default function Compas({ angleDiffByNord }) {
 
     return (
         <View>
-            <Image source={require("../../../assets/up-arrow.png")} style={{
+            <Image source={require("../../../../assets/up-arrow.png")} style={{
                 height: 100,
                 width:100,
                 marginLeft:'auto',

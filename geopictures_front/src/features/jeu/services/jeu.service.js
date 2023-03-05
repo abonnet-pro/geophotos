@@ -24,7 +24,6 @@ export async function getGadget(code, photoId) {
 
 export async function getGadgetLocation(code, photoId, location) {
     const joueur = await getValueFor(JOUEUR);
-    console.log(location)
     return axios.post(`${URL_API}/gadgets/nombre/location`, { code: code, photoId: photoId, latitude: location.coords.latitude, longitude: location.coords.longitude }, header(joueur.token))
 }
 
@@ -36,4 +35,9 @@ export async function useGadget(code, photoId) {
 export async function useGadgetLocation(code, photoId, location) {
     const joueur = await getValueFor(JOUEUR);
     return axios.post(`${URL_API}/gadgets/utilisation/location`, { code: code, photoId: photoId, latitude: location.coords.latitude, longitude: location.coords.longitude }, header(joueur.token))
+}
+
+export async function useGadgetRecommencer(photoId) {
+    const joueur = await getValueFor(JOUEUR);
+    return axios.post(`${URL_API}/gadgets/utilisation/recommencer/${photoId}`, {}, header(joueur.token))
 }
