@@ -24,4 +24,5 @@ public class PhotoDTO {
     private BigDecimal score;
     private Boolean succesGps;
     private Boolean succesGlobale;
+    private Boolean gadgetRecommencerDisponible;
 }

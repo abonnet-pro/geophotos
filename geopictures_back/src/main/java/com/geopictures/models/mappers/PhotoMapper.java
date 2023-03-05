@@ -1,9 +1,8 @@
 package com.geopictures.models.mappers;
 
 import com.geopictures.models.dtos.photo.PhotoDTO;
-import com.geopictures.models.entities.Joueur;
-import com.geopictures.models.entities.Photo;
-import com.geopictures.models.entities.PhotoJoueur;
+import com.geopictures.models.entities.*;
+import com.geopictures.models.enums.GadgetCode;
 import com.geopictures.repositories.PhotoJoueurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +17,7 @@ public class PhotoMapper {
 
     public PhotoDTO toDto(Photo entity, Joueur joueur) {
         Optional<PhotoJoueur> photoJoueurOpt = photoJoueurRepository.findByJoueurAndPhoto(joueur, entity);
+        GadgetJoueur gadgetRecommencer = joueur.getMesGadgets().stream().filter(gadgetJoueur -> gadgetJoueur.getGadget().getCode().equals(GadgetCode.RECOMMENCER)).findFirst().orElse(null);
 
         return PhotoDTO.builder()
                 .titulaire(entity.getTitulaire().getUtilisateur().getNom())
@@ -32,6 +32,7 @@ public class PhotoMapper {
                 .imageJouee(photoJoueurOpt.map(PhotoJoueur::getImageJoue).orElse(null))
                 .succesGps(photoJoueurOpt.map(PhotoJoueur::getSuccesGps).orElse(null))
                 .succesGlobale(photoJoueurOpt.map(PhotoJoueur::getSuccesGlobale).orElse(null))
+                .gadgetRecommencerDisponible(gadgetRecommencer != null && gadgetRecommencer.getQuantite() > 0)
                 .build();
     }
 

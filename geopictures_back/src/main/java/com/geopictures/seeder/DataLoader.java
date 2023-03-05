@@ -71,7 +71,7 @@ public class DataLoader implements CommandLineRunner {
             initUtilisateur();
         }
 
-        Optional<Joueur> joueurOpt = joueurRepository.findById(43L);
+        Optional<Joueur> joueurOpt = joueurRepository.findById(44L);
 
         if(!joueurOpt.isPresent()) {
             return;

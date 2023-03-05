@@ -71,7 +71,7 @@ public class Joueur {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
     private Set<GadgetPhotoJoueur> gadgetsUtilisesPhotos  = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<PhotoJoueur> photosJoues  = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)

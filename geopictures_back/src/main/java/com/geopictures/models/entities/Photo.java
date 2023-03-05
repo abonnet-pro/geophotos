@@ -51,7 +51,7 @@ public class Photo {
     @JoinColumn(name="joueur_id")
     private Joueur titulaire;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo", orphanRemoval = true)
     private Set<PhotoJoueur> photosJoues = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
