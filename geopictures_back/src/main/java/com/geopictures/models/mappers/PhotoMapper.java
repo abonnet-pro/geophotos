@@ -37,6 +37,8 @@ public class PhotoMapper {
     }
 
     public PhotoDTO toDtoWithPhotoJoueur(Photo entity, PhotoJoueur photoJoueur) {
+        GadgetJoueur gadgetRecommencer = photoJoueur.getJoueur().getMesGadgets().stream().filter(gadgetJoueur -> gadgetJoueur.getGadget().getCode().equals(GadgetCode.RECOMMENCER)).findFirst().orElse(null);
+
         return PhotoDTO.builder()
                 .titulaire(entity.getTitulaire().getUtilisateur().getNom())
                 .datePublication(entity.getDatePublication())
@@ -49,6 +51,7 @@ public class PhotoMapper {
                 .imageJouee(photoJoueur.getImageJoue())
                 .succesGps(photoJoueur.getSuccesGps())
                 .succesGlobale(photoJoueur.getSuccesGlobale())
+                .gadgetRecommencerDisponible(gadgetRecommencer != null && gadgetRecommencer.getQuantite() > 0)
                 .build();
     }
 }

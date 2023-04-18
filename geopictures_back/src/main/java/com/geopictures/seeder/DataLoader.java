@@ -204,7 +204,7 @@ public class DataLoader implements CommandLineRunner {
         for(int i = 1; i <= 50; i++) {
             Avatar avatar = Avatar.builder()
                     .image("avatar/avatar_f" + i + ".png")
-                    .free(true)
+                    .free(i%2 == 0)
                     .build();
             avatarRepository.save(avatar);
         }

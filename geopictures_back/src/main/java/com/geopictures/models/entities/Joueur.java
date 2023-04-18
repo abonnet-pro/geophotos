@@ -61,7 +61,7 @@ public class Joueur {
             joinColumns = @JoinColumn(name = "joueur_id"),
             inverseJoinColumns = @JoinColumn(name = "bordure_id"))
     private Set<Bordure> bordures;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "avatar_joueur",
             joinColumns = @JoinColumn(name = "joueur_id"),
