@@ -57,16 +57,19 @@ export default function JeuNonValide({ handlePressJouer, permission, handleSendP
                                     }
                                 </View>
                                 :
-                                <View style={ style.containerBouton }>
-                                    <Button
-                                        onPress={() => handlePressJouer()}
-                                        title="Prendre une photo"
-                                        raised={true}
-                                        radius={20}
-                                        containerStyle={ style.containerBoutonPhoto }
-                                        titleStyle={ font(25, 'bold') }
-                                        buttonStyle={ style.bouttonPhoto }/>
-                                </View>
+                                <>
+                                    <View style={ style.containerBouton }>
+                                        <Button
+                                            onPress={() => handlePressJouer()}
+                                            title="Prendre une photo"
+                                            raised={true}
+                                            radius={20}
+                                            containerStyle={ style.containerBoutonPhoto }
+                                            titleStyle={ font(25, 'bold') }
+                                            buttonStyle={ style.bouttonPhoto }/>
+                                    </View>
+                                </>
+
                         }
                     </ImageBackground>
                 </View>
