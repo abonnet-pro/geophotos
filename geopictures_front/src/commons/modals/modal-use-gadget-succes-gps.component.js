@@ -1,36 +1,37 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
 import {Button, Image, StyleSheet, TouchableOpacity, View} from "react-native";
-import {getGadget, useGadget} from "../../features/jeu/services/jeu.service";
+import {getGadget, getGadgetLocation, useGadget, useGadgetLocation} from "../../features/jeu/services/jeu.service";
 import {Gadget} from "../../features/jeu/enums/gadget.enum";
 import LoadingView from "../component/loading.component";
 import * as Clipboard from 'expo-clipboard';
 
-const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
+const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const init = () => {
-        const photoId = getParam('photoId', null);
         setLoading(true);
-        getGadget(Gadget.GPS, photoId)
+        const photoId = getParam('photoId', null);
+        const location = getParam('location', null);
+
+        if(!location) return;
+
+        getGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressUseGadgetGps = async () => {
+    const handlePressUseGadgetSuccessGps = async () => {
         setLoading(true);
         const photoId = getParam('photoId', null);
-        useGadget(Gadget.GPS, photoId)
+        const location = getParam('location', null);
+        useGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
-    }
-
-    const handlePressClipboard = async () => {
-        await Clipboard.setStringAsync(gadget.reponse);
     }
 
     useEffect(init, []);
@@ -42,25 +43,22 @@ const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Gps</Text>
+                        <Text style={style.title}>Gadget Success Gps</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_gps.png')}></Image>
+                            <Image style={style.image} source={require('../../../assets/gadget_success.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
                             gadget?.reponse ?
                                 <View style={style.reponseContainer}>
-                                    <Text style={style.reponse}>{gadget.reponse}</Text>
-                                    <TouchableOpacity onPress={handlePressClipboard}>
-                                        <Image style={style.copyImage} source={require('../../../assets/copy.png')}/>
-                                    </TouchableOpacity>
+                                    <Text style={style.reponse}>Zone succes GPS : <Text style={{fontWeight:'bold',color: gadget.reponse === "OUI" ? "darkgreen" : "darkred"}}>{gadget.reponse}</Text></Text>
                                 </View>
                                 :
                                 <>
                                 {
                                     gadget?.quantite > 0 ?
-                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetGps}></Button>
+                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetSuccessGps}></Button>
                                         :
                                         <Button title={"Acheter"} color={"green"}></Button>
                                 }
@@ -114,13 +112,7 @@ const style = StyleSheet.create({
     },
     reponse: {
         color:"white",
-        fontWeight:'bold',
     },
-    copyImage: {
-        width:20,
-        height:20,
-        marginLeft: 10,
-    }
 })
 
-export default ModalUseGadgetGps;
+export default ModalUseGadgetSuccesGps;

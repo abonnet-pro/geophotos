@@ -1,12 +1,12 @@
 import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
-import {ImageBackground, StyleSheet, Text, View} from "react-native";
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import * as React from "react";
 import {Image} from "@rneui/themed";
 import {primary1} from "../../../commons/styles/commons.styles";
 import {getColorByScore} from "../../../commons/consts/photo.const";
 import { modalfy } from 'react-native-modalfy'
 
-export default function JeuScoreDetail({photo}) {
+export default function JeuScoreDetail({photo, handleValidRecommencer}) {
 
    const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
 
@@ -22,6 +22,17 @@ export default function JeuScoreDetail({photo}) {
             return require('../../../../assets/global_valid.png');
         }
         return require('../../../../assets/global_wrong.png');
+    }
+
+    const handlePressRejouer = async () => {
+        const title = "Rejouer la photo";
+        const description = "Vous allez rejouer la photo, votre photo actuelle sera ecrasé. Voulez vous continuer ?";
+
+        openModal("ModalChoixValid", {title: title, description: description, callback: () => handleValidRecommencer(photo.id)});
+    }
+
+    function getBackgroundColorGadget() {
+        return photo.gadgetRecommencerDisponible ? primary1 : "grey";
     }
 
     return(
@@ -49,11 +60,11 @@ export default function JeuScoreDetail({photo}) {
                                     </View>
                                 </View>
                             </View>
-                            <View style={{alignSelf:'center'}}>
-                                <View style={ style.containerImageRejouer }>
+                            <TouchableOpacity disabled={!photo.gadgetRecommencerDisponible} onPress={handlePressRejouer} style={{alignSelf:'center'}}>
+                                <View style={{...style.containerImageRejouer, backgroundColor: getBackgroundColorGadget()}}>
                                     <Image style={ style.image } source={require('../../../../assets/rejouer.png')}/>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                     </ImageBackground>
                 </View>
@@ -76,9 +87,9 @@ const style = StyleSheet.create({
         marginLeft: 5,
         borderWidth: 1,
         borderColor: "white",
+        backgroundColor: primary1,
         width: 20,
         height:20,
-        backgroundColor: primary1,
         borderRadius: 30,
         padding: 3
     },
@@ -88,7 +99,6 @@ const style = StyleSheet.create({
         borderColor: "white",
         width: 35,
         height:35,
-        backgroundColor: primary1,
         borderRadius: 50,
         padding: 5
     },

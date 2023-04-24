@@ -3,7 +3,6 @@ package com.geopictures.models.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,8 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="photo_joueur")
-public class PhotoJoueur {
+@Table(name="gadget_photo_joueur")
+public class GadgetPhotoJoueur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -27,17 +26,11 @@ public class PhotoJoueur {
     @JoinColumn(name="joueur_id")
     private Joueur joueur;
     @ManyToOne
+    @JoinColumn(name="gadget_id")
+    private Gadget gadget;
+    @ManyToOne
     @JoinColumn(name="photo_id")
     private Photo photo;
-
-    @Column(name="image")
-    private String imageJoue;
-    @Column(name="score")
-    private BigDecimal score;
-    @Column(name="succes_gps")
-    private Boolean succesGps;
-    @Column(name="succes_globale")
-    private Boolean succesGlobale;
 
     @PrePersist
     public void onPrePersit() {

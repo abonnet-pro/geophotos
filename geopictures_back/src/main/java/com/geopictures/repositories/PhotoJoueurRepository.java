@@ -12,4 +12,6 @@ public interface PhotoJoueurRepository extends JpaRepository<PhotoJoueur, Long> 
     Optional<PhotoJoueur> findByJoueurAndPhoto(Joueur joueur, Photo photo);
 
     List<PhotoJoueur> findAllByJoueur(Joueur joueur);
+
+    List<PhotoJoueur> findAllByPhotoOrderByScoreDesc(Photo photo);
 }

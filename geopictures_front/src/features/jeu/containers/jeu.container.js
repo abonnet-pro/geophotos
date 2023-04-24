@@ -10,9 +10,11 @@ import JeuValide from "../components/jeu-valide.component";
 import JeuScoreDetail from "../components/jeu-score-detail.component";
 import {Camera} from "expo-camera";
 import {modalfy} from "react-native-modalfy";
-import {sendPhotoJouee} from "../services/jeu.service";
+import {getGadget, sendPhotoJouee, useGadgetRecommencer} from "../services/jeu.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 import * as Location from 'expo-location';
+import {Gadget} from "../enums/gadget.enum";
+import LoadingView from "../../../commons/component/loading.component";
 
 export default function JeuContainer({route, navigation}) {
 
@@ -21,6 +23,7 @@ export default function JeuContainer({route, navigation}) {
     const [location, setLocation] = useState(null);
     const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
     const [loadingSendPhoto, setLoadingSendPhoto] = useState(false);
+    const [loadingPermissionLocation, setLoadingPermissionLocation] = useState(false);
 
     const init = () => {
         const photo = route.params.photo;
@@ -62,6 +65,66 @@ export default function JeuContainer({route, navigation}) {
         });
     }
 
+    const handlePressGadgetGps = async () => {
+        openModal("ModalUseGadgetGps", {photoId: photo.id});
+    }
+
+    const handlePressGadgetIndice = async () => {
+        openModal("ModalUseGadgetIndice", {photoId: photo.id});
+    }
+
+
+    const handlePressGadgetTop1 = async () => {
+        openModal("ModalUseGadgetTop1", {photoId: photo.id, navigation: navigation});
+    }
+
+    const handlePressGadgetDistance = async () => {
+        openModal("ModalUseGadgetDistance", {photoId: photo.id});
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
+        const location = await Location.getCurrentPositionAsync({});
+        closeAllModals(() => openModal("ModalUseGadgetDistance", {photoId: photo.id, location: location}));
+    }
+
+    const handlePressGadgetDirection = async () => {
+        openModal("ModalUseGadgetDirection", {photoId: photo.id});
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
+        const location = await Location.getCurrentPositionAsync({});
+        closeAllModals(() => openModal("ModalUseGadgetDirection", {photoId: photo.id, location: location}));
+    }
+
+    const handlePressGadgetSuccessGps = async () => {
+        openModal("ModalUseGadgetSuccesGps", {photoId: photo.id});
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
+        const location = await Location.getCurrentPositionAsync({});
+        closeAllModals(() => openModal("ModalUseGadgetSuccesGps", {photoId: photo.id, location: location}));
+    }
+
+    const handleValidRecommencer = async (photoId) => {
+        const photo = await useGadgetRecommencer(photoId);
+        setPhoto(photo.data);
+    }
+
     useEffect(init, []);
 
     return (
@@ -81,9 +144,14 @@ export default function JeuContainer({route, navigation}) {
                 <View style={style.containerMiddle}>
                     {
                         photo?.score ?
-                            <JeuScoreDetail photo={photo}/>
+                            <JeuScoreDetail photo={photo} handleValidRecommencer={handleValidRecommencer}/>
                             :
-                            <JeuGadgets/>
+                            <JeuGadgets handlePressGadgetGps={handlePressGadgetGps}
+                                        handlePressGadgetDistance={handlePressGadgetDistance}
+                                        handlePressGadgetDirection={handlePressGadgetDirection}
+                                        handlePressGadgetSuccessGps={handlePressGadgetSuccessGps}
+                                        handlePressGadgetTop1={handlePressGadgetTop1}
+                                        handlePressGadgetIndice={handlePressGadgetIndice}/>
                     }
                 </View>
                 <View style={style.containerBottom}>

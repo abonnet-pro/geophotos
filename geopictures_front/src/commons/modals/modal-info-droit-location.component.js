@@ -29,7 +29,8 @@ const style = StyleSheet.create({
         padding: 10,
     },
     descriptionText: {
-        color:"#ffffff"
+        color:"#ffffff",
+        alignSelf:'center'
     }
 })
 

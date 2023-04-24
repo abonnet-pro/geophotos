@@ -95,8 +95,7 @@ create table if not exists gadget
     updated timestamp,
 
     libelle varchar(255) NOT NULL,
-    code    varchar(255) not null,
-    image   varchar(255) NOT NULL
+    code    varchar(255) not null
 );
 
 alter table gadget
@@ -390,4 +389,29 @@ create table if not exists demande_photo
     );
 
 alter table demande_photo
+    owner to postgres;
+
+create table if not exists gadget_photo_joueur
+(
+    id       bigserial
+        constraint gadget_photo_joueur_pk
+            primary key,
+    created timestamp,
+    updated timestamp,
+
+    joueur_id bigint not null,
+    gadget_id bigint not null,
+    photo_id bigint not null,
+    constraint fk_gadget_photo_joueur_joueur
+        foreign key (joueur_id)
+            references joueur(id),
+    constraint fk_gadget_photo_joueur_gadget
+        foreign key (gadget_id)
+            references gadget(id),
+    constraint fk_gadget_photo_joueur_photo
+        foreign key (photo_id)
+            references photo(id)
+);
+
+alter table gadget_photo_joueur
     owner to postgres;

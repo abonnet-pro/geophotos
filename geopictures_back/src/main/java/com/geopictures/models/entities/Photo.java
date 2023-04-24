@@ -51,8 +51,11 @@ public class Photo {
     @JoinColumn(name="joueur_id")
     private Joueur titulaire;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo", orphanRemoval = true)
     private Set<PhotoJoueur> photosJoues = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    private Set<GadgetPhotoJoueur> gadgetsUtilisesPhoto = new HashSet<>();
 
     public Coordonnees getCoordonnes() {
         return Coordonnees.builder()

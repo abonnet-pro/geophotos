@@ -27,11 +27,9 @@ export default function PhotoContainer({ navigation, route }) {
         const zoneId = route.params.zoneId;
         setLoadingPhotos(true);
         loadPhotoByZone(zoneId)
-            .then(photos => {
-                setPhotos(photos.data);
-                setLoadingPhotos(false);
-            })
-            .catch(error => console.log(error));
+            .then(photos => setPhotos(photos.data))
+            .catch(error => console.log(error))
+            .finally(() => setLoadingPhotos(false))
     }
 
     const goBack = () => {

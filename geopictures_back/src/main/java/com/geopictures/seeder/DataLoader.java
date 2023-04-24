@@ -2,6 +2,7 @@ package com.geopictures.seeder;
 
 import com.geopictures.models.entities.*;
 import com.geopictures.models.enums.Difficulte;
+import com.geopictures.models.enums.GadgetCode;
 import com.geopictures.models.enums.RegionCode;
 import com.geopictures.models.enums.Role;
 import com.geopictures.repositories.*;
@@ -44,9 +45,23 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private RegionRepository regionRepository;
 
+    @Autowired
+    private AvatarRepository avatarRepository;
+
+    @Autowired
+    private GadgetRepository gadgetRepository;
+
     @Override
     public void run(String... args) throws IOException {
         initDirPhotoJoueur();
+
+        if(avatarRepository.count() == 0) {
+            initAvatar();
+        }
+
+        if(regionRepository.count() == 0) {
+            initRegions();
+        }
 
         if(zoneRepository.count() == 0) {
             initZones();
@@ -56,9 +71,217 @@ public class DataLoader implements CommandLineRunner {
             initUtilisateur();
         }
 
-        if(photoRepository.count() == 0) {
-            initPhotos();
+        Optional<Joueur> joueurOpt = joueurRepository.findById(44L);
+
+        if(!joueurOpt.isPresent()) {
+            return;
         }
+
+        if(photoRepository.count() == 0) {
+            initPhotos(joueurOpt.get());
+        }
+
+        if(gadgetRepository.count() == 0) {
+            initGadget(joueurOpt.get());
+        }
+    }
+
+    private void initGadget(Joueur joueur) {
+        Gadget gps = Gadget.builder()
+                .code(GadgetCode.GPS)
+                .libelle("Le gadget vous indique la position Gps exacte de la photo")
+                .gadgetDetenus(new HashSet<>())
+                .build();
+
+        GadgetJoueur gadgetJoueur = GadgetJoueur.builder()
+                .gadget(gps)
+                .joueur(joueur)
+                .quantite(2)
+                .build();
+
+        gps.getGadgetDetenus().add(gadgetJoueur);
+
+        gadgetRepository.save(gps);
+
+        Gadget direction = Gadget.builder()
+                .code(GadgetCode.DIRECTION)
+                .libelle("Le gadget vous indique la direction à suivre à partir de votre position")
+                .gadgetDetenus(new HashSet<>())
+                .build();
+
+        GadgetJoueur gadgetJoueur2 = GadgetJoueur.builder()
+                .gadget(direction)
+                .joueur(joueur)
+                .quantite(2)
+                .build();
+
+        direction.getGadgetDetenus().add(gadgetJoueur2);
+
+        gadgetRepository.save(direction);
+
+        Gadget distance = Gadget.builder()
+                .code(GadgetCode.DISTANCE)
+                .libelle("Le gadget vous indique la distance vous séparant de la photo")
+                .gadgetDetenus(new HashSet<>())
+                .build();
+
+        GadgetJoueur gadgetJoueur3 = GadgetJoueur.builder()
+                .gadget(distance)
+                .joueur(joueur)
+                .quantite(2)
+                .build();
+
+        distance.getGadgetDetenus().add(gadgetJoueur3);
+
+        gadgetRepository.save(distance);
+
+        Gadget succes = Gadget.builder()
+                .code(GadgetCode.SUCCESS_ZONE)
+                .libelle("Le gadget vous indique si vous vous trouver dans la zone du succes Gps")
+                .gadgetDetenus(new HashSet<>())
+                .build();
+
+        GadgetJoueur gadgetJoueur4 = GadgetJoueur.builder()
+                .gadget(succes)
+                .joueur(joueur)
+                .quantite(2)
+                .build();
+
+        succes.getGadgetDetenus().add(gadgetJoueur4);
+
+        gadgetRepository.save(succes);
+
+        Gadget top = Gadget.builder()
+                .code(GadgetCode.TOP_1)
+                .libelle("Le gadget vous montre la photo prise par le joueur ayant fait le meilleur score sur la photo")
+                .gadgetDetenus(new HashSet<>())
+                .build();
+
+        GadgetJoueur gadgetJoueur5 = GadgetJoueur.builder()
+                .gadget(top)
+                .joueur(joueur)
+                .quantite(2)
+                .build();
+
+        top.getGadgetDetenus().add(gadgetJoueur5);
+
+        gadgetRepository.save(top);
+
+        Gadget indice = Gadget.builder()
+                .code(GadgetCode.INDICE)
+                .libelle("Le gadget vous donne un indice sur la photo (si il en existe un)")
+                .gadgetDetenus(new HashSet<>())
+                .build();
+
+        GadgetJoueur gadgetJoueur6 = GadgetJoueur.builder()
+                .gadget(indice)
+                .joueur(joueur)
+                .quantite(2)
+                .build();
+
+        indice.getGadgetDetenus().add(gadgetJoueur6);
+
+        gadgetRepository.save(indice);
+
+        Gadget recommencer = Gadget.builder()
+                .code(GadgetCode.RECOMMENCER)
+                .libelle("Le gadget vous permet de reprendre une photo déjà prise (Attention l'ancienne photo sera ecrasé)")
+                .gadgetDetenus(new HashSet<>())
+                .build();
+
+        GadgetJoueur gadgetJoueur7 = GadgetJoueur.builder()
+                .gadget(recommencer)
+                .joueur(joueur)
+                .quantite(2)
+                .build();
+
+        recommencer.getGadgetDetenus().add(gadgetJoueur7);
+
+        gadgetRepository.save(recommencer);
+    }
+
+    private void initAvatar() {
+        for(int i = 1; i <= 50; i++) {
+            Avatar avatar = Avatar.builder()
+                    .image("avatar/avatar_f" + i + ".png")
+                    .free(i%2 == 0)
+                    .build();
+            avatarRepository.save(avatar);
+        }
+    }
+
+    private void initRegions() {
+        Region hdf = Region.builder()
+                .code("HDF")
+                .libelle("Hauts-de-France")
+                .build();
+        regionRepository.save(hdf);
+
+        Region idf = Region.builder()
+                .code("IDF")
+                .libelle("Ile-de-France")
+                .build();
+        regionRepository.save(idf);
+
+        Region nor = Region.builder()
+                .code("NOR")
+                .libelle("Normandie")
+                .build();
+        regionRepository.save(nor);
+
+        Region bre = Region.builder()
+                .code("BRE")
+                .libelle("Bretagne")
+                .build();
+        regionRepository.save(bre);
+
+        Region pdl = Region.builder()
+                .code("PDL")
+                .libelle("Pays de la loire")
+                .build();
+        regionRepository.save(pdl);
+
+        Region cvl = Region.builder()
+                .code("CVL")
+                .libelle("Centre Val de Loire")
+                .build();
+        regionRepository.save(cvl);
+
+        Region bfc = Region.builder()
+                .code("BFC")
+                .libelle("Bourgogne-Franche-Comté")
+                .build();
+        regionRepository.save(bfc);
+
+        Region ara = Region.builder()
+                .code("ARA")
+                .libelle("Auverge-Rhône-Alpes")
+                .build();
+        regionRepository.save(ara);
+
+        Region naq = Region.builder()
+                .code("NAQ")
+                .libelle("Nouvelle-Aquitaine")
+                .build();
+        regionRepository.save(naq);
+
+        Region occ = Region.builder()
+                .code("OCC")
+                .libelle("Occitanie")
+                .build();
+        regionRepository.save(occ);
+
+        Region paca = Region.builder()
+                .code("PACA")
+                .libelle("Provence-Alpes-Côte d''Azur")
+                .build();
+        regionRepository.save(paca);
+
+        Region cor = Region.builder()
+                .code("COR")
+                .libelle("Corse")
+                .build();
+        regionRepository.save(cor);
     }
 
     private void initZones() {
@@ -118,15 +341,10 @@ public class DataLoader implements CommandLineRunner {
         joueurRepository.save(joueurAdmin);
     }
 
-    private void initPhotos() {
+    private void initPhotos(Joueur joueur) {
         Zone marseille = zoneRepository.findByLibelle("Marseille");
         Zone maisonAnthony = zoneRepository.findByLibelle("Maison Anthony");
         Utilisateur admin = utilisateurRepository.findByNom("Geopictures");
-        Optional<Joueur> joueurOpt = joueurRepository.findById(40L);
-
-        if(!joueurOpt.isPresent()) {
-            return;
-        }
 
         Photo photo1 = Photo.builder()
                 .titre("Vue Chambre")
@@ -141,7 +359,7 @@ public class DataLoader implements CommandLineRunner {
                 .build();
 
         PhotoJoueur photoJoueur1 = PhotoJoueur.builder()
-                .joueur(joueurOpt.get())
+                .joueur(joueur)
                 .photo(photo1)
                 .imageJoue("test_1.jpg")
                 .score(new BigDecimal(100))
@@ -179,7 +397,7 @@ public class DataLoader implements CommandLineRunner {
                 .build();
 
         PhotoJoueur photoJoueur3 = PhotoJoueur.builder()
-                .joueur(joueurOpt.get())
+                .joueur(joueur)
                 .photo(photo3)
                 .imageJoue("test_1.jpg")
                 .score(new BigDecimal("68.52"))
@@ -230,7 +448,7 @@ public class DataLoader implements CommandLineRunner {
                 .build();
 
         PhotoJoueur photoJoueur6 = PhotoJoueur.builder()
-                .joueur(joueurOpt.get())
+                .joueur(joueur)
                 .photo(photo6)
                 .imageJoue("test_1.jpg")
                 .score(new BigDecimal("22.36"))

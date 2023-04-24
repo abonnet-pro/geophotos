@@ -61,7 +61,7 @@ public class Joueur {
             joinColumns = @JoinColumn(name = "joueur_id"),
             inverseJoinColumns = @JoinColumn(name = "bordure_id"))
     private Set<Bordure> bordures;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "avatar_joueur",
             joinColumns = @JoinColumn(name = "joueur_id"),
@@ -69,9 +69,15 @@ public class Joueur {
     private Set<Avatar> avatars;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
+    private Set<GadgetPhotoJoueur> gadgetsUtilisesPhotos  = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<PhotoJoueur> photosJoues  = new HashSet<>();
 
-    @OneToMany(mappedBy = "titulaire", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
+    private Set<GadgetJoueur> mesGadgets  = new HashSet<>();
+
+    @OneToMany(mappedBy = "titulaire", cascade = CascadeType.ALL)
     private Set<Photo> photoCollaboration  = new HashSet<>();
 
     @PrePersist

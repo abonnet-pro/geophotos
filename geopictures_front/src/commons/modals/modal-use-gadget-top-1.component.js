@@ -6,7 +6,7 @@ import {Gadget} from "../../features/jeu/enums/gadget.enum";
 import LoadingView from "../component/loading.component";
 import * as Clipboard from 'expo-clipboard';
 
-const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
+const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -14,23 +14,34 @@ const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
     const init = () => {
         const photoId = getParam('photoId', null);
         setLoading(true);
-        getGadget(Gadget.GPS, photoId)
+        getGadget(Gadget.TOP_1, photoId)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressUseGadgetGps = async () => {
+    const handlePressUseGadgetTop1 = async () => {
         setLoading(true);
         const photoId = getParam('photoId', null);
-        useGadget(Gadget.GPS, photoId)
-            .then(res => setGadget(res.data))
+        useGadget(Gadget.TOP_1, photoId)
+            .then(res => {
+                setGadget(res.data);
+                const navigation = getParam('navigation', null);
+                navigation.navigate("imageZoom", {
+                    image: gadget.reponse
+                });
+            })
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressClipboard = async () => {
-        await Clipboard.setStringAsync(gadget.reponse);
+    const handlePressVoirPhoto = () => {
+        closeModal();
+        const navigation = getParam('navigation', null);
+
+        navigation.navigate("imageZoom", {
+            image: gadget.reponse
+        });
     }
 
     useEffect(init, []);
@@ -42,25 +53,29 @@ const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Gps</Text>
+                        <Text style={style.title}>Gadget Top 1</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_gps.png')}></Image>
+                            <Image style={style.image} source={require('../../../assets/gadget_premier.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
-                            gadget?.reponse ?
-                                <View style={style.reponseContainer}>
-                                    <Text style={style.reponse}>{gadget.reponse}</Text>
-                                    <TouchableOpacity onPress={handlePressClipboard}>
-                                        <Image style={style.copyImage} source={require('../../../assets/copy.png')}/>
-                                    </TouchableOpacity>
-                                </View>
+                            gadget?.reponse != null ?
+                                <>
+                                {
+                                    gadget.reponse ?
+                                        <Button title={"Voir la photo"} color={"green"} onPress={handlePressVoirPhoto}></Button>
+                                        :
+                                        <View style={style.reponseContainer}>
+                                            <Text style={style.reponse}>La photo n'a pas encore été jouée</Text>
+                                        </View>
+                                }
+                                </>
                                 :
                                 <>
                                 {
                                     gadget?.quantite > 0 ?
-                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetGps}></Button>
+                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetTop1}></Button>
                                         :
                                         <Button title={"Acheter"} color={"green"}></Button>
                                 }
@@ -116,11 +131,6 @@ const style = StyleSheet.create({
         color:"white",
         fontWeight:'bold',
     },
-    copyImage: {
-        width:20,
-        height:20,
-        marginLeft: 10,
-    }
 })
 
-export default ModalUseGadgetGps;
+export default ModalUseGadgetTop1;

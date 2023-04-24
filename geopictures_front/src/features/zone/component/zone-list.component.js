@@ -13,7 +13,7 @@ export default function ZoneList({ zones, handleGoListePhoto }) {
                     <ScrollView style={ style.zones } showsVerticalScrollIndicator={false}>
                         <View style={{ marginBottom: 10}}>
                             {
-                                zones.length > 0 ? zones.map((zone, index) => {
+                                zones && zones.length > 0 ? zones.map((zone, index) => {
                                     return(
                                         <View key={ zone.id }>
                                             <ZoneResume handleGoListePhoto={ handleGoListePhoto } zone={zone} last={ index === zones.length - 1 }/>

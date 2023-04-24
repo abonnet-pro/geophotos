@@ -36,7 +36,8 @@ const style = StyleSheet.create({
     },
     descriptionText: {
         maxWidth: "50%",
-        color:"#ffffff"
+        color:"#ffffff",
+        alignSelf:'center'
     }
 })
 
