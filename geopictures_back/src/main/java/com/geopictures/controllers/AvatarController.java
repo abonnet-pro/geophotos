@@ -21,6 +21,5 @@ public class AvatarController {
     @GetMapping("free")
     public List<AvatarDTO> getAllAvatarFree() {
         return avatarService.getAllAvatarFree().stream().map(AvatarMapper.INSTANCE::avatarToDto).collect(Collectors.toList());
-
     }
 }

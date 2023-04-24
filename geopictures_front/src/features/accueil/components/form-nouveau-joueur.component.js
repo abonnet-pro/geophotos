@@ -4,8 +4,9 @@ import {useState} from "react";
 import NomChooser from "./nom-chooser.component";
 import AvatarChooser from "./avatar-chooser.component";
 import {Button} from "@rneui/themed";
+import LoadingView from "../../../commons/component/loading.component";
 
-export default function FormNouveauJoueur({ setResponseAvailable, responseAvailable, handleCreateJoueur, avatars, bordure, background }) {
+export default function FormNouveauJoueur({ setResponseAvailable, loadingCreateJoueur, responseAvailable, handleCreateJoueur, avatars, bordure, background }) {
 
     const [nom, setNom] = useState('');
     const [avatarChoisi, setAvatarChoisi] = useState('');
@@ -24,12 +25,20 @@ export default function FormNouveauJoueur({ setResponseAvailable, responseAvaila
                     }
                     {
                         avatarChoisi ?
-                            <Button
-                                onPress={ () => handleCreateJoueur(nom, avatarChoisi) }
-                                title="C'est parti !"
-                                radius={20}
-                                titleStyle={ font(20, 'bold') }
-                                buttonStyle={ commonsStyle.boutonSuccess }/>
+                            <>
+                                {
+                                    loadingCreateJoueur ?
+                                        <LoadingView/>
+                                        :
+                                        <Button
+                                            onPress={ () => handleCreateJoueur(nom, avatarChoisi) }
+                                            title="C'est parti !"
+                                            radius={20}
+                                            titleStyle={ font(20, 'bold') }
+                                            buttonStyle={ commonsStyle.boutonSuccess }
+                                        />
+                                }
+                            </>
                             :
                             null
                     }

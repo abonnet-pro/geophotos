@@ -1,14 +1,23 @@
 import {BackHandler, Image, ImageBackground, StyleSheet, View} from "react-native";
-import {containerStyle, primary1} from "../../commons/styles/commons.styles";
+import {containerStyle} from "../../commons/styles/commons.styles";
 import {Text} from "@rneui/base";
 import {useEffect} from "react";
 import {getValueFor, JOUEUR} from "../../utils/store.utils";
+import {loadAccueil} from "../accueil/services/accueil.service";
 
 export default function ChargementContainer({ navigation }) {
 
     const init = () => {
         BackHandler.addEventListener("hardwareBackPress", () => true)
-        getValueFor(JOUEUR).then(r => r !== null ? navigation.navigate('accueil') : navigation.navigate('authentification'));
+        getValueFor(JOUEUR).then(joueur => {
+            if(joueur) {
+                loadAccueil(joueur.token)
+                    .then(joueurInformations => navigation.navigate('accueil', {joueurInformations: joueurInformations.data}))
+                    .catch(err => console.log(err))
+            } else {
+                navigation.navigate('authentification');
+            }
+        });
     }
 
     useEffect(init, []);

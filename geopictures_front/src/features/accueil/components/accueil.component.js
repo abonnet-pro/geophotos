@@ -4,7 +4,7 @@ import {Image, ImageBackground, StyleSheet, View} from "react-native";
 import {URL_API} from "../../../utils/url.utils";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ExperienceBarre from "./experienceBarre.component";
-import {gold, stars} from "../../../utils/uri.utils";
+import {deleteStore, JOUEUR} from "../../../utils/store.utils";
 
 export default function Accueil({ joueurInformations, navigation }) {
     return(
@@ -18,14 +18,14 @@ export default function Accueil({ joueurInformations, navigation }) {
                 <View style={ style.boutique }>
                     <AntDesign style={ style.plus } name="pluscircleo" color="white" />
                     <Text style={ style.points }>{ joueurInformations?.pointsBoutique }</Text>
-                    <Image style={ style.gold } source={{ uri: gold }}></Image>
+                    <Image style={ style.gold } source={require('../../../../assets/gold.png')}></Image>
                 </View>
             </View>
             <View>
             </View>
             <View style={ containerStyle.center }>
                 <View style={ style.experience }>
-                    <ImageBackground style={ style.star } source={{ uri: stars }}>
+                    <ImageBackground style={ style.star } source={require('../../../../assets/star.png')}>
                         <Text style={ style.niveau }>{ joueurInformations?.niveau }</Text>
                     </ImageBackground>
                     <ExperienceBarre experience={ joueurInformations?.experience} prochainNiveau={ joueurInformations?.prochainNiveau }></ExperienceBarre>

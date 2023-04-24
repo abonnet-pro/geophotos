@@ -21,7 +21,7 @@ export default function AuthentificationContainer({ navigation }) {
         if (response?.type === 'success') {
             setAccessToken(response.authentication.accessToken)
             accessToken && getUserData(accessToken);
-            navigation.navigate('accueil')
+            navigation.navigate('accueil', {joueurInformations: null})
         }
     }
 

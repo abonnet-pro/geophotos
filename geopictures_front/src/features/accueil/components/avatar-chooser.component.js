@@ -3,7 +3,7 @@ import {URL_API} from "../../../utils/url.utils";
 import {Avatar, Text} from '@rneui/themed';
 import {containerStyle, font} from "../../../commons/styles/commons.styles";
 
-export default function AvatarChooser({ avatars, avatarChoisi, setAvatarChoisi, bordure, background }) {
+export default function AvatarChooser({ loadingCreateJoueur, avatars, avatarChoisi, setAvatarChoisi, bordure, background }) {
 
     const handlePressAvatar = (avatar) => {
         setAvatarChoisi(avatar)
