@@ -9,13 +9,11 @@ export function getAvatarsFree(setAvatars) {
         .catch(error => console.log(error))
 }
 
-export function loadJoueur(setJoueurInformations) {
+export function loadAccueil(setJoueurInformations) {
     getValueFor(JOUEUR)
         .then(joueur => {
-            console.log(joueur)
             axios.get(`${URL_API}/accueil`, header(joueur.token))
                 .then(async res => {
-                    console.log(res.data)
                     setJoueurInformations(res.data)
                 })
                 .catch(error => console.log(error))

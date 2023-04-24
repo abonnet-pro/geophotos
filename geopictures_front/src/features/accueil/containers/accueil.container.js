@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import FormNouveauJoueur from "../components/form-nouveau-joueur.component";
 import {getRegister} from "../../../utils/authentification.utils";
 import Accueil from "../components/accueil.component";
-import {createJoueur, getAvatarsFree, loadJoueur} from "../services/accueil.service";
+import {createJoueur, getAvatarsFree, loadAccueil} from "../services/accueil.service";
 import {JOUEUR, save} from "../../../utils/store.utils";
 
 export default function AccueilContainer({ navigation }) {
@@ -36,7 +36,7 @@ export default function AccueilContainer({ navigation }) {
 
         getRegister().then(isRegister => {
             setRegistered(isRegister);
-            isRegister ? loadJoueur(setJoueurInformations) : getAvatarsFree(setAvatars);
+            isRegister ? loadAccueil(setJoueurInformations) : getAvatarsFree(setAvatars);
         });
     }
 

@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="chargement">
+        <Stack.Navigator screenOptions={{ headerShown: false, statusBarHidden: true, navigationBarHidden: true }} initialRouteName="chargement">
           <Stack.Screen name="chargement" component={ChargementContainer} />
           <Stack.Screen name="authentification" component={AuthentificationContainer} />
           <Stack.Screen name="accueil" component={AccueilContainer} />
