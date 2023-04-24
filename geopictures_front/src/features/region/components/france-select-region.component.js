@@ -4,7 +4,7 @@ import {Button, Text} from "@rneui/base";
 import {ImageBackground, StyleSheet, View} from "react-native";
 import {containerStyle, primary1} from "../../../commons/styles/commons.styles";
 import {Region, RegionLibelle} from "../enums/regions.enum";
-import {BACKGROUND_VIEW} from "../../../utils/store.utils";
+import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 
 export default function FranceSelectRegion({ regionSelected, setRegionSelected }) {
     const handlePressRegion = (region) => {
@@ -22,8 +22,8 @@ export default function FranceSelectRegion({ regionSelected, setRegionSelected }
     return(
         <View style={containerStyle.center}>
             <ImageBackground
-                source={ BACKGROUND_VIEW.bordure } style={ containerStyle.formBorder } borderRadius={20}>
-                <ImageBackground source={ BACKGROUND_VIEW.background } borderRadius={20}>
+                source={ BACKGROUND_ASSETS.bordure } style={ containerStyle.formBorder } borderRadius={20}>
+                <ImageBackground source={ BACKGROUND_ASSETS.background } borderRadius={20}>
                     <Text style={ style.choose }>Choisis ta région !</Text>
                 </ImageBackground>
             </ImageBackground>

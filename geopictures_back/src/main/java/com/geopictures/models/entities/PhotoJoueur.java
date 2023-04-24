@@ -1,8 +1,10 @@
 package com.geopictures.models.entities;
 
+import com.geopictures.models.pojos.Coordonnees;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -32,7 +34,7 @@ public class PhotoJoueur {
     @Column(name="image")
     private String imageJoue;
     @Column(name="score")
-    private Integer score;
+    private BigDecimal score;
     @Column(name="succes_gps")
     private Boolean succesGps;
     @Column(name="succes_globale")

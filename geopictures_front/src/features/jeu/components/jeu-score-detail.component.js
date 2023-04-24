@@ -1,4 +1,4 @@
-import {BACKGROUND_VIEW} from "../../../utils/store.utils";
+import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import * as React from "react";
 import {Image} from "@rneui/themed";
@@ -27,9 +27,9 @@ export default function JeuScoreDetail({photo}) {
     return(
         <>
             <ImageBackground
-                source={BACKGROUND_VIEW.bordure} style={{width: "100%", height: '100%'}} borderRadius={20}>
+                source={BACKGROUND_ASSETS.bordure} style={{width: "100%", height: '100%'}} borderRadius={20}>
                 <View style={{padding: 5}}>
-                    <ImageBackground source={BACKGROUND_VIEW.background} style={{width: "100%", height: '100%'}}
+                    <ImageBackground source={BACKGROUND_ASSETS.background} style={{width: "100%", height: '100%'}}
                                      borderRadius={20}>
                         <View style={ style.container }>
                             <View style={{height:"100%", justifyContent:"space-between"}}>

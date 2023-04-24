@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ZoneDTO {
     private Long id;
+    private String regionCode;
     private String libelle;
     private String image;
     private Long nombrePhotosDisponibles;

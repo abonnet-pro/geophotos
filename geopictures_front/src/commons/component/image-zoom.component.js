@@ -6,7 +6,6 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-import {containerStyle} from "../styles/commons.styles";
 import * as React from "react";
 import {Image} from "@rneui/themed";
 import LoadingView from "./loading.component";
@@ -38,7 +37,7 @@ export default function ImageZoom({ navigation, route }) {
                 <Image resizeMode={ "contain" }
                        style={ style.image }
                        PlaceholderContent={ <LoadingView/>}
-                       source={{ uri: `${URL_API}/images/${image}` }}
+                       source={{ uri: `${URL_API}/photos/${image}` }}
                        onLoadEnd={() => setLoading(false)}
                 />
             </View>

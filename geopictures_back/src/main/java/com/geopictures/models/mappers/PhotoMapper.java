@@ -24,12 +24,30 @@ public class PhotoMapper {
                 .datePublication(entity.getDatePublication())
                 .titre(entity.getTitre())
                 .id(entity.getId())
+                .zoneId(entity.getZone().getId())
+                .regionCode(entity.getZone().getRegion().getCode())
                 .score(photoJoueurOpt.map(PhotoJoueur::getScore).orElse(null))
                 .difficulte(entity.getDifficulte())
                 .image(entity.getImage())
                 .imageJouee(photoJoueurOpt.map(PhotoJoueur::getImageJoue).orElse(null))
                 .succesGps(photoJoueurOpt.map(PhotoJoueur::getSuccesGps).orElse(null))
                 .succesGlobale(photoJoueurOpt.map(PhotoJoueur::getSuccesGlobale).orElse(null))
+                .build();
+    }
+
+    public PhotoDTO toDtoWithPhotoJoueur(Photo entity, PhotoJoueur photoJoueur) {
+        return PhotoDTO.builder()
+                .titulaire(entity.getTitulaire().getUtilisateur().getNom())
+                .datePublication(entity.getDatePublication())
+                .titre(entity.getTitre())
+                .id(entity.getId())
+                .zoneId(entity.getZone().getId())
+                .score(photoJoueur.getScore())
+                .difficulte(entity.getDifficulte())
+                .image(entity.getImage())
+                .imageJouee(photoJoueur.getImageJoue())
+                .succesGps(photoJoueur.getSuccesGps())
+                .succesGlobale(photoJoueur.getSuccesGlobale())
                 .build();
     }
 }

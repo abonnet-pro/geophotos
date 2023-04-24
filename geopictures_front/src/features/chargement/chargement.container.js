@@ -2,26 +2,31 @@ import {BackHandler, Image, ImageBackground, StyleSheet, View} from "react-nativ
 import {containerStyle} from "../../commons/styles/commons.styles";
 import {Text} from "@rneui/base";
 import {useEffect} from "react";
-import {getValueFor, JOUEUR, loadBackgroundView} from "../../utils/store.utils";
-import {loadAccueil} from "../accueil/services/accueil.service";
+import {getValueFor, JOUEUR, storeAssets} from "../../utils/store.utils";
+import { useAssets} from 'expo-asset';
 
 export default function ChargementContainer({ navigation }) {
 
+    const [assets, error] = useAssets([require('../../../assets/background_wood.jpg'),
+        require('../../../assets/bordure_wood.jpg')
+    ]);
+
     const init = () => {
-        BackHandler.addEventListener("hardwareBackPress", () => true);
-        loadBackgroundView();
+        if(!assets || assets.length < 2) {
+            return;
+        }
+        storeAssets(assets);
+
         getValueFor(JOUEUR).then(joueur => {
             if(joueur) {
-                loadAccueil(joueur.token)
-                    .then(joueurInformations => navigation.navigate('accueil', {joueurInformations: joueurInformations.data}))
-                    .catch(err => console.log(err))
+                navigation.navigate('accueil');
             } else {
                 navigation.navigate('authentification');
             }
         });
     }
 
-    useEffect(init, []);
+    useEffect(init, [assets]);
 
     return(
         <>

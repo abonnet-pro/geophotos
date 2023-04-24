@@ -5,7 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class UtilisateurHolder {
 
-    Utilisateur utilisateur() {
+    protected Utilisateur utilisateur() {
         return (Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

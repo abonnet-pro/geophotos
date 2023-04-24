@@ -4,43 +4,55 @@ import {Image, ImageBackground, StyleSheet, View} from "react-native";
 import {URL_API} from "../../../utils/url.utils";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ExperienceBarre from "./experience-barre.component";
+import {deleteStore, JOUEUR} from "../../../utils/store.utils";
+import LoadingGeneral from "../../../commons/component/loading-general.component";
 
-export default function Accueil({ joueurInformations, navigation }) {
+export default function Accueil({ loadingAccueil, joueurInformations, navigation }) {
     return(
         <ImageBackground
             source={require('../../../../assets/auth_background.jpg')}
             style={ containerStyle.backgroundHover100 }>
-            <View style={ style.header }>
-                <View style={ containerStyle.flex }>
-                    <Image source={{ uri :`${URL_API}/images/${joueurInformations?.avatarActif?.image}` }} style={ style.avatar }></Image>
-                </View>
-                <View style={ style.boutique }>
-                    <AntDesign style={ style.plus } name="pluscircleo" color="white" />
-                    <Text style={ style.points }>{ joueurInformations?.pointsBoutique }</Text>
-                    <Image style={ style.gold } source={require('../../../../assets/gold.png')}></Image>
-                </View>
-            </View>
-            <View>
-            </View>
-            <View style={ containerStyle.center }>
-                <View style={ style.experience }>
-                    <ImageBackground style={ style.star } source={require('../../../../assets/star.png')}>
-                        <Text style={ style.niveau }>{ joueurInformations?.niveau }</Text>
-                    </ImageBackground>
-                    <ExperienceBarre experience={ joueurInformations?.experience} prochainNiveau={ joueurInformations?.prochainNiveau }></ExperienceBarre>
-                </View>
-                <Image
-                    source={require('../../../../assets/france.png')}
-                    style={style.france}
-                />
-                <Button
-                    onPress={ () => navigation.navigate('selectRegion') }
-                    title="Jouer une photo"
-                    raised={true}
-                    radius={20}
-                    titleStyle={ font(35, 'bold') }
-                    buttonStyle={ commonsStyle.boutonSuccess }/>
-            </View>
+            {
+                loadingAccueil ?
+                    <LoadingGeneral titre={"Chargement en cours ..."}></LoadingGeneral>
+                    :
+                    <>
+                        <View style={ style.header }>
+                            <View style={ containerStyle.flex }>
+                                <Image source={{ uri :`${URL_API}/images/${joueurInformations?.avatarActif?.image}` }} style={ style.avatar }></Image>
+                            </View>
+                            <View style={ style.boutique }>
+                                <AntDesign style={ style.plus } name="pluscircleo" color="white" />
+                                <Text style={ style.points }>{ joueurInformations?.pointsBoutique }</Text>
+                                <Image style={ style.gold } source={require('../../../../assets/gold.png')}></Image>
+                            </View>
+                        </View>
+                        <View>
+                        </View>
+                        <View style={ containerStyle.center }>
+                            <View style={ style.experience }>
+                                <View style={ style.niveauContainer }>
+                                    <ImageBackground style={ style.star } source={require('../../../../assets/star.png')}>
+                                        <Text style={ style.niveau }>{ joueurInformations?.niveau }</Text>
+                                    </ImageBackground>
+                                </View>
+
+                                <ExperienceBarre experience={ joueurInformations?.experience} prochainNiveau={ joueurInformations?.prochainNiveau }></ExperienceBarre>
+                            </View>
+                            <Image
+                                source={require('../../../../assets/france.png')}
+                                style={style.france}
+                            />
+                            <Button
+                                onPress={ () => navigation.navigate('selectRegion') }
+                                title="Jouer une photo"
+                                raised={true}
+                                radius={20}
+                                titleStyle={ font(35, 'bold') }
+                                buttonStyle={ commonsStyle.boutonSuccess }/>
+                        </View>
+                    </>
+            }
         </ImageBackground>
     )
 }
@@ -85,9 +97,8 @@ const style = StyleSheet.create({
         height:20
     },
     star: {
-        margin:10,
-        width: 40,
-        height:40,
+        width: "100%",
+        height:"100%",
     },
     plus: {
         fontSize: 20
@@ -97,8 +108,14 @@ const style = StyleSheet.create({
         alignItems: "center",
     },
     niveau: {
-        padding:10,
         alignSelf: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginTop:'auto',
+        marginBottom:'auto'
+    },
+    niveauContainer : {
+        width: 50,
+        height:50,
+        margin: 5
     }
 });

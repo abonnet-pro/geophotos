@@ -1,9 +1,11 @@
 package com.geopictures.models.entities;
 
 import com.geopictures.models.enums.Difficulte;
+import com.geopictures.models.pojos.Coordonnees;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,8 +35,10 @@ public class Photo {
     private Difficulte difficulte;
     @Column(name="date_publication")
     private LocalDateTime datePublication;
-    @Column(name="coordonnees")
-    private String coordonnees;
+    @Column(name="latitude")
+    private String latitude;
+    @Column(name="longitude")
+    private String longitude;
     @Column(name="titre")
     private String titre;
     @Column(name="indice")
@@ -49,6 +53,13 @@ public class Photo {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
     private Set<PhotoJoueur> photosJoues = new HashSet<>();
+
+    public Coordonnees getCoordonnes() {
+        return Coordonnees.builder()
+                .latitude(new BigDecimal(this.latitude))
+                .longitude(new BigDecimal(this.longitude))
+                .build();
+    }
 
     @PrePersist
     public void onPrePersit() {

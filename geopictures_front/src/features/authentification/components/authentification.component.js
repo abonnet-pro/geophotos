@@ -14,7 +14,7 @@ export default function Authentification({ navigation, accessToken, promptAsync 
                         style={style.logo}
                     />
                     <Button
-                        onPress={ () => navigation.navigate('accueil', {joueurInformations: null}) }
+                        onPress={ () => navigation.navigate('creation') }
                         title="JOUER"
                         raised={true}
                         radius={20}

@@ -234,7 +234,8 @@ create table if not exists photo
     image varchar(255) not null,
     difficulte varchar(255) not null,
     date_publication timestamp not null,
-    coordonnees varchar(255) not null,
+    latitude varchar(255) not null,
+    longitude varchar(255) not null,
     titre varchar(255) not null,
     indice varchar(255),
     constraint fk_photo_zone
@@ -259,7 +260,7 @@ create table if not exists photo_joueur
     joueur_id bigint NOT NULL,
     photo_id bigint not null,
     image varchar(255) not null,
-    score int not null,
+    score numeric(19, 2) not null,
     succes_gps boolean not null,
     succes_globale boolean not null,
     constraint fk_photo_joueur_joueur

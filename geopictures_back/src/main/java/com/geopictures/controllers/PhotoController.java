@@ -1,11 +1,9 @@
 package com.geopictures.controllers;
 
 import com.geopictures.models.dtos.photo.PhotoDTO;
-import com.geopictures.models.entities.Utilisateur;
 import com.geopictures.models.mappers.PhotoMapper;
 import com.geopictures.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
