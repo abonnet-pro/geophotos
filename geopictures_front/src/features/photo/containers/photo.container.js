@@ -16,7 +16,6 @@ import {A_JOUE, DEJA_JOUE, TOUTES} from "../../../commons/consts/photo.const";
 
 export default function PhotoContainer({ navigation, route }) {
 
-
     const [photos, setPhotos] = useState([]);
     const [selectedDifficulte, setSelectedDifficulte] = useState(Difficulte.TOUTES);
     const [selectedJoues, setSelectedJoues] = useState(TOUTES);
@@ -27,8 +26,14 @@ export default function PhotoContainer({ navigation, route }) {
     }
 
     const handlePressPhoto = (photo) => {
+        navigation.navigate("jeu", {
+            photo: photo
+        });
+    }
+
+    const handlePressImage = (image) => {
         navigation.navigate("imageZoom", {
-            image: photo.image
+            image: image
         });
     }
 
@@ -80,7 +85,7 @@ export default function PhotoContainer({ navigation, route }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <PhotoList handlePressPhoto={ handlePressPhoto } photos={ getPhotosFiltered() }/>
+                    <PhotoList handlePressImage={ handlePressImage } handlePressPhoto={ handlePressPhoto } photos={ getPhotosFiltered() }/>
                 </ScrollView>
             </ImageBackground>
         </>

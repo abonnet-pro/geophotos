@@ -1,38 +1,46 @@
 import {StyleSheet, View} from "react-native";
-import {Picker} from "@react-native-picker/picker";
-import {Difficulte} from "../enums/difficulte.enum";
 import * as React from "react";
 import {A_JOUE, DEJA_JOUE, TOUTES} from "../../../commons/consts/photo.const";
+import Picker from '@ouroboros/react-native-picker';
+import {Difficulte} from "../enums/difficulte.enum";
 
 export default function PhotoFiltre({ selectedJoues, selectedDifficulte, setSelectedJoues, setSelectedDifficulte}) {
 
-    const handleSelectedDifficulte = (itemValue, itemIndex) => {
+    const handleSelectedDifficulte = (itemValue) => {
         setSelectedDifficulte(itemValue);
     }
 
-    const handleSelectedJoues = (itemValue, itemIndex) => {
+    const handleSelectedJoues = (itemValue) => {
         setSelectedJoues(itemValue);
     }
 
     return(
         <>
             <View style={ style.pickerJouesContainer}>
-                <Picker selectedValue={selectedJoues}
-                        onValueChange={handleSelectedJoues}>
-                    <Picker.Item style={ style.itemPicker } label="Toutes" value={TOUTES} />
-                    <Picker.Item style={ style.itemPicker } label="Déja joués" value={DEJA_JOUE} />
-                    <Picker.Item style={ style.itemPicker } label="A joués" value={A_JOUE} />
-                </Picker>
+                <Picker
+                    onChanged={handleSelectedJoues}
+                    options={[
+                        {text: "Toutes", value: TOUTES},
+                        {text: "A jouées", value: A_JOUE},
+                        {text: "Déjà jouées", value: DEJA_JOUE},
+                    ]}
+                    style={{padding: 5}}
+                    value={selectedJoues}
+                />
             </View>
-            <View  style={ style.pickerDifficulteContainer}>
-                <Picker selectedValue={selectedDifficulte}
-                        onValueChange={handleSelectedDifficulte}>
-                    <Picker.Item style={ style.itemPicker } label="Toutes" value={Difficulte.TOUTES} />
-                    <Picker.Item style={ style.itemPicker } label="Facile" value={Difficulte.FACILE} />
-                    <Picker.Item style={ style.itemPicker } label="Normal" value={Difficulte.NORMAL} />
-                    <Picker.Item style={ style.itemPicker } label="Difficile" value={Difficulte.DIFFICILE} />
-                    <Picker.Item style={ style.itemPicker } label="Extrême" value={Difficulte.EXTREME} />
-                </Picker>
+            <View style={ style.pickerDifficulteContainer}>
+                <Picker
+                    onChanged={handleSelectedDifficulte}
+                    options={[
+                        {text: "Toutes", value: Difficulte.TOUTES},
+                        {text: "Facile", value: Difficulte.FACILE},
+                        {text: "Normal", value: Difficulte.NORMAL},
+                        {text: "Difficile", value: Difficulte.DIFFICILE},
+                        {text: "Extrême", value: Difficulte.EXTREME},
+                    ]}
+                    style={{padding: 5}}
+                    value={selectedDifficulte}
+                />
             </View>
         </>
     )
@@ -50,8 +58,5 @@ const style = StyleSheet.create({
         marginLeft:5,
         backgroundColor: 'white',
         borderRadius: 20
-    },
-    itemPicker: {
-
     },
 });

@@ -58,7 +58,7 @@ export default function ZoneContainer({ navigation, route }) {
                         filterZones(recherche) ? <ZoneList loadingPhotos={ loadingPhotos } handleGoListePhoto={ handleGoListePhoto } zones={filterZones(recherche)}/> : null
                     }
                 </View>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, marginBottom:5 }}>
                     <ZoneRecherche recherche={ recherche } setRecherche={ setRecherche }/>
                 </View>
             </ImageBackground>
@@ -68,6 +68,7 @@ export default function ZoneContainer({ navigation, route }) {
 
 const style = StyleSheet.create({
     backContainer: {
+        flex:1,
         marginLeft: 10,
     },
     back: {
@@ -76,7 +77,7 @@ const style = StyleSheet.create({
     },
     zonesContainer: {
         margin: 10,
-        flex: 10
+        flex: 15
     },
     zones: {
         padding: 10,

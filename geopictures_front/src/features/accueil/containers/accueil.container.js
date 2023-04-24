@@ -4,6 +4,7 @@ import Accueil from "../components/accueil.component";
 import {createJoueur, getAvatarsFree, loadAccueil} from "../services/accueil.service";
 import {JOUEUR, save} from "../../../utils/store.utils";
 import {BackHandler} from "react-native";
+import {StatusBar} from "expo-status-bar";
 
 export default function AccueilContainer({ navigation, route }) {
 
@@ -33,7 +34,7 @@ export default function AccueilContainer({ navigation, route }) {
     }
 
     const init = () => {
-        BackHandler.addEventListener("hardwareBackPress", () => true)
+        BackHandler.addEventListener("hardwareBackPress", () => true);
 
         const joueur = route.params.joueurInformations;
         setJoueurInformations(joueur);

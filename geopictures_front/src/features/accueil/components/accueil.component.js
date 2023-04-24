@@ -3,7 +3,7 @@ import {commonsStyle, containerStyle, font} from "../../../commons/styles/common
 import {Image, ImageBackground, StyleSheet, View} from "react-native";
 import {URL_API} from "../../../utils/url.utils";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import ExperienceBarre from "./experienceBarre.component";
+import ExperienceBarre from "./experience-barre.component";
 
 export default function Accueil({ joueurInformations, navigation }) {
     return(

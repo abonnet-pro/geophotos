@@ -62,6 +62,10 @@ public class PhotoDataLoader implements CommandLineRunner {
         Utilisateur admin = utilisateurRepository.findByNom("Geopictures");
         Optional<Joueur> joueurOpt = joueurRepository.findById(36L);
 
+        if(!joueurOpt.isPresent()) {
+            return;
+        }
+
         Photo photo1 = Photo.builder()
                 .titre("Vue Chambre")
                 .image("photo/jeu/defi/test_1.jpg")

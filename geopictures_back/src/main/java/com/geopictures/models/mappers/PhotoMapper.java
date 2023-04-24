@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Component
 public class PhotoMapper {
@@ -28,6 +27,7 @@ public class PhotoMapper {
                 .score(photoJoueurOpt.map(PhotoJoueur::getScore).orElse(null))
                 .difficulte(entity.getDifficulte())
                 .image(entity.getImage())
+                .imageJouee(photoJoueurOpt.map(PhotoJoueur::getImageJoue).orElse(null))
                 .succesGps(photoJoueurOpt.map(PhotoJoueur::getSuccesGps).orElse(null))
                 .succesGlobale(photoJoueurOpt.map(PhotoJoueur::getSuccesGlobale).orElse(null))
                 .build();
