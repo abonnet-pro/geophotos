@@ -40,16 +40,13 @@ export default function Accueil({ joueurInformations, navigation }) {
                     raised={true}
                     radius={20}
                     titleStyle={ font(35, 'bold') }
-                    buttonStyle={ style.play }/>
+                    buttonStyle={ commonsStyle.boutonSuccess }/>
             </View>
         </ImageBackground>
     )
 }
 
 const style = StyleSheet.create({
-    play: {
-        ...commonsStyle.boutonSuccess,
-    },
     france: {
         marginTop: -50,
         marginBottom: -50,
