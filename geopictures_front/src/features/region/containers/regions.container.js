@@ -1,11 +1,11 @@
 import FranceSelectRegion from "../components/france-select-region.component";
-import {Image, ImageBackground, StyleSheet, TouchableWithoutFeedback, View} from "react-native";
-import {back} from "../../../utils/uri.utils";
+import {Image, ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import {Button, Text} from "@rneui/base";
 import {useState} from "react";
 import {loadZonesByCode} from "../../zone/services/zone.service";
 import LoadingView from "../../../commons/component/loading.component";
+import Toast from "react-native-root-toast";
 
 export default function RegionsContainer({ navigation }) {
 
@@ -18,6 +18,11 @@ export default function RegionsContainer({ navigation }) {
         const zones = await loadZonesByCode(regionSelected);
         setLoading(false);
 
+        if(!zones.data) {
+            Toast.show("Erreur veuillez réessayer plus tard");
+            return;
+        }
+
         navigation.navigate("zones", {
             zones: zones.data
         })
@@ -28,9 +33,9 @@ export default function RegionsContainer({ navigation }) {
             source={require('../../../../assets/auth_background.jpg')}
             style={ containerStyle.backgroundHover100 }>
             <View style={ style.backContainer }>
-                <TouchableWithoutFeedback onPress={ () => navigation.goBack() }>
+                <TouchableOpacity onPress={ () => navigation.goBack() }>
                     <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             </View>
             <View style={ style.franceContainer }>
                 <FranceSelectRegion regionSelected={ regionSelected } setRegionSelected={ setRegionSelected }/>

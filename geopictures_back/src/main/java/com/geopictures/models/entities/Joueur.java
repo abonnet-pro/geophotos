@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -66,6 +67,12 @@ public class Joueur {
             joinColumns = @JoinColumn(name = "joueur_id"),
             inverseJoinColumns = @JoinColumn(name = "avatar_id"))
     private Set<Avatar> avatars;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur")
+    private Set<PhotoJoueur> photosJoues  = new HashSet<>();
+
+    @OneToMany(mappedBy = "titulaire", cascade = CascadeType.REMOVE)
+    private Set<Photo> photos  = new HashSet<>();
 
     @PrePersist
     public void onPrePersit() {

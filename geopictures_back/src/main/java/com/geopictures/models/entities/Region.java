@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,7 +31,7 @@ public class Region {
     private String code;
 
     @OneToMany(mappedBy = "region", cascade = CascadeType.REMOVE)
-    private Set<Zone> zones;
+    private Set<Zone> zones = new HashSet<>();
 
     @PrePersist
     public void onPrePersit() {

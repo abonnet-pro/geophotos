@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,7 @@ public class Bordure {
     private String image;
 
     @OneToMany(mappedBy = "bordureActif")
-    Set<Joueur> joueursActif;
+    Set<Joueur> joueursActif = new HashSet<>();
 
     @ManyToMany(mappedBy = "bordures")
     Set<Joueur> joueurs;

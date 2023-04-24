@@ -4,8 +4,9 @@ import {ActivityIndicator, ImageBackground, StyleSheet, TextInput, View} from "r
 import {checkNomSaisi} from "../services/accueil.service";
 import {useState} from "react";
 import LoadingView from "../../../commons/component/loading.component";
+import {BACKGROUND_VIEW} from "../../../utils/store.utils";
 
-export default function NomChooser({ setResponseAvailable, responseAvailable, nom, setNom, bordure, background}) {
+export default function NomChooser({ setResponseAvailable, responseAvailable, nom, setNom }) {
 
     const [loading, setLoading] = useState(false);
 
@@ -23,8 +24,8 @@ export default function NomChooser({ setResponseAvailable, responseAvailable, no
 
     return(
         <ImageBackground
-            source={ bordure } style={ containerStyle.formBorder } borderRadius={20}>
-            <ImageBackground source={ background } borderRadius={20}>
+            source={ BACKGROUND_VIEW.bordure } style={ containerStyle.formBorder } borderRadius={20}>
+            <ImageBackground source={ BACKGROUND_VIEW.background } borderRadius={20}>
                 <View style={ style.form }>
                     <Text style={ font(18, 'bold', 'center') }>Bienvenue dans geopictures !</Text>
                     <Text style={ font(18, 'bold', 'center') }>Veuillez choisir un nom d'utilisateur</Text>

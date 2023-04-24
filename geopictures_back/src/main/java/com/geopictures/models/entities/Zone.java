@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -29,6 +31,9 @@ public class Zone {
     @ManyToOne
     @JoinColumn(name="region_id")
     private Region region;
+
+    @OneToMany(mappedBy = "zone", cascade = CascadeType.REMOVE)
+    private Set<Photo> photos = new HashSet<>();
 
     @PrePersist
     public void onPrePersit() {

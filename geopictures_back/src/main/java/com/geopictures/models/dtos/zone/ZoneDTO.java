@@ -11,6 +11,6 @@ public class ZoneDTO {
     private Long id;
     private String libelle;
     private String image;
-    private int nombrePhotosDisponibles;
-    private int nombrePhotosReussis;
+    private Long nombrePhotosDisponibles;
+    private Long nombrePhotosJoues;
 }
