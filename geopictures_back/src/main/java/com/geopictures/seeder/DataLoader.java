@@ -49,6 +49,12 @@ public class DataLoader implements CommandLineRunner {
     private AvatarRepository avatarRepository;
 
     @Autowired
+    private BordureRepository bordureRepository;
+
+    @Autowired
+    private TitreRepository titreRepository;
+
+    @Autowired
     private GadgetRepository gadgetRepository;
 
     @Override
@@ -57,6 +63,14 @@ public class DataLoader implements CommandLineRunner {
 
         if(avatarRepository.count() == 0) {
             initAvatar();
+        }
+
+        if(bordureRepository.count() == 0) {
+            initBordure();
+        }
+
+        if(titreRepository.count() == 0) {
+            initTitre();
         }
 
         if(regionRepository.count() == 0) {
@@ -208,6 +222,63 @@ public class DataLoader implements CommandLineRunner {
                     .build();
             avatarRepository.save(avatar);
         }
+    }
+
+    private void initTitre() {
+        Titre supporter = Titre.builder()
+                .libelle("Supporter de geopictures")
+                .code("supp")
+                .build();
+        titreRepository.save(supporter);
+
+        Titre fan = Titre.builder()
+                .libelle("Fan de geopictures")
+                .code("fan")
+                .build();
+        titreRepository.save(fan);
+
+        Titre actionnaire = Titre.builder()
+                .libelle("Actionnaire de geopictures")
+                .code("actionnaire")
+                .build();
+        titreRepository.save(actionnaire);
+    }
+
+    private void initBordure() {
+        Bordure gold = Bordure.builder()
+                .libelle("gold")
+                .code("gold")
+                .image("bordure/bordure_gold.png")
+                .build();
+        bordureRepository.save(gold);
+
+        Bordure silver = Bordure.builder()
+                .libelle("silver")
+                .code("silver")
+                .image("bordure/bordure_silver.png")
+                .build();
+        bordureRepository.save(silver);
+
+        Bordure bronze = Bordure.builder()
+                .libelle("bronze")
+                .code("bronze")
+                .image("bordure/bordure_bronze.png")
+                .build();
+        bordureRepository.save(bronze);
+
+        Bordure platine = Bordure.builder()
+                .libelle("platine")
+                .code("platine")
+                .image("bordure/bordure_platine.png")
+                .build();
+        bordureRepository.save(platine);
+
+        Bordure saphir = Bordure.builder()
+                .libelle("saphir")
+                .code("saphir")
+                .image("bordure/bordure_saphir.png")
+                .build();
+        bordureRepository.save(saphir);
     }
 
     private void initRegions() {
