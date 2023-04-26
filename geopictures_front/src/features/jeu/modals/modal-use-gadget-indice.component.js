@@ -1,12 +1,12 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
 import {Button, Image, StyleSheet, TouchableOpacity, View} from "react-native";
-import {getGadget, useGadget} from "../../features/jeu/services/jeu.service";
-import {Gadget} from "../../features/jeu/enums/gadget.enum";
-import LoadingView from "../component/loading.component";
+import {getGadget, useGadget} from "../services/jeu.service";
+import {Gadget} from "../enums/gadget.enum";
+import LoadingView from "../../../commons/component/loading.component";
 import * as Clipboard from 'expo-clipboard';
 
-const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
+const ModalUseGadgetIndice = ({ modal: { closeModal, getParam }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -14,34 +14,23 @@ const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
     const init = () => {
         const photoId = getParam('photoId', null);
         setLoading(true);
-        getGadget(Gadget.TOP_1, photoId)
+        getGadget(Gadget.INDICE, photoId)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressUseGadgetTop1 = async () => {
+    const handlePressUseGadgetIndice = async () => {
         setLoading(true);
         const photoId = getParam('photoId', null);
-        useGadget(Gadget.TOP_1, photoId)
-            .then(res => {
-                setGadget(res.data);
-                const navigation = getParam('navigation', null);
-                navigation.navigate("imageZoom", {
-                    image: gadget.reponse
-                });
-            })
+        useGadget(Gadget.INDICE, photoId)
+            .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressVoirPhoto = () => {
-        closeModal();
-        const navigation = getParam('navigation', null);
-
-        navigation.navigate("imageZoom", {
-            image: gadget.reponse
-        });
+    function getIndice() {
+        return gadget?.reponse ? "" + gadget?.reponse + "" : "Aucun indice disponible pour cette photo";
     }
 
     useEffect(init, []);
@@ -53,29 +42,22 @@ const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Top 1</Text>
+                        <Text style={style.title}>Gadget Indice</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_premier.png')}></Image>
+                            <Image style={style.image} source={require('../../../../assets/gadget_indice.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
-                            gadget?.reponse != null ?
-                                <>
-                                {
-                                    gadget.reponse ?
-                                        <Button title={"Voir la photo"} color={"green"} onPress={handlePressVoirPhoto}></Button>
-                                        :
-                                        <View style={style.reponseContainer}>
-                                            <Text style={style.reponse}>La photo n'a pas encore été jouée</Text>
-                                        </View>
-                                }
-                                </>
+                            gadget?.reponse !== null ?
+                                <View style={style.reponseContainer}>
+                                    <Text style={style.reponse}>{getIndice()}</Text>
+                                </View>
                                 :
                                 <>
                                 {
                                     gadget?.quantite > 0 ?
-                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetTop1}></Button>
+                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetIndice}></Button>
                                         :
                                         <Button title={"Acheter"} color={"green"}></Button>
                                 }
@@ -133,4 +115,4 @@ const style = StyleSheet.create({
     },
 })
 
-export default ModalUseGadgetTop1;
+export default ModalUseGadgetIndice;

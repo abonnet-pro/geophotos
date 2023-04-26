@@ -1,12 +1,11 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
-import {Button, Image, StyleSheet, TouchableOpacity, View} from "react-native";
-import {getGadget, getGadgetLocation, useGadget, useGadgetLocation} from "../../features/jeu/services/jeu.service";
-import {Gadget} from "../../features/jeu/enums/gadget.enum";
-import LoadingView from "../component/loading.component";
-import * as Clipboard from 'expo-clipboard';
+import {Button, Image, StyleSheet, View} from "react-native";
+import {getGadgetLocation, useGadgetLocation} from "../services/jeu.service";
+import {Gadget} from "../enums/gadget.enum";
+import LoadingView from "../../../commons/component/loading.component";
 
-const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
+const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -18,17 +17,18 @@ const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
 
         if(!location) return;
 
-        getGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
+        getGadgetLocation(Gadget.DISTANCE, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    const handlePressUseGadgetSuccessGps = async () => {
+    const handlePressUseGadgetDistance = async () => {
         setLoading(true);
         const photoId = getParam('photoId', null);
         const location = getParam('location', null);
-        useGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
+
+        useGadgetLocation(Gadget.DISTANCE, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
@@ -43,22 +43,22 @@ const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Success Gps</Text>
+                        <Text style={style.title}>Gadget Distance</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_success.png')}></Image>
+                            <Image style={style.image} source={require('../../../../assets/gadget_distance.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
                             gadget?.reponse ?
                                 <View style={style.reponseContainer}>
-                                    <Text style={style.reponse}>Zone succes GPS : <Text style={{fontWeight:'bold',color: gadget.reponse === "OUI" ? "darkgreen" : "darkred"}}>{gadget.reponse}</Text></Text>
+                                    <Text style={style.reponse}>{gadget.reponse} Mètres ({gadget.reponse / 1000} Km)</Text>
                                 </View>
                                 :
                                 <>
                                 {
                                     gadget?.quantite > 0 ?
-                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetSuccessGps}></Button>
+                                        <Button title={"utiliser"} color={"green"} onPress={handlePressUseGadgetDistance}></Button>
                                         :
                                         <Button title={"Acheter"} color={"green"}></Button>
                                 }
@@ -112,7 +112,8 @@ const style = StyleSheet.create({
     },
     reponse: {
         color:"white",
-    },
+        fontWeight:'bold',
+    }
 })
 
-export default ModalUseGadgetSuccesGps;
+export default ModalUseGadgetDistance;
