@@ -59,8 +59,8 @@ export default function Accueil({ loadingAccueil, joueurInformations, navigation
 
 const style = StyleSheet.create({
     france: {
-        marginTop: -50,
-        marginBottom: -50,
+        marginTop: -60,
+        marginBottom: -90,
         width: "80%",
         height: "80%",
         resizeMode: "contain",

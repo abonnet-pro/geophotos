@@ -27,6 +27,7 @@ import ModalLoading from "./src/commons/modals/modal-loading.component";
 import ModalUseGadgetTop1 from "./src/commons/modals/modal-use-gadget-top-1.component";
 import ModalUseGadgetIndice from "./src/commons/modals/modal-use-gadget-indice.component";
 import ModalChoixValid from "./src/commons/modals/modal-choix-valid.component";
+import Tabs from './src/commons/component/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,20 +58,12 @@ export default function App() {
 
     return (
     <RootSiblingParent>
+      <NavigationContainer>
+        <Tabs />
+      </NavigationContainer>
       <ModalProvider stack={stack}>
         <NavigationContainer>
           <StatusBar hidden/>
-            <Stack.Navigator screenOptions={{ headerShown: false, navigationBarHidden: true }} initialRouteName="chargement">
-              <Stack.Screen name="chargement" component={ChargementContainer} />
-              <Stack.Screen name="authentification" component={AuthentificationContainer} />
-              <Stack.Screen name="creation" component={CreationContainer} />
-              <Stack.Screen name="accueil" component={AccueilContainer} />
-              <Stack.Screen name="selectRegion" component={RegionsContainer} />
-              <Stack.Screen name="zones" component={ZoneContainer} />
-              <Stack.Screen name="photos" component={PhotoContainer} />
-              <Stack.Screen name="imageZoom" component={ImageZoom} />
-              <Stack.Screen name="jeu" component={JeuContainer} />
-            </Stack.Navigator>
         </NavigationContainer>
       </ModalProvider>
     </RootSiblingParent>
