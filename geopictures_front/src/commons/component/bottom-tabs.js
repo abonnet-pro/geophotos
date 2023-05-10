@@ -31,7 +31,7 @@ const Tabs = () => {
                 ),
                 tabBarLabel: "",
             }}/>
-            <Tab.Screen name="accueil" component={AccueilContainer} options={{
+            <Tab.Screen name="accueil" component={HomeScreenNavigator} options={{
                 tabBarIcon: ({}) => (
                     <View style={{alignItems: "center", justifyContent: "center", top:20, left:5}}>
                         <FontAwesome name="home" size={35} color="black" />
