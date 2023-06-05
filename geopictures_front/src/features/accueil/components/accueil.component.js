@@ -22,7 +22,7 @@ export default function Accueil({ loadingAccueil, joueurInformations, navigation
                                 <Image source={{ uri :`${URL_API}/images/${joueurInformations?.avatarActif?.image}` }} style={ style.avatar }></Image>
                             </TouchableOpacity>
                             <View style={ style.boutique }>
-                                <AntDesign style={ style.plus } name="pluscircleo" color="white" />
+                                <AntDesign onPress={() => navigation.navigate("boutique")} style={ style.plus } name="pluscircleo" color="white" />
                                 <Text style={ style.points }>{ joueurInformations?.pointsBoutique }</Text>
                                 <Image style={ style.gold } source={require('../../../../assets/gold.png')}></Image>
                             </View>
@@ -59,8 +59,8 @@ export default function Accueil({ loadingAccueil, joueurInformations, navigation
 
 const style = StyleSheet.create({
     france: {
-        marginTop: -50,
-        marginBottom: -50,
+        marginTop: -60,
+        marginBottom: -90,
         width: "80%",
         height: "80%",
         resizeMode: "contain",
