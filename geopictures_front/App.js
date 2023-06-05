@@ -13,20 +13,22 @@ import JeuContainer from "./src/features/jeu/containers/jeu.container";
 import {StatusBar} from "expo-status-bar";
 import {useEffect} from "react";
 import {BackHandler} from "react-native";
-import ModalUseGadgetGps from "./src/commons/modals/modal-use-gadget-gps.component";
+import ModalUseGadgetGps from "./src/features/jeu/modals/modal-use-gadget-gps.component";
 import { ModalProvider, createModalStack } from 'react-native-modalfy';
 import  ModalInfoSuccessGps  from "./src/commons/modals/modal-info-success-gps.component";
 import  ModalInfoSuccessGlobale  from "./src/commons/modals/modal-info-success-global.component";
 import ModalInfoDroitCamera from "./src/commons/modals/modal-info-droit-camera.component";
 import ModalInfoDroitLocation from "./src/commons/modals/modal-info-droit-location.component";
 import CreationContainer from "./src/features/creation/containers/creation.container";
-import ModalUseGadgetDistance from "./src/commons/modals/modal-use-gadget-distance.component";
-import ModalUseGadgetDirection from "./src/commons/modals/modal-use-gadget-direction.component";
-import ModalUseGadgetSuccesGps from "./src/commons/modals/modal-use-gadget-succes-gps.component";
+import ModalUseGadgetDistance from "./src/features/jeu/modals/modal-use-gadget-distance.component";
+import ModalUseGadgetDirection from "./src/features/jeu/modals/modal-use-gadget-direction.component";
+import ModalUseGadgetSuccesGps from "./src/features/jeu/modals/modal-use-gadget-succes-gps.component";
 import ModalLoading from "./src/commons/modals/modal-loading.component";
-import ModalUseGadgetTop1 from "./src/commons/modals/modal-use-gadget-top-1.component";
-import ModalUseGadgetIndice from "./src/commons/modals/modal-use-gadget-indice.component";
+import ModalUseGadgetTop1 from "./src/features/jeu/modals/modal-use-gadget-top-1.component";
+import ModalUseGadgetIndice from "./src/features/jeu/modals/modal-use-gadget-indice.component";
 import ModalChoixValid from "./src/commons/modals/modal-choix-valid.component";
+import ProfilContainer from "./src/features/profil/containers/profil.container";
+import ModalInfoGadget from "./src/features/profil/modals/modal-info-gadget.component";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +44,8 @@ const modalConfig = {
   ModalLoading,
   ModalUseGadgetTop1,
   ModalUseGadgetIndice,
-  ModalChoixValid: ModalChoixValid
+  ModalChoixValid: ModalChoixValid,
+  ModalInfoGadget
 }
 
 const stack = createModalStack(modalConfig, {backdropOpacity: 0.6});
@@ -70,6 +73,7 @@ export default function App() {
               <Stack.Screen name="photos" component={PhotoContainer} />
               <Stack.Screen name="imageZoom" component={ImageZoom} />
               <Stack.Screen name="jeu" component={JeuContainer} />
+              <Stack.Screen name="profil" component={ProfilContainer} />
             </Stack.Navigator>
         </NavigationContainer>
       </ModalProvider>

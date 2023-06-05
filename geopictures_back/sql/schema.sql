@@ -217,6 +217,8 @@ create table if not exists zone
     references region(id)
 );
 
+
+
 alter table zone
     owner to postgres;
 

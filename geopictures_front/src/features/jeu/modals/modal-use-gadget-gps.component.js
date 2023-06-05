@@ -1,9 +1,9 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
 import {Button, Image, StyleSheet, TouchableOpacity, View} from "react-native";
-import {getGadget, useGadget} from "../../features/jeu/services/jeu.service";
-import {Gadget} from "../../features/jeu/enums/gadget.enum";
-import LoadingView from "../component/loading.component";
+import {getGadget, useGadget} from "../services/jeu.service";
+import {Gadget} from "../enums/gadget.enum";
+import LoadingView from "../../../commons/component/loading.component";
 import * as Clipboard from 'expo-clipboard';
 
 const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
@@ -44,7 +44,7 @@ const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
                     <View style={ style.modalContainer }>
                         <Text style={style.title}>Gadget Gps</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_gps.png')}></Image>
+                            <Image style={style.image} source={require('../../../../assets/gadget_gps.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
@@ -53,7 +53,7 @@ const ModalUseGadgetGps = ({ modal: { closeModal, getParam  }}) => {
                                 <View style={style.reponseContainer}>
                                     <Text style={style.reponse}>{gadget.reponse}</Text>
                                     <TouchableOpacity onPress={handlePressClipboard}>
-                                        <Image style={style.copyImage} source={require('../../../assets/copy.png')}/>
+                                        <Image style={style.copyImage} source={require('../../../../assets/copy.png')}/>
                                     </TouchableOpacity>
                                 </View>
                                 :

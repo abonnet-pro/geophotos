@@ -1,6 +1,6 @@
 import {Button, Text} from "@rneui/base";
 import {commonsStyle, containerStyle, font} from "../../../commons/styles/commons.styles";
-import {Image, ImageBackground, StyleSheet, View} from "react-native";
+import {Image, ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {URL_API} from "../../../utils/url.utils";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ExperienceBarre from "./experience-barre.component";
@@ -18,9 +18,9 @@ export default function Accueil({ loadingAccueil, joueurInformations, navigation
                     :
                     <>
                         <View style={ style.header }>
-                            <View style={ containerStyle.flex }>
+                            <TouchableOpacity style={ containerStyle.flex } onPress={ () => navigation.navigate('profil') }>
                                 <Image source={{ uri :`${URL_API}/images/${joueurInformations?.avatarActif?.image}` }} style={ style.avatar }></Image>
-                            </View>
+                            </TouchableOpacity>
                             <View style={ style.boutique }>
                                 <AntDesign style={ style.plus } name="pluscircleo" color="white" />
                                 <Text style={ style.points }>{ joueurInformations?.pointsBoutique }</Text>
