@@ -18,7 +18,7 @@ import ModalUseGadgetTop1 from "./src/features/jeu/modals/modal-use-gadget-top-1
 import ModalUseGadgetIndice from "./src/features/jeu/modals/modal-use-gadget-indice.component";
 import ModalChoixValid from "./src/commons/modals/modal-choix-valid.component";
 import ModalInfoGadget from "./src/features/profil/modals/modal-info-gadget.component";
-import AppNavigator from "./src/commons/component/bottom-tabs";
+import AppNavigator from "./app-navigator";
 
 const modalConfig = {
   ModalInfoSuccessGps,
