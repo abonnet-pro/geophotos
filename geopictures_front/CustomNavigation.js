@@ -9,6 +9,7 @@ import ZoneContainer from "./src/features/zone/container/zone.container";
 import PhotoContainer from "./src/features/photo/containers/photo.container";
 import ImageZoom from "./src/commons/component/image-zoom.component";
 import JeuContainer from "./src/features/jeu/containers/jeu.container";
+import ProfilContainer from "./src/features/profil/containers/profil.container";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const HomeScreenNavigator = () => {
         <Stack.Screen name="photos" component={PhotoContainer} />
         <Stack.Screen name="imageZoom" component={ImageZoom} />
         <Stack.Screen name="jeu" component={JeuContainer} />
+        <Stack.Screen name="profil" component={ProfilContainer} />
       </Stack.Navigator>
     );
   }

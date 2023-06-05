@@ -1,12 +1,12 @@
 import {Text} from "@rneui/base";
 import React, {useEffect, useState} from 'react'
 import {Button, Image, StyleSheet, View} from "react-native";
-import {getGadgetLocation, useGadgetLocation} from "../../features/jeu/services/jeu.service";
-import {Gadget} from "../../features/jeu/enums/gadget.enum";
-import LoadingView from "../component/loading.component";
-import Compas from "../../features/jeu/components/fleche-direction-azimute.component";
+import {getGadgetLocation, useGadgetLocation} from "../services/jeu.service";
+import {Gadget} from "../enums/gadget.enum";
+import LoadingView from "../../../commons/component/loading.component";
+import FlecheDirectionAzimute from "../components/fleche-direction-azimute.component";
 
-const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
+const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
 
     const [gadget, setGadget] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
 
         if(!location) return;
 
-        getGadgetLocation(Gadget.DISTANCE, photoId, location)
+        getGadgetLocation(Gadget.DIRECTION, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
@@ -29,13 +29,15 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
         const photoId = getParam('photoId', null);
         const location = getParam('location', null);
 
-        useGadgetLocation(Gadget.DISTANCE, photoId, location)
+        useGadgetLocation(Gadget.DIRECTION, photoId, location)
             .then(res => setGadget(res.data))
             .catch(err => console.log(err))
             .finally(() => setLoading(false));
     }
 
-    useEffect(init, []);
+    useEffect(() => {
+        init();
+    }, []);
 
     return(
         <>
@@ -44,16 +46,18 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
                     <LoadingView color={"white"}/>
                     :
                     <View style={ style.modalContainer }>
-                        <Text style={style.title}>Gadget Distance</Text>
+                        <Text style={style.title}>Gadget Direction</Text>
                         <View style={style.descriptionContainer}>
-                            <Image style={style.image} source={require('../../../assets/gadget_distance.png')}></Image>
+                            <Image style={style.image} source={require('../../../../assets/gadget_cardinal.png')}></Image>
                             <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                         </View>
                         <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
                         {
                             gadget?.reponse ?
                                 <View style={style.reponseContainer}>
-                                    <Text style={style.reponse}>{gadget.reponse} Mètres ({gadget.reponse / 1000} Km)</Text>
+                                    <View style={{flex:1}}>
+                                        <FlecheDirectionAzimute angleDiffByNord={gadget.reponse}></FlecheDirectionAzimute>
+                                    </View>
                                 </View>
                                 :
                                 <>
@@ -78,6 +82,8 @@ const style = StyleSheet.create({
         padding: 20,
         borderRadius: 20,
         borderWidth:2,
+        maxWidth:"95%",
+        alignSelf:'center'
     },
     title: {
         color: "white",
@@ -117,4 +123,4 @@ const style = StyleSheet.create({
     }
 })
 
-export default ModalUseGadgetDistance;
+export default ModalUseGadgetDirection;

@@ -49,13 +49,13 @@ public class Joueur {
     @JoinColumn(name="titre_actif", referencedColumnName = "id")
     private Titre titreActif;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "titre_joueur",
             joinColumns = @JoinColumn(name = "joueur_id"),
             inverseJoinColumns = @JoinColumn(name = "titre_id"))
     private Set<Titre> titres;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "bordure_joueur",
             joinColumns = @JoinColumn(name = "joueur_id"),
