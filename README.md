@@ -20,3 +20,5 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/free-icons/wrong" title="wrong icons">Wrong icons created by Freepik - Flaticon</a>  
 <a href="https://www.flaticon.com/free-icons/copy-link" title="copy link icons">Copy link icons created by Ahmad Zalat - Flaticon</a>  
 <a href="https://www.flaticon.com/free-icons/cancel" title="cancel icons">Cancel icons created by Smashicons - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/geo" title="geo icônes">Geo icônes créées par Good Ware - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/camera" title="caméra icônes">Caméra icônes créées par justicon - Flaticon</a>  
