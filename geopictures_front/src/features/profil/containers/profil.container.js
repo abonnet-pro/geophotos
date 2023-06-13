@@ -93,16 +93,5 @@ const style = StyleSheet.create({
     inventaireContainer: {
         flex:5,
         margin:10
-    },
-    backContainer: {
-        marginLeft: 10,
-        flexDirection: "row",
-        alignItems: 'center',
-        marginTop: 5,
-        marginBottom: 5,
-    },
-    back: {
-        width: 50,
-        height: 50,
-    },
+    }
 })
