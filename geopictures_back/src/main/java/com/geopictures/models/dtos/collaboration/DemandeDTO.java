@@ -17,6 +17,6 @@ public class DemandeDTO {
     private EtatDemande etatDemande;
     private String libelle;
     private TypeDemande typeDemande;
-    private String imageDemande;
+    private String image;
     private String commentaire;
 }

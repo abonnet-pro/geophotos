@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="demande_photo")
-public class DemandePhoto {
+@Table(name="demande_zone")
+public class DemandeZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -28,27 +28,16 @@ public class DemandePhoto {
     @JoinColumn(name="joueur_id")
     private Joueur joueur;
     @ManyToOne
-    @JoinColumn(name="zone_id")
-    private Zone zone;
+    @JoinColumn(name="region_id")
+    private Region region;
 
     @Column(name="image")
     private String image;
     @Column(name="etat")
     @Enumerated(EnumType.STRING)
     private EtatDemande etatDemande;
-    @Column(name="difficulte")
-    @Enumerated(EnumType.STRING)
-    private Difficulte difficulte;
     @Column(name="libelle")
     private String libelle;
-    @Column(name="indice")
-    private String indice;
-    @Column(name="latitude")
-    private String latitude;
-    @Column(name="longitude")
-    private String longitude;
-    @Column(name="commentaire")
-    private String commentaire;
 
     @PrePersist
     public void onPrePersit() {

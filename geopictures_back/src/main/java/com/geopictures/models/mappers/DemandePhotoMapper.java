@@ -12,7 +12,6 @@ public interface DemandePhotoMapper {
     DemandePhotoMapper INSTANCE = Mappers.getMapper( DemandePhotoMapper.class );
 
     @Mapping(source = "entity.created", target = "dateDemande")
-    @Mapping(source = "entity.titre", target = "libelle")
     @Mapping(constant = "PHOTO", target = "typeDemande")
     DemandeDTO demandePhotoToDto(DemandePhoto entity);
 }

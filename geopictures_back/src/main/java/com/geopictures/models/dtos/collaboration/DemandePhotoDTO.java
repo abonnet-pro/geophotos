@@ -11,7 +11,7 @@ import lombok.*;
 public class DemandePhotoDTO {
     private Long zoneId;
     private Difficulte difficulte;
-    private String titre;
+    private String libelle;
     private String indice;
     private String latitude;
     private String longitude;
