@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {Image, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {Button} from "@rneui/themed";
 import {EtatDemande} from "../enums/etat-demande.enum";
 import {TypeDemande} from "../enums/type-demande.enum";
 import LoadingView from "../../../commons/component/loading.component";
 import {URL_API} from "../../../utils/url.utils";
+import {Image} from "@rneui/themed";
 
 const ModalInfosDemande = ({ modal: { closeModal, getParam }}) => {
 
@@ -51,12 +52,12 @@ const ModalInfosDemande = ({ modal: { closeModal, getParam }}) => {
                     <Text style={style.libelle}>{demande?.libelle}</Text>
                 </View>
                 {
-                    demande?.typeDemande === TypeDemande.PHOTO ?
+                    demande?.image ?
                         <View style={style.photoContainer}>
                             <Image style={ style.photo }
                                    borderRadius={10}
                                    PlaceholderContent={ <LoadingView/>}
-                                   source={{ uri: `${URL_API}/photos/${demande?.imageDemande}` }}
+                                   source={{ uri: `${URL_API}/photos/${demande?.image}` }}
                             />
                         </View>
                         :
@@ -76,7 +77,7 @@ const ModalInfosDemande = ({ modal: { closeModal, getParam }}) => {
             {
                 demande?.etatDemande === EtatDemande.EN_ATTENTE ?
                     <View style={style.boutonContainer}>
-                        <Button buttonStyle={style.boutonCancel} title={"Annuler la demande"} onPress={closeModal}></Button>
+                        <Button buttonStyle={style.boutonCancel} title={"Annuler la demande"} onPress={() => closeModal(undefined, getParam('callback'))}></Button>
                     </View>
                     :
                     <></>

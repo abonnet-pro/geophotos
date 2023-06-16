@@ -7,6 +7,7 @@ import Inventaire from "../components/inventaire.component";
 import CarteVisite from "../components/carte-visite.component";
 import {loadProfil, saveProfil} from "../services/profil.service";
 import {Image} from "@rneui/themed";
+import Toast from "react-native-root-toast";
 
 export default function ProfilContainer({ navigation }) {
 
@@ -17,7 +18,7 @@ export default function ProfilContainer({ navigation }) {
         setLoadingProfil(true);
         loadProfil()
             .then(profil => setProfil(profil.data))
-            .catch(error => console.log(error))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoadingProfil(false))
     }
 
@@ -32,7 +33,7 @@ export default function ProfilContainer({ navigation }) {
 
         saveProfil(profilActif)
             .then(profil => setProfil(profil.data))
-            .catch(error => console.log(error))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoadingProfil(false))
     }
 
@@ -47,7 +48,7 @@ export default function ProfilContainer({ navigation }) {
 
         saveProfil(profilActif)
             .then(profil => setProfil(profil.data))
-            .catch(error => console.log(error))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoadingProfil(false))
     }
 
@@ -62,7 +63,7 @@ export default function ProfilContainer({ navigation }) {
 
         saveProfil(profilActif)
             .then(profil => setProfil(profil.data))
-            .catch(error => console.log(error))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoadingProfil(false))
     }
 

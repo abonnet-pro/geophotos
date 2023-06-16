@@ -3,22 +3,70 @@ import * as React from "react";
 import {ImageBackground, StyleSheet, View} from "react-native";
 import {Button, Text} from "@rneui/base";
 import {useEffect, useState} from "react";
-import {loadDemandes} from "../services/mes-demandes.service";
+import {annulationDemande, loadDemandes} from "../services/mes-demandes.service";
 import MesDemandes from "../component/mes-demandes.component";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 import {modalfy} from "react-native-modalfy";
+import {TOUS} from "../../../commons/consts/filtre-type.const";
+import {EtatDemande} from "../enums/etat-demande.enum";
+import Toast from "react-native-root-toast";
+
 
 export default function MesDemandesContainer({ navigation }) {
 
     const [demandes, setDemandes] = useState(null);
     const [loadingDemandes, setLoadingDemandes] = useState(false);
     const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
+    const [selectedTypes, setSelectedTypes] = useState(TOUS);
+    const [selectedEtat, setSelectedEtat] = useState(EtatDemande.TOUS);
 
     const init = () => {
+        load();
+    }
+
+    const load = () => {
         setLoadingDemandes(true);
         loadDemandes()
             .then(demandes => setDemandes(demandes.data.mesDemandes))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
+            .finally(() => setLoadingDemandes(false))
+    }
+
+    const handleSelectedTypes = (typeSelected) => {
+        setSelectedTypes(typeSelected);
+    }
+
+    const handleSelectedEtat = (etatSelected) => {
+        setSelectedEtat(etatSelected);
+    }
+
+    function getDemandesFiltered() {
+        if(selectedTypes === TOUS && selectedEtat === EtatDemande.TOUS) {
+            return demandes;
+        }
+
+        const demandesFiltered = demandes.filter(demande => {
+            if(selectedTypes === TOUS) {
+                return true;
+            }
+
+            return selectedTypes === demande.typeDemande;
+        });
+
+        return demandesFiltered.filter(demande => {
+            if(selectedEtat === EtatDemande.TOUS) {
+                return true;
+            }
+
+            return selectedEtat === demande.etatDemande;
+        });
+    }
+
+    const handleAnnulationDemande = (demande) => {
+        setLoadingDemandes(true);
+        annulationDemande(demande)
+            .then(res => load())
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoadingDemandes(false))
     }
 
@@ -28,7 +76,7 @@ export default function MesDemandesContainer({ navigation }) {
         <ImageBackground
             source={require('../../../../assets/auth_background.jpg')}
             style={ containerStyle.backgroundHover100 }>
-            { loadingDemandes && <LoadingGeneral/> }
+            { loadingDemandes && <LoadingGeneral titre={"Chargement en cours"}/> }
             <View>
                 <Button
                     onPress={() => navigation.navigate("collaboration-container")}
@@ -41,7 +89,14 @@ export default function MesDemandesContainer({ navigation }) {
             </View>
 
             <View style={style.containerMesDemandes}>
-                <MesDemandes demandes={ demandes } openModal={openModal}></MesDemandes>
+                <MesDemandes demandes={ getDemandesFiltered() }
+                             openModal={openModal}
+                             handleSelectedTypes={handleSelectedTypes}
+                             handleSelectedEtat={handleSelectedEtat}
+                             selectedTypes={selectedTypes}
+                             selectedEtat={selectedEtat}
+                             handleAnnulationDemande={handleAnnulationDemande}>
+                </MesDemandes>
             </View >
         </ImageBackground>
     )

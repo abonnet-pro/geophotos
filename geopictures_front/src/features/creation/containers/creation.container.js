@@ -2,6 +2,7 @@ import FormNouveauJoueur from "../components/form-nouveau-joueur.component";
 import {useEffect, useState} from "react";
 import {JOUEUR, save} from "../../../utils/store.utils";
 import {createJoueur, getAvatarsFree} from "../services/creation.service";
+import Toast from "react-native-root-toast";
 
 export default function CreationContainer({ navigation }) {
 
@@ -12,7 +13,7 @@ export default function CreationContainer({ navigation }) {
     const init = () => {
         getAvatarsFree(setAvatars)
             .then(res => setAvatars(res.data))
-            .catch(error => console.log(error));
+            .catch(err => Toast.show("Une erreur est survenu"))
     }
 
     const handleCreateJoueur = async (nom, avatar) => {

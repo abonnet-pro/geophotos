@@ -26,7 +26,7 @@ export default function ChargementContainer({ navigation }) {
         });
     }
 
-    useEffect(init, []);
+    useEffect(init, [assets]);
 
     return(
         <>

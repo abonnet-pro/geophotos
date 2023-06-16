@@ -5,6 +5,7 @@ import {getGadgetLocation, useGadgetLocation} from "../services/jeu.service";
 import {Gadget} from "../enums/gadget.enum";
 import LoadingView from "../../../commons/component/loading.component";
 import FlecheDirectionAzimute from "../components/fleche-direction-azimute.component";
+import Toast from "react-native-root-toast";
 
 const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
 
@@ -20,7 +21,7 @@ const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
 
         getGadgetLocation(Gadget.DIRECTION, photoId, location)
             .then(res => setGadget(res.data))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 
@@ -31,7 +32,7 @@ const ModalUseGadgetDirection = ({ modal: { closeModal, getParam  }}) => {
 
         useGadgetLocation(Gadget.DIRECTION, photoId, location)
             .then(res => setGadget(res.data))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 

@@ -4,6 +4,7 @@ import {Button, Image, StyleSheet, View} from "react-native";
 import {getGadgetLocation, useGadgetLocation} from "../services/jeu.service";
 import {Gadget} from "../enums/gadget.enum";
 import LoadingView from "../../../commons/component/loading.component";
+import Toast from "react-native-root-toast";
 
 const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
 
@@ -19,7 +20,7 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
 
         getGadgetLocation(Gadget.DISTANCE, photoId, location)
             .then(res => setGadget(res.data))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 
@@ -30,7 +31,7 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
 
         useGadgetLocation(Gadget.DISTANCE, photoId, location)
             .then(res => setGadget(res.data))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 

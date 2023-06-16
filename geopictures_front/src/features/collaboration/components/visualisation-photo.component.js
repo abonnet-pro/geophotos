@@ -3,7 +3,7 @@ import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {Camera} from "expo-camera";
 import * as React from "react";
 
-export default function VisualisationPhoto({permission, location, photoPrise, setPhotoPrise, formValid, handleSendDemande}) {
+export default function VisualisationPhoto({setFormValid, regionSelected, zoneSelected, difficulteSelected, titre, indice, permission, location, photoPrise, setPhotoPrise, formValid, handleSendDemande}) {
 
     let camera;
 
@@ -11,6 +11,7 @@ export default function VisualisationPhoto({permission, location, photoPrise, se
         if(camera) {
             const photo = await camera.takePictureAsync();
             setPhotoPrise(photo);
+            setFormValid(regionSelected && zoneSelected && difficulteSelected && titre && indice);
         }
     }
 

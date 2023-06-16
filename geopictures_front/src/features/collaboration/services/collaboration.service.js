@@ -15,3 +15,20 @@ export async function demandePhoto(demandePhoto, photoPrise) {
     formData.append('demandePhoto', JSON.stringify(demandePhoto));
     return axios.post(`${URL_API}/collaboration/demande/photo`, formData, headerMultiPart(joueur.token));
 }
+
+export async function demandeZone(demandeZone, image) {
+    const joueur = await getValueFor(JOUEUR);
+
+    const formData = new FormData();
+
+    if(image) {
+        formData.append('file', {
+            uri: image,
+            name: image.split("/").slice(-1).pop(),
+            type: `image/${image.split(".").slice(-1).pop()}`,
+        });
+    }
+
+    formData.append('demandeZone', JSON.stringify(demandeZone));
+    return axios.post(`${URL_API}/collaboration/demande/zone`, formData, headerMultiPart(joueur.token));
+}

@@ -1,13 +1,13 @@
 import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
-import {ImageBackground, ScrollView, StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
-import {Button, Input, Text} from "@rneui/base";
+import {Image, ImageBackground, ScrollView, StyleSheet, TextInput, View} from "react-native";
+import {Button, Text} from "@rneui/base";
 import Picker from "@ouroboros/react-native-picker/index";
 import {Region, RegionLibelle} from "../../../commons/enums/regions.enum";
 import {Difficulte} from "../../photo/enums/difficulte.enum";
 import * as React from "react";
-import {commonsStyle, font} from "../../../commons/styles/commons.styles";
+import {commonsStyle, font, primary1} from "../../../commons/styles/commons.styles";
 
-export default function NouvelleDemande({handleIndiceChange, handleTitreChange, regionSelected, handleRegionSelected, zonesOptions, zoneSelected, handleZoneSelected, handleDifficulteSelected, difficulteSelected, handlePressPhoto}) {
+export default function NouvelleDemande({handleEnvoiDemandeZone, zoneLibelle, imageZone, pickImage, handleZoneLibelleChange, onNouvelleZoneEdit,handleIndiceChange, handleTitreChange, regionSelected, handleRegionSelected, zonesOptions, zoneSelected, handleZoneSelected, handleDifficulteSelected, difficulteSelected, handlePressPhoto}) {
 
     return(
         <ImageBackground
@@ -45,7 +45,7 @@ export default function NouvelleDemande({handleIndiceChange, handleTitreChange, 
                         </View>
 
                         {
-                            zonesOptions &&
+                            zonesOptions && !onNouvelleZoneEdit ?
                             <View style={style.formulaireLigneContainer}>
                                 <View style={style.formulaireLibelleContainer}>
                                     <Text style={style.formulaireLibelle}>Zone :</Text>
@@ -58,11 +58,43 @@ export default function NouvelleDemande({handleIndiceChange, handleTitreChange, 
                                         value={zoneSelected}
                                     />
                                 </View>
-                            </View>
+                            </View> : <></>
                         }
 
                         {
-                            zoneSelected && <>
+                            regionSelected && onNouvelleZoneEdit ? <>
+                            <View style={style.formulaireLigneContainer}>
+                                <View style={style.formulaireLibelleContainer}>
+                                    <Text style={style.formulaireLibelle}>Zone :</Text>
+                                </View>
+                                <View style={ style.formulaireInputContainer}>
+                                    <TextInput autoFocus={true} onChangeText={handleZoneLibelleChange} containerStyle={ style.formulaireInputContainer }
+                                               inputContainerStyle={{borderBottomWidth:0}}
+                                    />
+                                </View>
+                            </View>
+
+                            <View style={style.formulaireLigneContainer}>
+                                <View style={style.formulaireLibelleContainer}>
+                                    <Text style={style.formulaireLibelle}>Image :</Text>
+                                </View>
+                                <View style={style.chooseFileContainer}>
+                                    <Button title="Choisir une image" onPress={pickImage} buttonStyle={style.boutonChoose}/>
+                                    {imageZone && <Image source={{ uri: imageZone.uri }} style={{ width: 50, height: 50 }} />}
+                                </View>
+                            </View>
+
+                            <Button disabled={!!!zoneLibelle}
+                                    containerStyle={style.boutonEnvoyerZoneContainer}
+                                    buttonStyle={style.boutonEnvoyerZone}
+                                    title={"Envoyer la demande"}
+                                    onPress={handleEnvoiDemandeZone}>
+                            </Button>
+                            </> : <></>
+                        }
+
+                        {
+                            zoneSelected && !onNouvelleZoneEdit ? <>
                                 <View style={style.formulaireLigneContainer}>
                                     <View style={style.formulaireLibelleContainer}>
                                         <Text style={style.formulaireLibelle}>Difficulté :</Text>
@@ -117,7 +149,7 @@ export default function NouvelleDemande({handleIndiceChange, handleTitreChange, 
                                         titleStyle={ font(15, 'bold') }
                                         buttonStyle={ commonsStyle.boutonSuccess }/>
                                 </View>
-                            </>
+                            </> : <></>
                         }
                     </View>
                 </ScrollView>
@@ -138,7 +170,7 @@ const style = StyleSheet.create({
         marginTop: 10
     },
     formulaireContainer: {
-        margin:10
+        margin:10,
     },
     formulaireLibelleContainer: {
         flex:1
@@ -161,8 +193,23 @@ const style = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 20,
     },
-    containerBoutonPhoto : {
-        marginLeft:'auto',
-        marginRight:'auto'
+    chooseFileContainer: {
+        flex:2,
+        padding:5,
+        marginRight:5,
+        flexDirection: "row",
+        justifyContent:"space-between",
+        alignItems:"center",
+    },
+    boutonChoose: {
+        backgroundColor:'#6c9372',
+        borderRadius:5
+    },
+    boutonEnvoyerZoneContainer: {
+        marginTop:70,
+        alignItems:"flex-end",
+    },
+    boutonEnvoyerZone: {
+        backgroundColor:primary1
     }
 });

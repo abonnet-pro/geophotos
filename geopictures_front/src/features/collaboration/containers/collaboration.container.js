@@ -9,9 +9,10 @@ import * as Location from "expo-location";
 import {modalfy} from "react-native-modalfy";
 import VisualisationPhoto from "../components/visualisation-photo.component";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
-import {demandePhoto} from "../services/collaboration.service";
+import {demandePhoto, demandeZone} from "../services/collaboration.service";
 import {Button} from "@rneui/base";
 import Toast from "react-native-root-toast";
+import * as ImagePicker from "expo-image-picker";
 
 
 export default function CollaborationContainer({ navigation }) {
@@ -22,7 +23,8 @@ export default function CollaborationContainer({ navigation }) {
     const [difficulteSelected, setDifficulteSelected] = useState(null);
     const [titre, setTitre] = useState(null);
     const [indice, setIndice] = useState(null);
-    const [image, setImage] = useState(null);
+    const [zoneLibelle, setZoneLibelle] = useState(null);
+    const [imageZone, setImagZone] = useState(null);
     const [zonesOptions, setZonesOptions] = useState(null);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [permission, setPermission] = useState(null);
@@ -30,6 +32,7 @@ export default function CollaborationContainer({ navigation }) {
     const [photoPrise, setPhotoPrise] = useState(null);
     const [formValid, setFormValid] = useState(false);
     const [loadingDemandeSend, setLoadingDemandeSend] = useState(false);
+    const [onNouvelleZoneEdit, setOnNouvelleZoneEdit] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -62,10 +65,13 @@ export default function CollaborationContainer({ navigation }) {
 
         setZonesOptions(buildOptionsZonePicker(zones.data));
         setFormValid(regionSelected && zoneSelected && difficulteSelected && titre && indice && photoPrise);
+        setZoneSelected(null);
+        setOnNouvelleZoneEdit(false);
     }
 
     const handleZoneSelected = (itemValue) => {
         setZoneSelected(itemValue);
+        setOnNouvelleZoneEdit(false);
         setFormValid(regionSelected && zoneSelected && difficulteSelected && titre && indice && photoPrise);
     }
 
@@ -82,6 +88,10 @@ export default function CollaborationContainer({ navigation }) {
     const handleIndiceChange = (indice) => {
         setIndice(indice);
         setFormValid(regionSelected && zoneSelected && difficulteSelected && titre && indice && photoPrise);
+    }
+
+    const handleZoneLibelleChange = (zoneLibelle) => {
+        setZoneLibelle(zoneLibelle);
     }
 
     function buildOptionsZonePicker(zones) {
@@ -106,7 +116,18 @@ export default function CollaborationContainer({ navigation }) {
         }
     }
 
-    const handleSendDemande = async () => {
+    const handleEnvoiDemandeZone = () => {
+        if(!zoneLibelle) {
+            return;
+        }
+
+        const title = "Valider la demande";
+        const description = "Voulez-vous validez la demande actuelle ? Vous serez notifié par la validation ou non de la demande par les équipes Geopictures. Nous vous remercions de votre collaboration !";
+
+        openModal("ModalChoixValid", {title: title, description: description, callback: () => sendDemandeZone()});
+    }
+
+    const handleSendDemande = () => {
         if(!formValid) {
             return;
         }
@@ -114,17 +135,17 @@ export default function CollaborationContainer({ navigation }) {
         const title = "Valider la demande";
         const description = "Voulez-vous validez la demande actuelle ? Vous serez notifié par la validation ou non de la demande par les équipes Geopictures. Nous vous remercions de votre collaboration !";
 
-        openModal("ModalChoixValid", {title: title, description: description, callback: () => sendDemande()});
+        openModal("ModalChoixValid", {title: title, description: description, callback: () => sendDemandePhoto()});
     }
 
-    const sendDemande = async () => {
+    const sendDemandePhoto = async () => {
         setLoadingDemandeSend(true);
         const location = await Location.getCurrentPositionAsync({});
 
         const demandePhotoRequest = {
             zoneId: zoneSelected,
             difficulte: difficulteSelected,
-            titre: titre,
+            libelle: titre,
             indice: indice,
             latitude: location.coords.latitude,
             longitude: location.coords.longitude
@@ -133,10 +154,61 @@ export default function CollaborationContainer({ navigation }) {
         demandePhoto(demandePhotoRequest, photoPrise.uri)
             .then(res => {
                 Toast.show("Demande envoyée avec succès !");
-                navigation.navigate('mes-demandes-container');
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'mes-demandes-container'}],
+                });
             })
             .catch(err => Toast.show("Une erreur est survenue"))
             .finally(() => setLoadingDemandeSend(false));
+    }
+
+    const sendDemandeZone = async () => {
+        setLoadingDemandeSend(true);
+
+        const demandeZoneRequest = {
+            codeRegion: regionSelected,
+            libelle: zoneLibelle,
+        };
+
+        demandeZone(demandeZoneRequest, imageZone?.uri)
+            .then(res => {
+                Toast.show("Demande envoyée avec succès !");
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'mes-demandes-container'}],
+                });
+            })
+            .catch(err => Toast.show("Une erreur est survenue"))
+            .finally(() => setLoadingDemandeSend(false));
+    }
+
+    const handlePressNouvelleZone = () => {
+        setOnNouvelleZoneEdit(!onNouvelleZoneEdit);
+        setImagZone(null);
+    }
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [16, 9],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setImagZone(result.assets[0]);
+        }
+    }
+
+    function getStyleBoutonTop() {
+        return !zoneSelected && regionSelected ? {
+            flexDirection:"row",
+            justifyContent:"space-between"
+        } : {
+            flexDirection:"row",
+            alignSelf:"flex-end"
+        }
     }
 
     return (
@@ -144,14 +216,32 @@ export default function CollaborationContainer({ navigation }) {
             source={require('../../../../assets/auth_background.jpg')}
             style={ containerStyle.backgroundHover100 }>
             { loadingDemandeSend && <LoadingGeneral/> }
-            <Button
-                onPress={() => navigation.navigate("mes-demandes-container")}
-                title="Mes demandes"
-                raised={true}
-                radius={20}
-                containerStyle={ style.containerBoutonNavigation }
-                titleStyle={ font(15, 'bold') }
-                buttonStyle={ commonsStyle.boutonSuccess }/>
+
+            <View style={getStyleBoutonTop()}>
+                {
+                    !zoneSelected && regionSelected ?
+                        <Button
+                            onPress={handlePressNouvelleZone}
+                            title={onNouvelleZoneEdit ? "Zones existantes" : "Nouvelle zone"}
+                            raised={true}
+                            radius={20}
+                            containerStyle={ style.containerBoutonNouvelleZone }
+                            titleStyle={ font(15, 'bold') }
+                            buttonStyle={ commonsStyle.boutonSuccess }/>
+                        :
+                        <></>
+                }
+
+                <Button
+                    onPress={() => navigation.navigate("mes-demandes-container")}
+                    title="Mes demandes"
+                    raised={true}
+                    radius={20}
+                    containerStyle={ style.containerBoutonNavigation }
+                    titleStyle={ font(15, 'bold') }
+                    buttonStyle={ commonsStyle.boutonSuccess }/>
+            </View>
+
             <View style={ style.nouvelleDemandeContainer }>
                 <NouvelleDemande regionSelected={regionSelected}
                                  handleRegionSelected={handleRegionSelected}
@@ -162,7 +252,13 @@ export default function CollaborationContainer({ navigation }) {
                                  handleDifficulteSelected={handleDifficulteSelected}
                                  handleTitreChange={handleTitreChange}
                                  handlePressPhoto={handlePressPhoto}
-                                 handleIndiceChange={handleIndiceChange}>
+                                 handleIndiceChange={handleIndiceChange}
+                                 onNouvelleZoneEdit={onNouvelleZoneEdit}
+                                 handleZoneLibelleChange={handleZoneLibelleChange}
+                                 pickImage={pickImage}
+                                 imageZone={imageZone}
+                                 zoneLibelle={zoneLibelle}
+                                 handleEnvoiDemandeZone={handleEnvoiDemandeZone}>
                 </NouvelleDemande>
             </View>
             {
@@ -175,7 +271,13 @@ export default function CollaborationContainer({ navigation }) {
                                             photoPrise={photoPrise}
                                             setPhotoPrise={setPhotoPrise}
                                             formValid={formValid}
-                                            handleSendDemande={handleSendDemande}>
+                                            handleSendDemande={handleSendDemande}
+                                            setFormValid={setFormValid}
+                                            regionSelected={regionSelected}
+                                            zoneSelected={zoneSelected}
+                                            difficulteSelected={difficulteSelected}
+                                            titre={titre}
+                                            indice={indice}>
                         </VisualisationPhoto>
                     }
                 </View>
@@ -201,9 +303,17 @@ const style = StyleSheet.create({
         marginBottom:10
     },
     containerBoutonNavigation: {
-        alignSelf:"flex-end",
         marginTop:10,
         marginRight:10,
-        marginBottom:5
+        marginBottom:5,
+    },
+    containerBoutonNouvelleZone: {
+        marginTop:10,
+        marginBottom:5,
+        marginLeft:10,
+    },
+    containerBouttonTop: {
+        flexDirection:"row",
+        justifyContent:"space-between"
     }
 })
