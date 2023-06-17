@@ -24,3 +24,5 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/fr/icones-gratuites/camera" title="caméra icônes">Caméra icônes créées par justicon - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/sablier" title="sablier icônes">Sablier icônes créées par nawicon - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/annuler" title="annuler icônes">Annuler icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/google" title="google icônes">Google icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/cocher" title="cocher icônes">Cocher icônes créées par Freepik - Flaticon</a>  
