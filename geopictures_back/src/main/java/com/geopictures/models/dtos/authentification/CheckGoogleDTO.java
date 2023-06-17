@@ -7,9 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateJoueurDTO {
-    private String nom;
-    private Long avatarId;
+public class CheckGoogleDTO {
     private String email;
-    private String googleId;
+    private String id;
 }

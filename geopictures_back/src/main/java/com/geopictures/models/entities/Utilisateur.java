@@ -35,6 +35,8 @@ public class Utilisateur {
     private Role role;
     @Column(name="actif")
     private boolean actif;
+    @Column(name="google_id")
+    private String googleId;
 
     @OneToOne(mappedBy = "utilisateur")
     private Joueur joueur;

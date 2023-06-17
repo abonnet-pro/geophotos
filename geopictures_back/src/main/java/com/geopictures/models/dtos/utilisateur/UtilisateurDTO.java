@@ -11,4 +11,5 @@ public class UtilisateurDTO {
     private Long id;
     private String nom;
     private String token;
+    private boolean admin;
 }

@@ -20,11 +20,13 @@ public class UtilisateurService implements IUtilisateurService {
         return utilisateurRepository.findByNom(nom);
     }
 
-    public Utilisateur initUtilisateur(String nom) {
+    public Utilisateur initUtilisateur(String nom, String email, String googleId) {
         return Utilisateur.builder()
                 .nom(nom)
                 .role(Role.JOUEUR)
                 .actif(true)
+                .email(email)
+                .googleId(googleId)
                 .build();
     }
 }
