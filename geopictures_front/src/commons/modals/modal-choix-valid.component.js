@@ -54,6 +54,7 @@ const style = StyleSheet.create({
         fontWeight:'bold',
         color:'white',
         fontSize:20,
+        textAlign:'center'
     },
     descriptionContainer: {
         margin:5

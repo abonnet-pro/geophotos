@@ -1,6 +1,6 @@
 import FormNouveauJoueur from "../components/form-nouveau-joueur.component";
 import {useEffect, useState} from "react";
-import {JOUEUR, save} from "../../../utils/store.utils";
+import {getValueFor, JOUEUR, save, USER_GOOGLE} from "../../../utils/store.utils";
 import {createJoueur, getAvatarsFree} from "../services/creation.service";
 import Toast from "react-native-root-toast";
 
@@ -17,9 +17,14 @@ export default function CreationContainer({ navigation }) {
     }
 
     const handleCreateJoueur = async (nom, avatar) => {
+
+        const userGoogle = await getValueFor(USER_GOOGLE);
+
         const data = {
             nom: nom,
-            avatarId: avatar.id
+            avatarId: avatar.id,
+            email: userGoogle?.email ? userGoogle?.email : null,
+            googleId: userGoogle?.id ? userGoogle?.id : null
         }
 
         setLoadingCreateJoueur(true);
@@ -30,7 +35,7 @@ export default function CreationContainer({ navigation }) {
             return;
         }
 
-        await save(JOUEUR, {id: joueur.data.id, token: joueur.data.token});
+        await save(JOUEUR, {id: joueur.data.id, token: joueur.data.token, isAdmin: utilisateur.data.admin});
         setLoadingCreateJoueur(false);
 
         navigation.navigate('accueil');

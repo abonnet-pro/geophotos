@@ -22,3 +22,9 @@ export function storeAssets(assets) {
     BACKGROUND_ASSETS.background = assets[0];
     BACKGROUND_ASSETS.bordure = assets[1];
 }
+
+export async function resetStore() {
+    await deleteStore(JOUEUR);
+    await deleteStore(USER_GOOGLE);
+    await deleteStore(TOKEN_GOOGLE);
+}
