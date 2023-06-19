@@ -19,7 +19,7 @@ import ClassementContainer from "./src/features/classement/containers/classement
 import {primary1} from "./src/commons/styles/commons.styles";
 
 const screenOption = {
-    statusBarHidden:true,
+    statusBarColor:"black",
     navigationBarHidden: true,
     headerShown: false,
     tabBarActiveTintColor: "white",

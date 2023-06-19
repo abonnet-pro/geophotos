@@ -4,7 +4,7 @@ import {Image, ImageBackground, StyleSheet, TouchableOpacity, View} from "react-
 import {URL_API} from "../../../utils/url.utils";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ExperienceBarre from "./experience-barre.component";
-import {deleteStore, JOUEUR} from "../../../utils/store.utils";
+import {deleteStore, getValueFor, JOUEUR} from "../../../utils/store.utils";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 
 export default function Accueil({ loadingAccueil, joueurInformations, navigation }) {
