@@ -26,3 +26,4 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/fr/icones-gratuites/annuler" title="annuler icônes">Annuler icônes créées par Freepik - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/google" title="google icônes">Google icônes créées par Freepik - Flaticon</a>  
 <a href="https://www.flaticon.com/fr/icones-gratuites/cocher" title="cocher icônes">Cocher icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/chevron" title="chevron icônes">Chevron icônes créées par Ridho Imam Prayogi - Flaticon</a>  
