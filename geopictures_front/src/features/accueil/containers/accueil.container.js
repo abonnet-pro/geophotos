@@ -7,7 +7,7 @@ import {getValueFor, JOUEUR, resetStore, save, TOKEN_GOOGLE, USER_GOOGLE} from "
 import {modalfy} from "react-native-modalfy";
 import * as Google from "expo-auth-session/providers/google";
 import {
-    checkUtilisateurGoogle,
+    checkUtilisateurGoogle, getUserData,
     getUserDataAndSave,
     synchorniseUtilisateurGoogle
 } from "../../authentification/services/authentification.service";
@@ -30,7 +30,10 @@ export default function AccueilContainer({ navigation }) {
 
         setLoadingAccuil(true);
 
-        getValueFor(USER_GOOGLE).then(userGoogle => setUserGoogle(userGoogle));
+        getValueFor(USER_GOOGLE).then(userGoogle => {
+            console.log(userGoogle)
+            setUserGoogle(userGoogle)
+        });
 
         loadAccueil()
             .then(joueurInformations => setJoueurInformations(joueurInformations.data))
@@ -52,8 +55,7 @@ export default function AccueilContainer({ navigation }) {
 
         if (result?.type === 'success') {
             setLoadingAccuil(true);
-            await getUserDataAndSave(result.authentication.accessToken);
-            const userGoogle = await getValueFor(USER_GOOGLE);
+            const userGoogle = await getUserData(result.authentication.accessToken);
 
             const checkGoogleUtilisateurRequest = {
                 email: userGoogle.email,
@@ -63,7 +65,7 @@ export default function AccueilContainer({ navigation }) {
             const utilisateur = await checkUtilisateurGoogle(checkGoogleUtilisateurRequest);
 
             if(utilisateur.data) {
-                await handleSynchronisationGoogleUtilisateurExistant(utilisateur.data, result.authentication.accessToken)
+                await handleSynchronisationGoogleUtilisateurExistant(userGoogle, utilisateur.data, result.authentication.accessToken)
             } else {
                 await handleSynchronisationGoogleUtilisateurInexistant(userGoogle, checkGoogleUtilisateurRequest, result.authentication.accessToken)
             }
@@ -71,26 +73,40 @@ export default function AccueilContainer({ navigation }) {
     }
 
     const handleSynchronisationGoogleUtilisateurInexistant = async (userGoogle, checkGoogleUtilisateurRequest, accessToken) => {
-        synchorniseUtilisateurGoogle(checkGoogleUtilisateurRequest)
-            .then(_ => {
-                save(TOKEN_GOOGLE, accessToken);
-                save(USER_GOOGLE, userGoogle);
-                setUserGoogle(userGoogle);
-            })
-            .catch(err => Toast.show("Une erreur est survenu"))
-            .finally(() => setLoadingAccuil(false));
+
+        const userGoogleExisting = await getValueFor(USER_GOOGLE);
+
+        if(userGoogleExisting) {
+            const title = "Synchroniser votre compte Google";
+            const description = "Aucun compte Geopictures n'a été trouvé sur cet identifiant Google, voulez-vous créer un nouveau compte lié à cet identifiant ?";
+
+            openModal("ModalChoixValid", {title: title, description: description, callback: () => handleCreateNouveauCompteGoogle(userGoogle, accessToken)});
+        } else {
+            synchorniseUtilisateurGoogle(checkGoogleUtilisateurRequest)
+                .then(_ => {
+                    save(TOKEN_GOOGLE, accessToken);
+                    save(USER_GOOGLE, userGoogle);
+                    setUserGoogle(userGoogle);
+                })
+                .catch(err => Toast.show("Une erreur est survenu"))
+                .finally(() => setLoadingAccuil(false));
+        }
     }
 
-    const handleSynchronisationGoogleUtilisateurExistant = async (utilisateur, accessToken) => {
+    const handleCreateNouveauCompteGoogle = (userGoogle, accessToken) => {
+        navigation.navigate("creation", {userGoogle: userGoogle, accessToken: accessToken});
+    }
+
+    const handleSynchronisationGoogleUtilisateurExistant = async (userGoogle, utilisateur, accessToken) => {
         setLoadingAccuil(false);
 
         const title = "Synchroniser votre compte Google";
         const description = "Une compte geopictures est déja existant avec cet identifiant google, voulez vous bacsuler sur ce compte ? Attention si votre compte actuelle n'est pas synchronisé avec Google vous perdrez toutes les données existantes.";
 
-        openModal("ModalChoixValid", {title: title, description: description, callback: () => synchronisationGoogleUtilisateurExistant(utilisateur, accessToken)});
+        openModal("ModalChoixValid", {title: title, description: description, callback: () => synchronisationGoogleUtilisateurExistant(userGoogle, utilisateur, accessToken)});
     }
 
-    const synchronisationGoogleUtilisateurExistant = async (utilisateur, accessToken) => {
+    const synchronisationGoogleUtilisateurExistant = async (userGoogle, utilisateur, accessToken) => {
         await resetStore();
         await save(JOUEUR, {id: utilisateur.id, token: utilisateur.token, isAdmin: utilisateur.admin});
         await save(TOKEN_GOOGLE, accessToken);

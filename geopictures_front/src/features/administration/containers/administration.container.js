@@ -2,14 +2,81 @@ import {commonsStyle, containerStyle, font} from "../../../commons/styles/common
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 import * as React from "react";
 import {Image, ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
-import {useState} from "react";
-import {Button} from "@rneui/base";
-import MesDemandes from "../../mes-demandes/component/mes-demandes.component";
-import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
+import {useEffect, useState} from "react";
+import {BACKGROUND_ASSETS, getValueFor, JOUEUR} from "../../../utils/store.utils";
+import AdministrationDemandesAttentes from "../components/administration-demandes-attentes.component";
+import Toast from "react-native-root-toast";
+import {loadDemandesEnAttentes, updateDemande} from "../services/administration.services";
 
 export default function AdministrationContainer({ navigation }) {
 
     const [loading, setLoading] = useState(false);
+    const [demandesEnAttentes, setDemandesEnAttentes] = useState(null);
+
+    const init = () => {
+        getValueFor(JOUEUR).then(joueur => {
+            if(!joueur.isAdmin) {
+                navigation.navigate("accueil-stack");
+            } else {
+                load();
+            }
+        });
+    }
+
+    const load = () => {
+        setLoading(true);
+        loadDemandesEnAttentes()
+            .then(demandes => {
+                setDemandesEnAttentes(demandes.data);
+            })
+            .catch(err => Toast.show("Une erreur est survenu"))
+            .finally(() => setLoading(false));
+    }
+
+    const handlePressImage = (image) => {
+        navigation.navigate("imageZoom", {
+            image: image
+        });
+    }
+
+    const handleRefuseDemande = (demande, commentaire) => {
+        const updateRequest = {
+            commentaire: commentaire,
+            typeDemande: demande.typeDemande,
+            accept: false,
+            demandeId: demande.id
+        }
+
+        setLoading(true);
+        updateDemande(demande, updateRequest)
+            .then(_ => load())
+            .catch(err => Toast.show("Une erreur est survenu"))
+            .finally(() => setLoading(false));
+    }
+
+    const handleAcceptDemande = (demande, commentaire) => {
+        const updateRequest = {
+            commentaire: commentaire,
+            accept: true,
+            typeDemande: demande.typeDemande,
+            demandeId: demande.id
+        }
+
+        setLoading(true);
+        updateDemande(demande, updateRequest)
+            .then(_ => load())
+            .catch(err => Toast.show("Une erreur est survenu"))
+            .finally(() => setLoading(false));
+    }
+
+    const goBack = () => {
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'mes-demandes-container' }],
+        });
+    }
+
+    useEffect(init, []);
 
     return(
         <ImageBackground
@@ -18,21 +85,17 @@ export default function AdministrationContainer({ navigation }) {
             { loading && <LoadingGeneral titre={"Chargement en cours"}/> }
 
             <View style={ style.backContainer }>
-                <TouchableOpacity onPress={ () => navigation.goBack() }>
+                <TouchableOpacity onPress={ () => goBack() }>
                     <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
                 </TouchableOpacity>
             </View>
 
             <View style={style.containerBody}>
-                <View>
-                    <ImageBackground
-                        source={ BACKGROUND_ASSETS.bordure } style={{ padding:5 }} borderRadius={20}>
-                        <ImageBackground source={ BACKGROUND_ASSETS.background } borderRadius={20}>
-                            <View style={style.containerDemandes}>
-                            </View>
-                        </ImageBackground>
-                    </ImageBackground>
-                </View>
+                <AdministrationDemandesAttentes demandesEnAttentes={demandesEnAttentes}
+                                                handlePressImage={handlePressImage}
+                                                handleRefuseDemande={handleRefuseDemande}
+                                                handleAcceptDemande={handleAcceptDemande}>
+                </AdministrationDemandesAttentes>
             </View >
 
         </ImageBackground>
@@ -46,17 +109,6 @@ const style = StyleSheet.create({
         marginLeft:10,
         marginBottom:10,
         flex:1
-    },
-    boutonsHeaderContainer: {
-        // flexDirection: "row",
-        // marginTop:10,
-        // marginRight:10,
-        // marginLeft:10,
-        // marginBottom:5,
-        // justifyContent:'flex-start'
-    },
-    containerDemandes: {
-        height:'100%'
     },
     back: {
         width: 50,

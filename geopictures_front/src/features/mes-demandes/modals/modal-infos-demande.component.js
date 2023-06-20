@@ -51,6 +51,7 @@ const ModalInfosDemande = ({ modal: { closeModal, getParam }}) => {
                     <Image style={ style.image } source={getSource()}/>
                     <Text style={style.libelle}>{demande?.libelle}</Text>
                 </View>
+                {demande?.typeDemande === TypeDemande.PHOTO && <Text style={style.indice}>Indice : {demande?.indice ? demande?.indice : "Aucun indice"}</Text>}
                 {
                     demande?.image ?
                         <View style={style.photoContainer}>
@@ -111,6 +112,10 @@ const style = StyleSheet.create({
         color:'white',
         alignSelf:'center',
         margin:10
+    },
+    indice: {
+        marginTop:10,
+        color:'white',
     },
     boutonContainer: {
         flexDirection:'row',

@@ -1,9 +1,9 @@
 import Authentification from "../components/authentification.component";
 import {useEffect, useState} from "react";
-import {getValueFor, JOUEUR, save, USER_GOOGLE} from "../../../utils/store.utils";
+import {getValueFor, JOUEUR, save, TOKEN_GOOGLE, USER_GOOGLE} from "../../../utils/store.utils";
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
-import {checkUtilisateurGoogle, getUserDataAndSave} from "../services/authentification.service";
+import {checkUtilisateurGoogle, getUserData, getUserDataAndSave} from "../services/authentification.service";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -19,8 +19,7 @@ export default function AuthentificationContainer({ navigation }) {
         const result = await promptAsync({showInRecents: true});
 
         if (result?.type === 'success') {
-            await getUserDataAndSave(result.authentication.accessToken);
-            const userGoogle = await getValueFor(USER_GOOGLE);
+            const userGoogle = await getUserData(result.authentication.accessToken);
 
             const checkGoogleUtilisateurRequest = {
                 email: userGoogle.email,
@@ -28,12 +27,13 @@ export default function AuthentificationContainer({ navigation }) {
             }
 
             const utilisateur = await checkUtilisateurGoogle(checkGoogleUtilisateurRequest);
-
             if(utilisateur.data) {
+                await save(TOKEN_GOOGLE, result.authentication.accessToken);
+                await save(USER_GOOGLE, userGoogle);
                 await save(JOUEUR, {id: utilisateur.data.id, token: utilisateur.data.token, isAdmin: utilisateur.data.admin});
                 navigation.navigate('accueil');
             } else {
-                navigation.navigate('creation');
+                navigation.navigate("creation", {userGoogle: userGoogle, accessToken: result.authentication.accessToken});
             }
         }
     }
