@@ -1,5 +1,6 @@
 package com.geopictures.models.dtos.collaboration;
 
+import com.geopictures.models.entities.Joueur;
 import com.geopictures.models.enums.EtatDemande;
 import com.geopictures.models.enums.TypeDemande;
 import lombok.*;
@@ -19,4 +20,6 @@ public class DemandeDTO {
     private TypeDemande typeDemande;
     private String image;
     private String commentaire;
+    private String indice;
+    private String nomJoueur;
 }
