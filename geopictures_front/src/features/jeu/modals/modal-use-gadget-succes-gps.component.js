@@ -5,6 +5,7 @@ import {getGadget, getGadgetLocation, useGadget, useGadgetLocation} from "../ser
 import {Gadget} from "../enums/gadget.enum";
 import LoadingView from "../../../commons/component/loading.component";
 import * as Clipboard from 'expo-clipboard';
+import Toast from "react-native-root-toast";
 
 const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
 
@@ -20,7 +21,7 @@ const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
 
         getGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
             .then(res => setGadget(res.data))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 
@@ -30,7 +31,7 @@ const ModalUseGadgetSuccesGps = ({ modal: { closeModal, getParam  }}) => {
         const location = getParam('location', null);
         useGadgetLocation(Gadget.SUCCESS_ZONE, photoId, location)
             .then(res => setGadget(res.data))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 

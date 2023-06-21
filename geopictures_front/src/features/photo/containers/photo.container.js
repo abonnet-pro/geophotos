@@ -15,6 +15,7 @@ import PhotoFiltre from "../components/photo-filtre.component";
 import {A_JOUE, DEJA_JOUE, TOUTES} from "../../../commons/consts/photo.const";
 import {loadPhotoByZone} from "../services/photo.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
+import Toast from "react-native-root-toast";
 
 export default function PhotoContainer({ navigation, route }) {
 
@@ -28,7 +29,7 @@ export default function PhotoContainer({ navigation, route }) {
         setLoadingPhotos(true);
         loadPhotoByZone(zoneId)
             .then(photos => setPhotos(photos.data))
-            .catch(error => console.log(error))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoadingPhotos(false))
     }
 

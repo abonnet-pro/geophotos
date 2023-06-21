@@ -5,6 +5,7 @@ import {getGadget, useGadget} from "../services/jeu.service";
 import {Gadget} from "../enums/gadget.enum";
 import LoadingView from "../../../commons/component/loading.component";
 import * as Clipboard from 'expo-clipboard';
+import Toast from "react-native-root-toast";
 
 const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
 
@@ -16,7 +17,7 @@ const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
         setLoading(true);
         getGadget(Gadget.TOP_1, photoId)
             .then(res => setGadget(res.data))
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 
@@ -31,7 +32,7 @@ const ModalUseGadgetTop1 = ({ modal: { closeModal, getParam }}) => {
                     image: gadget.reponse
                 });
             })
-            .catch(err => console.log(err))
+            .catch(err => Toast.show("Une erreur est survenu"))
             .finally(() => setLoading(false));
     }
 

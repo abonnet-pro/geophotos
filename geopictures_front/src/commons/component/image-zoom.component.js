@@ -47,6 +47,7 @@ export default function ImageZoom({ navigation, route }) {
 
 const style = StyleSheet.create({
     backContainer: {
+        marginTop: 20,
         marginRight: 20,
         marginBottom: 20,
         alignSelf: "flex-end"

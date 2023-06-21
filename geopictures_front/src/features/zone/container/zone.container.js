@@ -6,6 +6,7 @@ import ZoneList from "../component/zone-list.component";
 import ZoneRecherche from "../component/zone-recherche.component";
 import {loadZonesByCode} from "../services/zone.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
+import Toast from "react-native-root-toast";
 
 
 export default function ZoneContainer({ navigation, route }) {
@@ -20,9 +21,9 @@ export default function ZoneContainer({ navigation, route }) {
         loadZonesByCode(regionCode)
             .then(zones => {
                 setZones(zones.data);
-                setLoadingZone(false);
             })
-            .catch(err => console.log(err));
+            .catch(err => Toast.show("Une erreur est survenu"))
+            .finally(() => setLoadingZone(false))
     }
 
     const goBack = () => {

@@ -17,9 +17,11 @@ import CreationContainer from "./src/features/creation/containers/creation.conta
 import CollaborationContainer from "./src/features/collaboration/containers/collaboration.container";
 import ClassementContainer from "./src/features/classement/containers/classement.container";
 import {primary1} from "./src/commons/styles/commons.styles";
+import MesDemandesContainer from "./src/features/mes-demandes/containers/mes-demandes.container";
 
 const screenOption = {
-    statusBarHidden:true,
+    // statubsBarHidden: true,
+    statusBarColor:"black",
     navigationBarHidden: true,
     headerShown: false,
     tabBarActiveTintColor: "white",
@@ -50,6 +52,7 @@ function getTabBarView(iconName, tabName) {
         tabBarLabel: ({ focused, color }) => (
             focused ? <Text style={{marginBottom:10, fontWeight:"bold", fontSize:10, color:color}}>{tabName}</Text> : <></>
         ),
+        unmountOnBlur: true
     }
 }
 
@@ -103,8 +106,9 @@ function AccueilStackScreen() {
 
 function CollaborationStackScreen() {
     return (
-        <CollaborationStack.Navigator  initialRouteName={"collaboration-container"} screenOptions={screenOption}>
+        <CollaborationStack.Navigator  initialRouteName={"mes-demandes-container"} screenOptions={screenOption}>
             <CollaborationStack.Screen name="collaboration-container" component={CollaborationContainer} />
+            <CollaborationStack.Screen name="mes-demandes-container" component={MesDemandesContainer} />
         </CollaborationStack.Navigator>
     );
 }

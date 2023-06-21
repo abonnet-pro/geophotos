@@ -38,55 +38,59 @@ export default function GadgetsList({ gadgets }) {
         openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.RECOMMENCER)})
     }
 
+    function getQuantite(codeGadget) {
+        return gadgets.find(gadget => gadget.code === codeGadget)?.quantite ? gadgets.find(gadget => gadget.code === codeGadget)?.quantite : 0;
+    }
+
     return(
         <>
             <View style={style.containerGadget}>
                 <Touchable style={style.containerImageGadget} onPress={handlePressGps}>
                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_gps.png')}/>
                 </Touchable>
-                <Text style={style.quantite}>Quantité : {gadgets.find(gadget => gadget.code === Gadget.GPS)?.quantite}</Text>
+                <Text style={style.quantite}>Quantité : {getQuantite(Gadget.GPS)}</Text>
             </View>
 
             <View style={style.containerGadget}>
                 <Touchable style={style.containerImageGadget} onPress={handlePressDistance}>
                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_distance.png')}/>
                 </Touchable>
-                <Text style={style.quantite}>Quantité : {gadgets.find(gadget => gadget.code === Gadget.DISTANCE)?.quantite}</Text>
+                <Text style={style.quantite}>Quantité : {getQuantite(Gadget.DISTANCE)}</Text>
             </View>
 
             <View style={style.containerGadget}>
                 <Touchable style={style.containerImageGadget} onPress={handlePressDirection}>
                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_cardinal.png')}/>
                 </Touchable>
-                <Text style={style.quantite}>Quantité : {gadgets.find(gadget => gadget.code === Gadget.DIRECTION)?.quantite}</Text>
+                <Text style={style.quantite}>Quantité : {getQuantite(Gadget.DIRECTION)}</Text>
             </View>
 
             <View style={style.containerGadget}>
                 <Touchable style={style.containerImageGadget} onPress={handlePressPremier}>
                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_premier.png')}/>
                 </Touchable>
-                <Text style={style.quantite}>Quantité : {gadgets.find(gadget => gadget.code === Gadget.TOP_1)?.quantite}</Text>
+                <Text style={style.quantite}>Quantité : {getQuantite(Gadget.TOP_1)}</Text>
             </View>
 
             <View style={style.containerGadget}>
                 <Touchable style={style.containerImageGadget} onPress={handlePressSuccess}>
                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_success.png')}/>
                 </Touchable>
-                <Text style={style.quantite}>Quantité : {gadgets.find(gadget => gadget.code === Gadget.SUCCESS_ZONE)?.quantite}</Text>
+                <Text style={style.quantite}>Quantité : {getQuantite(Gadget.SUCCESS_ZONE)}</Text>
             </View>
 
             <View style={style.containerGadget}>
                 <Touchable style={style.containerImageGadget} onPress={handlePressIndice}>
                     <Image style={ style.imageGadget } source={require('../../../../assets/gadget_indice.png')}/>
                 </Touchable>
-                <Text style={style.quantite}>Quantité : {gadgets.find(gadget => gadget.code === Gadget.INDICE)?.quantite}</Text>
+                <Text style={style.quantite}>Quantité : {getQuantite(Gadget.INDICE)}</Text>
             </View>
 
             <View style={style.containerGadget}>
                 <Touchable style={style.containerImageGadget} onPress={handlePressRecommencer}>
                     <Image style={ style.imageGadget } source={require('../../../../assets/rejouer.png')}/>
                 </Touchable>
-                <Text style={style.quantite}>Quantité : {gadgets.find(gadget => gadget.code === Gadget.RECOMMENCER)?.quantite}</Text>
+                <Text style={style.quantite}>Quantité : {getQuantite(Gadget.RECOMMENCER)}</Text>
             </View>
         </>
     )
