@@ -8,6 +8,7 @@ import {Text} from "@rneui/base";
 import {getDifficulteColor, getDifficulteLibelle} from "../enums/difficulte.enum";
 import PercentageCircle from "../../../commons/component/percentage-circle.component";
 import {getColorByScore} from "../../../commons/consts/photo.const";
+import {formatDate} from "../../../utils/date.utils";
 
 export default function PhotoResume({ photo, handlePressPhoto, handlePressImage }) {
 
@@ -37,7 +38,7 @@ export default function PhotoResume({ photo, handlePressPhoto, handlePressImage 
                                 </View>
 
                                 <View style={ style.publicationContainer }>
-                                    <Text>Publié le : { new Date(photo.datePublication).toLocaleDateString() }</Text>
+                                    <Text>Publié le : { formatDate(photo.datePublication) }</Text>
                                     <Text>Par : { photo.titulaire }</Text>
                                 </View>
                             </View>

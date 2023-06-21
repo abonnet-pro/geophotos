@@ -7,6 +7,7 @@ import {TypeDemande} from "../../mes-demandes/enums/type-demande.enum";
 import LoadingView from "../../../commons/component/loading.component";
 import {URL_API} from "../../../utils/url.utils";
 import {commonsStyle, font, primary1} from "../../../commons/styles/commons.styles";
+import {formatDate} from "../../../utils/date.utils";
 
 export default function AdministrationDemandesAttentes({ demandesEnAttentes, handlePressImage, handleRefuseDemande, handleAcceptDemande }) {
 
@@ -90,7 +91,12 @@ export default function AdministrationDemandesAttentes({ demandesEnAttentes, han
 
                                     <View style={style.infosContainer}>
                                         <Text style={style.libelle}><Text style={{fontWeight:'bold'}}>Publié par :</Text> {demandeSelected?.nomJoueur}</Text>
-                                        <Text style={style.libelle}><Text style={{fontWeight:'bold'}}>Le :</Text> {new Date(demandeSelected?.dateDemande).toLocaleDateString()}</Text>
+                                        <Text style={style.libelle}><Text style={{fontWeight:'bold'}}>Le :</Text> {formatDate(demandeSelected?.dateDemande)}</Text>
+                                    </View>
+
+                                    <View style={style.infosContainer}>
+                                        {demandeSelected?.typeDemande === TypeDemande.PHOTO ? <Text style={style.libelle}><Text style={{fontWeight:'bold'}}>Zone :</Text> {demandeSelected?.zone}</Text> : <></>}
+                                        <Text style={style.libelle}><Text style={{fontWeight:'bold'}}>Région :</Text> {demandeSelected?.region}</Text>
                                     </View>
 
                                     <View style={style.infosContainer}>

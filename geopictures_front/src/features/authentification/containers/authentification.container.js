@@ -15,6 +15,16 @@ export default function AuthentificationContainer({ navigation }) {
         androidClientId: "549351708019-hhbd8evh0vbj1os4577p2e9jguruotil.apps.googleusercontent.com"
     });
 
+    const handlePressJouer = async () => {
+        const joueur = await getValueFor(JOUEUR);
+
+        if(joueur) {
+            navigation.navigate('accueil');
+        } else {
+            navigation.navigate('creation');
+        }
+    }
+
     const handleConnexionGoogle = async () => {
         const result = await promptAsync({showInRecents: true});
 
@@ -40,7 +50,7 @@ export default function AuthentificationContainer({ navigation }) {
 
     return(
         <>
-            <Authentification navigation={ navigation } handleConnexionGoogle={handleConnexionGoogle}/>
+            <Authentification navigation={ navigation } handleConnexionGoogle={handleConnexionGoogle} handlePressJouer={handlePressJouer}/>
         </>
     )
 }

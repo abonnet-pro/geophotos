@@ -15,7 +15,7 @@ export default function JeuValide({photo, handlePressImage}) {
                                      borderRadius={20}>
                         <View>
                             <Image
-                                onPress={() => handlePressImage(photo?.imageJouee)}
+                                onPress={() => handlePressImage(photo?.imageJouee, false)}
                                 style={ style.image }
                                 PlaceholderContent={ <LoadingView/>}
                                 source={{ uri: `${URL_API}/photos/${photo?.imageJouee}` }}

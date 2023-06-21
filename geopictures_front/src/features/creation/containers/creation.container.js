@@ -21,7 +21,7 @@ export default function CreationContainer({ navigation, route }) {
 
         getAvatarsFree(setAvatars)
             .then(res => setAvatars(res.data))
-            .catch(_ => Toast.show("Une erreur est survenu"))
+            .catch(_ => Toast.show("Une erreur est survenu, veuillez contacter le support"))
     }
 
     const handleCreateJoueur = async (nom, avatar) => {

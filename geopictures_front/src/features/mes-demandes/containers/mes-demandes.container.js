@@ -11,6 +11,7 @@ import {TOUS} from "../../../commons/consts/filtre-type.const";
 import {EtatDemande} from "../enums/etat-demande.enum";
 import Toast from "react-native-root-toast";
 import {getValueFor, JOUEUR} from "../../../utils/store.utils";
+import {handleError} from "../../../utils/http.utils";
 
 
 export default function MesDemandesContainer({ navigation }) {
@@ -31,7 +32,10 @@ export default function MesDemandesContainer({ navigation }) {
         setLoadingDemandes(true);
         loadDemandes()
             .then(demandes => setDemandes(demandes.data.mesDemandes))
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingDemandes(false))
     }
 
@@ -69,7 +73,10 @@ export default function MesDemandesContainer({ navigation }) {
         setLoadingDemandes(true);
         annulationDemande(demande)
             .then(res => load())
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingDemandes(false))
     }
 
@@ -83,7 +90,7 @@ export default function MesDemandesContainer({ navigation }) {
             <View style={{...style.boutonsHeaderContainer, justifyContent:`${isAdmin ? "space-between" : "flex-end"}`}}>
                 {
                     isAdmin && <Button
-                        onPress={() => navigation.navigate("administration-container")}
+                        onPress={() => navigation.navigate("administration-demandes-container")}
                         title="Administration"
                         raised={true}
                         radius={20}

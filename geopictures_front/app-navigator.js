@@ -18,7 +18,8 @@ import CollaborationContainer from "./src/features/collaboration/containers/coll
 import ClassementContainer from "./src/features/classement/containers/classement.container";
 import {primary1} from "./src/commons/styles/commons.styles";
 import MesDemandesContainer from "./src/features/mes-demandes/containers/mes-demandes.container";
-import AdministrationContainer from "./src/features/administration/containers/administration.container";
+import AdministrationDemandesContainer from "./src/features/administration/containers/administration-demandes.container";
+import AdministrationProfilsContainer from "./src/features/administration/containers/administration-profils.container";
 
 const screenOption = {
     // statubsBarHidden: true,
@@ -110,7 +111,9 @@ function CollaborationStackScreen() {
         <CollaborationStack.Navigator  initialRouteName={"mes-demandes-container"} screenOptions={screenOption}>
             <CollaborationStack.Screen name="collaboration-container" component={CollaborationContainer} />
             <CollaborationStack.Screen name="mes-demandes-container" component={MesDemandesContainer} />
-            <CollaborationStack.Screen name="administration-container" component={AdministrationContainer} />
+            <CollaborationStack.Screen name="administration-container" component={AdministrationDemandesContainer} />
+            <CollaborationStack.Screen name="administration-demandes-container" component={AdministrationDemandesContainer} />
+            <CollaborationStack.Screen name="administration-profils-container" component={AdministrationProfilsContainer} />
         </CollaborationStack.Navigator>
     );
 }

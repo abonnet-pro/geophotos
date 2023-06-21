@@ -2,7 +2,7 @@ import {Image, ImageBackground, View, StyleSheet} from "react-native";
 import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import { Button } from "@rneui/themed";
 
-export default function Authentification({ navigation, handleConnexionGoogle }) {
+export default function Authentification({ navigation, handleConnexionGoogle, handlePressJouer }) {
     return(
             <ImageBackground
                 source={require('../../../../assets/auth_background.jpg')}
@@ -13,7 +13,7 @@ export default function Authentification({ navigation, handleConnexionGoogle }) 
                         style={style.logo}
                     />
                     <Button
-                        onPress={ () => navigation.navigate('creation') }
+                        onPress={ handlePressJouer }
                         title="JOUER"
                         raised={true}
                         radius={20}

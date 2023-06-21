@@ -7,6 +7,7 @@ import {BACKGROUND_ASSETS, getValueFor, JOUEUR} from "../../../utils/store.utils
 import AdministrationDemandesAttentes from "../components/administration-demandes-attentes.component";
 import Toast from "react-native-root-toast";
 import {loadDemandesEnAttentes, updateDemande} from "../services/administration.services";
+import {Button} from "@rneui/base";
 
 export default function AdministrationDemandesContainer({ navigation }) {
 
@@ -94,6 +95,15 @@ export default function AdministrationDemandesContainer({ navigation }) {
                 <TouchableOpacity onPress={ () => goBack() }>
                     <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
                 </TouchableOpacity>
+
+                <Button
+                    onPress={() => navigation.navigate("administration-profils-container")}
+                    title={"Joueurs"}
+                    raised={true}
+                    radius={20}
+                    containerStyle={ style.containerBoutonJouers }
+                    titleStyle={ font(15, 'bold') }
+                    buttonStyle={ commonsStyle.boutonSuccess }/>
             </View>
 
             <View style={style.containerBody}>
@@ -102,7 +112,7 @@ export default function AdministrationDemandesContainer({ navigation }) {
                                                 handleRefuseDemande={handleRefuseDemande}
                                                 handleAcceptDemande={handleAcceptDemande}>
                 </AdministrationDemandesAttentes>
-            </View >
+            </View>
 
         </ImageBackground>
     )
@@ -125,6 +135,10 @@ const style = StyleSheet.create({
         flexDirection: "row",
         alignItems:'center',
         marginTop:5,
-        marginBottom:5
+        marginBottom:5,
+        justifyContent: "space-between"
+    },
+    containerBoutonJouers: {
+        marginRight: 10
     }
 });

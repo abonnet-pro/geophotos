@@ -1,15 +1,14 @@
-import {Image, ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
+import {ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {Button} from "@rneui/base";
 import {commonsStyle, font} from "../../../commons/styles/commons.styles";
 import * as React from "react";
 import {Camera} from "expo-camera";
-import {useState} from "react";
-
-export default function JeuNonValide({ handlePressJouer, permission, handleSendPhoto, location }) {
+import {Image} from "@rneui/themed";
+import LoadingView from "../../../commons/component/loading.component";
+export default function JeuNonValide({ handlePressJouer, permission, handleSendPhoto, location, photoPrise, setPhotoPrise, handlePressImage }) {
 
     let camera;
-    const [photoPrise, setPhotoPrise] = useState(null);
 
     const takePicture = async () => {
         if(camera) {
@@ -31,7 +30,11 @@ export default function JeuNonValide({ handlePressJouer, permission, handleSendP
                                     {
                                         photoPrise ?
                                             <>
-                                                <Image style={{width: "100%", height: "100%"}} source={{uri: photoPrise ? photoPrise.uri : ''}}></Image>
+                                                <Image style={{width: "100%", height: "100%"}}
+                                                       source={{uri: photoPrise ? photoPrise.uri : ''}}
+                                                       PlaceholderContent={ <LoadingView/>}
+                                                       onPress={ () => handlePressImage(photoPrise.uri, true) }>
+                                                </Image>
                                                 <View style={ style.choixContainer }>
                                                     <TouchableOpacity onPress={() => handleSendPhoto(photoPrise)}>
                                                         <Image style={ style.choix } source={require('../../../../assets/valid.png')}></Image>

@@ -7,6 +7,7 @@ import ZoneRecherche from "../component/zone-recherche.component";
 import {loadZonesByCode} from "../services/zone.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 import Toast from "react-native-root-toast";
+import {handleError} from "../../../utils/http.utils";
 
 
 export default function ZoneContainer({ navigation, route }) {
@@ -22,7 +23,10 @@ export default function ZoneContainer({ navigation, route }) {
             .then(zones => {
                 setZones(zones.data);
             })
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingZone(false))
     }
 

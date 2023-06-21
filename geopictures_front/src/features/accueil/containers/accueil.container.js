@@ -8,9 +8,9 @@ import {modalfy} from "react-native-modalfy";
 import * as Google from "expo-auth-session/providers/google";
 import {
     checkUtilisateurGoogle, getUserData,
-    getUserDataAndSave,
     synchorniseUtilisateurGoogle
 } from "../../authentification/services/authentification.service";
+import {handleError} from "../../../utils/http.utils";
 
 export default function AccueilContainer({ navigation }) {
 
@@ -31,13 +31,15 @@ export default function AccueilContainer({ navigation }) {
         setLoadingAccuil(true);
 
         getValueFor(USER_GOOGLE).then(userGoogle => {
-            console.log(userGoogle)
             setUserGoogle(userGoogle)
         });
 
         loadAccueil()
             .then(joueurInformations => setJoueurInformations(joueurInformations.data))
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support");
+            })
             .finally(() => setLoadingAccuil(false))
     }
 
@@ -88,7 +90,10 @@ export default function AccueilContainer({ navigation }) {
                     save(USER_GOOGLE, userGoogle);
                     setUserGoogle(userGoogle);
                 })
-                .catch(err => Toast.show("Une erreur est survenu"))
+                .catch(err => {
+                    handleError(err, navigation);
+                    Toast.show("Une erreur est survenu, veuillez contacter le support")
+                })
                 .finally(() => setLoadingAccuil(false));
         }
     }
@@ -117,7 +122,10 @@ export default function AccueilContainer({ navigation }) {
 
         loadAccueil()
             .then(joueurInformations => setJoueurInformations(joueurInformations.data))
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingAccuil(false))
     }
 

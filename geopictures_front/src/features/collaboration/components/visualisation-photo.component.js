@@ -1,9 +1,10 @@
-import {Image, ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
+import {ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 import {Camera} from "expo-camera";
 import * as React from "react";
+import {Image} from "@rneui/themed";
 
-export default function VisualisationPhoto({setFormValid, regionSelected, zoneSelected, difficulteSelected, titre, indice, permission, location, photoPrise, setPhotoPrise, formValid, handleSendDemande}) {
+export default function VisualisationPhoto({handlePressImage, setFormValid, regionSelected, zoneSelected, difficulteSelected, titre, indice, permission, location, photoPrise, setPhotoPrise, formValid, handleSendDemande}) {
 
     let camera;
 
@@ -30,7 +31,7 @@ export default function VisualisationPhoto({setFormValid, regionSelected, zoneSe
                                 {
                                     photoPrise ?
                                         <>
-                                            <Image style={{width: "100%", height: "100%"}} source={{uri: photoPrise ? photoPrise.uri : ''}}></Image>
+                                            <Image onPress={() => handlePressImage(photoPrise.uri, true)} style={{width: "100%", height: "100%"}} source={{uri: photoPrise ? photoPrise.uri : ''}}></Image>
                                             <View style={ style.choixContainer }>
                                                 <TouchableOpacity onPress={handleSendDemande}>
                                                     <Image style={ style.choix } source={getImage()}></Image>
