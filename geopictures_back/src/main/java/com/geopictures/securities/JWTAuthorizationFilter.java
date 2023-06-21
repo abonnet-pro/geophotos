@@ -58,6 +58,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
             if (nom != null) {
                 Utilisateur utilisateur = utilisateurService.getByNom(nom);
+
+                if(!utilisateur.isActif()) {
+                    return null;
+                }
+
                 List<GrantedAuthority> grantedAuths = new ArrayList<>();
                 grantedAuths.add(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().getRole()));
                 return new UsernamePasswordAuthenticationToken(utilisateur, null, grantedAuths);

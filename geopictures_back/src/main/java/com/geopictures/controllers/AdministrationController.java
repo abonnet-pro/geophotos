@@ -1,15 +1,15 @@
 package com.geopictures.controllers;
 
 import com.geopictures.models.dtos.administration.AdministrationDemandeUpdateRequest;
+import com.geopictures.models.dtos.administration.AdministrationSuspensionRequest;
+import com.geopictures.models.dtos.profil.ProfildminDTO;
 import com.geopictures.models.enums.TypeDemande;
 import com.geopictures.services.AdministrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 @RestController
 @RequestMapping("administration")
@@ -26,5 +26,23 @@ public class AdministrationController {
         } else {
             administrationService.demandeZone(administrationDemandeUpdateRequest);
         }
+    }
+
+    @GetMapping("/joueurs")
+    @RolesAllowed("ADMIN")
+    public List<ProfildminDTO> getJoueurs() {
+        return administrationService.getListJoueurs();
+    }
+
+    @PostMapping("/utilisateur/suspension")
+    @RolesAllowed("ADMIN")
+    public ProfildminDTO suspensionUtilisateur(@RequestBody AdministrationSuspensionRequest administrationSuspensionRequest) throws Exception {
+        return administrationService.suspensionUtilisateur(administrationSuspensionRequest);
+    }
+
+    @DeleteMapping("/utilisateur/{id}")
+    @RolesAllowed("ADMIN")
+    public void suppressionUtilisateur(@PathVariable("id") Long utilisateurId) throws Exception {
+        administrationService.suppressionUtilisateur(utilisateurId);
     }
 }

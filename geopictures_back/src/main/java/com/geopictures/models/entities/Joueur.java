@@ -49,19 +49,19 @@ public class Joueur {
     @JoinColumn(name="titre_actif", referencedColumnName = "id")
     private Titre titreActif;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "titre_joueur",
             joinColumns = @JoinColumn(name = "joueur_id"),
             inverseJoinColumns = @JoinColumn(name = "titre_id"))
     private Set<Titre> titres;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "bordure_joueur",
             joinColumns = @JoinColumn(name = "joueur_id"),
             inverseJoinColumns = @JoinColumn(name = "bordure_id"))
     private Set<Bordure> bordures;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "avatar_joueur",
             joinColumns = @JoinColumn(name = "joueur_id"),
@@ -77,8 +77,14 @@ public class Joueur {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur", fetch = FetchType.EAGER)
     private Set<GadgetJoueur> mesGadgets  = new HashSet<>();
 
-    @OneToMany(mappedBy = "titulaire", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "titulaire")
     private Set<Photo> photoCollaboration  = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur")
+    private Set<DemandePhoto> mesDemandesPhoto  = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "joueur")
+    private Set<DemandeZone> mesDemandesZones  = new HashSet<>();
 
     @PrePersist
     public void onPrePersit() {

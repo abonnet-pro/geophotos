@@ -8,7 +8,7 @@ import AdministrationDemandesAttentes from "../components/administration-demande
 import Toast from "react-native-root-toast";
 import {loadDemandesEnAttentes, updateDemande} from "../services/administration.services";
 
-export default function AdministrationContainer({ navigation }) {
+export default function AdministrationDemandesContainer({ navigation }) {
 
     const [loading, setLoading] = useState(false);
     const [demandesEnAttentes, setDemandesEnAttentes] = useState(null);
@@ -29,7 +29,7 @@ export default function AdministrationContainer({ navigation }) {
             .then(demandes => {
                 setDemandesEnAttentes(demandes.data);
             })
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => Toast.show("Une erreur est survenu, veuillez contacter le support"))
             .finally(() => setLoading(false));
     }
 
@@ -49,8 +49,11 @@ export default function AdministrationContainer({ navigation }) {
 
         setLoading(true);
         updateDemande(demande, updateRequest)
-            .then(_ => load())
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .then(_ => {
+                Toast.show("Demande refusée");
+                load()
+            })
+            .catch(err => Toast.show("Une erreur est survenu, veuillez contacter le support"))
             .finally(() => setLoading(false));
     }
 
@@ -64,8 +67,11 @@ export default function AdministrationContainer({ navigation }) {
 
         setLoading(true);
         updateDemande(demande, updateRequest)
-            .then(_ => load())
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .then(_ => {
+                Toast.show("Demande acceptée");
+                load();
+            })
+            .catch(err => Toast.show("Une erreur est survenu, veuillez contacter le support"))
             .finally(() => setLoading(false));
     }
 
