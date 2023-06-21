@@ -4,7 +4,7 @@ import {Text} from "@rneui/base";
 import {BACKGROUND_ASSETS, JOUEUR, getValueFor} from "../../../utils/store.utils";
 import ClassementResume from "./classement-resume.component";
 
-export default function ClassementList({ handleGoListeUser, classement }) {
+export default function ClassementPlayer({ handleGoListeUser, classement }) {
     return(
         <ImageBackground
             source={ BACKGROUND_ASSETS.bordure } style={{ width: "100%", height:"100%"}} borderRadius={20}>
@@ -13,22 +13,16 @@ export default function ClassementList({ handleGoListeUser, classement }) {
                     <ScrollView style={ style.zones } showsVerticalScrollIndicator={false}>
                         <View style={{ marginBottom: 10}}>
                             {
-                                classement && classement.classement.length > 0 ? classement.classement.slice(0, 50).map((rank, index) => {
+                                classement ? classement.map((rank, index) => {
                                     return(
-                                        <View key={ rank.joueurId}>
-                                            <ClassementResume handleGoListeUser={ handleGoListeUser } rank={rank} index={index} last={ index === classement.classement.length - 1 }/>
+                                        <View key={ rank.joueurId }>
+                                            <ClassementResume handleGoListeUser={ handleGoListeUser } rank={rank} index={index}/>
                                         </View>
                                     )
                                 }) :
                                     null
                             }
                         </View>
-                        {
-                            classement.classement.length > 0 ? null :
-                                <View  style={ style.noZoneContainer }>
-                                    <Text style={ style.noZone }>{`Donnée insuffisante pour créer un classement. Joue une partie et soit le premier à en faire partie !`}</Text>
-                                </View>
-                        }
                     </ScrollView>
 
                 </ImageBackground>

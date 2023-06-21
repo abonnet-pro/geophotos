@@ -3,7 +3,7 @@ import {URL_API} from "../../../utils/url.utils";
 import {getValueFor, JOUEUR} from "../../../utils/store.utils";
 import {header} from "../../../utils/http.utils";
 
-export async function getClassement() {
+export async function loadClassement() {
     const joueur = await getValueFor(JOUEUR);
     return axios.get(`${URL_API}/classement`, header(joueur.token));
 }
