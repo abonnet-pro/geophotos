@@ -18,7 +18,17 @@ export async function getClassementByCodeRegion(codeRegion) {
     return axios.get(`${URL_API}/classement?codeRegion=${codeRegion}`, header(joueur.token));
 }
 
+export async function getClassementByPhotoId(photoId) {
+    const joueur = await getValueFor(JOUEUR);
+    return axios.get(`${URL_API}/classement?photoId=${photoId}`, header(joueur.token));
+}
+
 export async function getClassementByZoneIdAndCodeRegion(zoneId, codeRegion) {
     const joueur = await getValueFor(JOUEUR);
     return axios.get(`${URL_API}/classement?zoneId=${zoneId}&codeRegion=${codeRegion}`, header(joueur.token));
+}
+
+export async function getAllRegion() {
+    const joueur = await getValueFor(JOUEUR);
+    return axios.get(`${URL_API}/region`, header(joueur.token));
 }

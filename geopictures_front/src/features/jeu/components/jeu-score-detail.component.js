@@ -30,6 +30,7 @@ export default function JeuScoreDetail({photo, handleValidRecommencer}) {
 
         openModal("ModalChoixValid", {title: title, description: description, callback: () => handleValidRecommencer(photo.id)});
     }
+    
 
     function getBackgroundColorGadget() {
         return photo.gadgetRecommencerDisponible ? primary1 : "grey";
@@ -47,7 +48,7 @@ export default function JeuScoreDetail({photo, handleValidRecommencer}) {
                                 <View style={ style.rowContainer }>
                                     <Text style={{ fontSize:15, fontWeight: "bold"}}>Ressemblance : <Text style={{color:getColorByScore(photo?.score)}}>{photo?.score}%</Text></Text>
                                     <View style={ style.containerImageClassement }>
-                                        <Image style={ style.image } source={require('../../../../assets/podium.png')}/>
+                                        <Image onPress={() => openModal('ModalClassementPhoto', {photoId: photo.id})} style={ style.image } source={require('../../../../assets/podium.png')}/>
                                     </View>
                                 </View>
                                 <View style={ style.rowContainer }>

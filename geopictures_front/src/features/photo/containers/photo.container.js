@@ -30,6 +30,8 @@ export default function PhotoContainer({ navigation, route }) {
             .then(photos => setPhotos(photos.data))
             .catch(error => console.log(error))
             .finally(() => setLoadingPhotos(false))
+
+            
     }
 
     const goBack = () => {

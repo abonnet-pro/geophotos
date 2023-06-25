@@ -24,8 +24,8 @@ public class ClassementService {
     @Autowired
     private JoueurRepository joueurRepo;
 
-    public ClassementDTO getClassementGeneral(Long zoneId, String codeRegion) throws Exception {
-        List<PhotoJoueur> photoJoueurAll = getPhotoJoueur(zoneId, codeRegion);
+    public ClassementDTO getClassementGeneral(Long zoneId, String codeRegion, Long photoId) throws Exception {
+        List<PhotoJoueur> photoJoueurAll = getPhotoJoueur(zoneId, codeRegion, photoId);
         Map<Joueur, Double> groupScorePhotoJoueurByJoueur = photoJoueurAll.stream().collect(Collectors.groupingBy(PhotoJoueur::getJoueur, Collectors.summingDouble(photoJoueur->photoJoueur.getScore().doubleValue())));
 
         List<ClassementLigneDTO> classement = new ArrayList<>();
@@ -44,12 +44,15 @@ public class ClassementService {
         return ClassementDTO.builder().classement(classement.stream().sorted(Comparator.comparingDouble(ClassementLigneDTO::getScore).reversed()).collect(Collectors.toList())).build();
     }
 
-    private List<PhotoJoueur> getPhotoJoueur(Long zoneId, String codeRegion) {
+    private List<PhotoJoueur> getPhotoJoueur(Long zoneId, String codeRegion, Long photoId) {
         if(zoneId != null) {
             return photoJoueurRepo.findAll().stream().filter(photoJoueur -> Objects.equals(photoJoueur.getPhoto().getZone().getId(), zoneId)).collect(Collectors.toList());
         }
         if(codeRegion != null) {
             return photoJoueurRepo.findAll().stream().filter(photoJoueur -> Objects.equals(photoJoueur.getPhoto().getZone().getRegion().getCode(), codeRegion)).collect(Collectors.toList());
+        }
+        if(photoId != null) {
+            return photoJoueurRepo.findAll().stream().filter(photoJoueur -> Objects.equals(photoJoueur.getPhoto().getId(), photoId)).collect(Collectors.toList());
         }
         return photoJoueurRepo.findAll();
     }

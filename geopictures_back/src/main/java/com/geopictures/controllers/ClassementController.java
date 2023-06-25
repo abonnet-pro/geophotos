@@ -21,7 +21,7 @@ public class ClassementController {
     private ClassementService classementService;
 
     @GetMapping()
-    public ClassementDTO getClassementGeneral(@RequestParam(required = false, name = "zoneId") Long zoneId, @RequestParam(required = false, name = "codeRegion") String codeRegion) throws Exception {
-        return classementService.getClassementGeneral(zoneId, codeRegion);
+    public ClassementDTO getClassementGeneral(@RequestParam(required = false, name = "zoneId") Long zoneId, @RequestParam(required = false, name = "codeRegion") String codeRegion, @RequestParam(required = false, name = "photoId") Long photoId) throws Exception {
+        return classementService.getClassementGeneral(zoneId, codeRegion, photoId);
     }
 }
