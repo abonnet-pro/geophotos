@@ -38,9 +38,12 @@ public class AdministrationService {
     @Autowired
     private ProfilAdminMapper profilAdminMapper;
 
+
     @Value("${spring.security.admin.name}")
     private String adminEmail;
 
+    @Autowired
+    private UploaderService uploaderService;
 
     public void demandePhoto(AdministrationDemandeUpdateRequest administrationDemandeUpdateRequest) throws Exception {
         Optional<DemandePhoto> optDemandePhoto = demandePhotoRepository.findById(administrationDemandeUpdateRequest.getDemandeId());
@@ -142,5 +145,41 @@ public class AdministrationService {
         }
 
         utilisateurRepository.delete(utilisateur);
+    }
+
+    public void suppressionPhoto(Long photoId) throws Exception {
+        Optional<Photo> optPhoto = photoRepository.findById(photoId);
+
+        if(!optPhoto.isPresent()) {
+            throw new Exception("Photo invalide");
+        }
+
+        Photo photo = optPhoto.get();
+
+        if(!photo.getPhotosJoues().isEmpty()) {
+            for(PhotoJoueur photoJoueur : photo.getPhotosJoues()) {
+                uploaderService.deleteFile(photoJoueur.getImageJoue());
+            }
+        }
+
+        photoRepository.delete(photo);
+    }
+
+    public void suppressionZone(Long zoneId) throws Exception {
+        Optional<Zone> optZone = zoneRepository.findById(zoneId);
+
+        if(!optZone.isPresent()) {
+            throw new Exception("Zone invalide");
+        }
+
+        Zone zone = optZone.get();
+
+        if(!zone.getPhotos().isEmpty()) {
+            for(Photo photo : zone.getPhotos()) {
+                suppressionPhoto(photo.getId());
+            }
+        }
+
+        zoneRepository.delete(zone);
     }
 }

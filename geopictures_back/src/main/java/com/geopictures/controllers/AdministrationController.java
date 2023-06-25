@@ -45,4 +45,16 @@ public class AdministrationController {
     public void suppressionUtilisateur(@PathVariable("id") Long utilisateurId) throws Exception {
         administrationService.suppressionUtilisateur(utilisateurId);
     }
+
+    @DeleteMapping("/photo/{id}")
+    @RolesAllowed("ADMIN")
+    public void suppressionPhoto(@PathVariable("id") Long photoId) throws Exception {
+        administrationService.suppressionPhoto(photoId);
+    }
+
+    @DeleteMapping("/zone/{id}")
+    @RolesAllowed("ADMIN")
+    public void suppressionZone(@PathVariable("id") Long zoneId) throws Exception {
+        administrationService.suppressionZone(zoneId);
+    }
 }
