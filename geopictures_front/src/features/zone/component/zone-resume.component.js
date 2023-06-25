@@ -5,7 +5,7 @@ import {Divider, Text} from "@rneui/base";
 import LoadingView from "../../../commons/component/loading.component";
 import {Image} from "@rneui/themed";
 
-export default function ZoneResume({ zone, last, handleGoListePhoto }) {
+export default function ZoneResume({ zone, last, handleGoListePhoto, handlePressDeleteZone, isAdmin }) {
 
     function getUri() {
         if(zone.image) {
@@ -26,7 +26,15 @@ export default function ZoneResume({ zone, last, handleGoListePhoto }) {
                     />
                 </View>
                 <View style={ style.descriptionContainer }>
-                    <Text style={ style.nomZone }>{zone.libelle}</Text>
+                    <View style={ style.row}>
+                        {
+                            isAdmin &&
+                            <View style={style.imageCroixContainer}>
+                                <Image onPress={() => handlePressDeleteZone(zone.id)} style={ style.imageCroix } source={require('../../../../assets/cross.png')}></Image>
+                            </View>
+                        }
+                        <Text style={ style.nomZone }>{zone.libelle}</Text>
+                    </View>
                     <View style={ style.photos }>
                         <View style={ style.nombrePhotosContainer }>
                             <Image style={{ width: 30, height: 30}} source={require('../../../../assets/camera.png')}></Image>
@@ -89,5 +97,14 @@ const style = StyleSheet.create({
         alignSelf: "center",
         flex:1,
         justifyContent: "flex-end",
+    },
+    imageCroix: {
+        width:25,
+        height:25,
+        marginRight: 5
+    },
+    row: {
+        flexDirection: "row",
+        alignItems: 'center'
     }
 });

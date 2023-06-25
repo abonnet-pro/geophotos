@@ -7,3 +7,8 @@ export async function loadZonesByCode(regionCode) {
     const joueur = await getValueFor(JOUEUR);
     return axios.get(`${URL_API}/zone/region/${regionCode}`, header(joueur.token));
 }
+
+export async function suppressionZone(zoneId) {
+    const joueur = await getValueFor(JOUEUR);
+    return axios.delete(`${URL_API}/administration/zone/${zoneId}`, header(joueur.token));
+}

@@ -10,7 +10,7 @@ import PercentageCircle from "../../../commons/component/percentage-circle.compo
 import {getColorByScore} from "../../../commons/consts/photo.const";
 import {formatDate} from "../../../utils/date.utils";
 
-export default function PhotoResume({ photo, handlePressPhoto, handlePressImage }) {
+export default function PhotoResume({ handlePressSuppressionPhoto, photo, handlePressPhoto, handlePressImage, isAdmin }) {
 
     function getSuccesGps() {
         return photo.succesGps ? require('../../../../assets/gps_valid.png') : require('../../../../assets/gps_wrong.png')
@@ -33,7 +33,17 @@ export default function PhotoResume({ photo, handlePressPhoto, handlePressImage 
                             </View>
                             <View style={ style.DescritpionContainer }>
                                 <View style={ style.titreCcontainer }>
-                                    <Text style={ style.titre }>{ photo.titre }</Text>
+                                    <View style={style.row}>
+                                        <Text style={ style.titre }>{ photo.titre }</Text>
+
+                                        {
+                                            isAdmin &&
+                                            <View style={style.imageCroixContainer}>
+                                                <Image onPress={() => handlePressSuppressionPhoto(photo)} style={ style.imageCroix } source={require('../../../../assets/cross.png')}></Image>
+                                            </View>
+                                        }
+
+                                    </View>
                                     <Text style={{...style.difficulte, color: getDifficulteColor(photo?.difficulte)}} >{ getDifficulteLibelle(photo?.difficulte) }</Text>
                                 </View>
 
@@ -91,10 +101,20 @@ const style = StyleSheet.create({
     DescritpionContainer: {
         margin: 10,
         height: '100%',
+        flex:1,
     },
     titre: {
         fontWeight: "bold",
         fontSize: 20,
+    },
+    imageCroixContainer: {
+        flex:1,
+        alignSelf: "center",
+        alignItems:"flex-end"
+    },
+    imageCroix: {
+      width:25,
+      height:25
     },
     difficulte: {
         fontSize: 15,
@@ -105,6 +125,9 @@ const style = StyleSheet.create({
     },
     titreCcontainer: {
         flex:1
+    },
+    row: {
+      flexDirection: "row"
     },
     bottomContainer: {
         margin: 10,

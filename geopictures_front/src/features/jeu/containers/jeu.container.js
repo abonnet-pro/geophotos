@@ -56,8 +56,17 @@ export default function JeuContainer({route, navigation}) {
     }
 
     const handleSendPhoto = async (photoPrise) => {
-        setLoadingSendPhoto(true);
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
         const location = await Location.getCurrentPositionAsync({});
+        setLoadingSendPhoto(true);
+
         sendPhotoJouee(photo.id, photoPrise.uri, location)
             .then(photoJoue => setPhoto(photoJoue.data))
             .catch(err => {
