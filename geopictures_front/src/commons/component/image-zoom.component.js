@@ -14,30 +14,34 @@ import {URL_API} from "../../utils/url.utils";
 export default function ImageZoom({ navigation, route }) {
 
     const [image, setImage] = useState(null);
+    const [local, setLocal] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const init = () => {
         const image = route.params.image;
+        const local = route.params?.local;
         setImage(image);
+        setLocal(local);
+    }
+
+    const getSource = () => {
+        return local ? image : `${URL_API}/photos/${image}`;
     }
 
     useEffect(init, []);
 
     return(
         <View style={{ backgroundColor: 'black',}}>
-            {
-                loading ? null :
-                    <View style={ style.backContainer }>
-                        <TouchableOpacity onPress={ () => navigation.goBack() }>
-                            <Image style={ style.back } source={require('../../../assets/cross_white.png')}></Image>
-                        </TouchableOpacity>
-                    </View>
-            }
+            <View style={ style.backContainer }>
+                <TouchableOpacity onPress={ () => navigation.goBack() }>
+                    <Image style={ style.back } source={require('../../../assets/cross_white.png')}></Image>
+                </TouchableOpacity>
+            </View>
             <View style={ style.imageContainer }>
                 <Image resizeMode={ "contain" }
                        style={ style.image }
                        PlaceholderContent={ <LoadingView/>}
-                       source={{ uri: `${URL_API}/photos/${image}` }}
+                       source={{ uri:  getSource()}}
                        onLoadEnd={() => setLoading(false)}
                 />
             </View>

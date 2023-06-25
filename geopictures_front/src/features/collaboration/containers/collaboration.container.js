@@ -13,6 +13,7 @@ import {demandePhoto, demandeZone} from "../services/collaboration.service";
 import {Button} from "@rneui/base";
 import Toast from "react-native-root-toast";
 import * as ImagePicker from "expo-image-picker";
+import {handleError} from "../../../utils/http.utils";
 
 
 export default function CollaborationContainer({ navigation }) {
@@ -57,16 +58,19 @@ export default function CollaborationContainer({ navigation }) {
     const handleRegionSelected = async (itemValue) => {
         setRegionSelected(itemValue);
 
-        const zones = await loadZonesByCode(itemValue);
-
-        if(!zones.data) {
-            return;
-        }
-
-        setZonesOptions(buildOptionsZonePicker(zones.data));
-        setFormValid(regionSelected && zoneSelected && difficulteSelected && titre && indice && photoPrise);
-        setZoneSelected(null);
-        setOnNouvelleZoneEdit(false);
+        loadZonesByCode(itemValue)
+            .then(zones => {
+                setZonesOptions(buildOptionsZonePicker(zones.data));
+            })
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
+            .finally(() => {
+                setFormValid(regionSelected && zoneSelected && difficulteSelected && titre && indice && photoPrise);
+                setZoneSelected(null);
+                setOnNouvelleZoneEdit(false);
+            })
     }
 
     const handleZoneSelected = (itemValue) => {
@@ -159,7 +163,10 @@ export default function CollaborationContainer({ navigation }) {
                     routes: [{ name: 'mes-demandes-container'}],
                 });
             })
-            .catch(err => Toast.show("Une erreur est survenue"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingDemandeSend(false));
     }
 
@@ -179,7 +186,10 @@ export default function CollaborationContainer({ navigation }) {
                     routes: [{ name: 'mes-demandes-container'}],
                 });
             })
-            .catch(err => Toast.show("Une erreur est survenue"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingDemandeSend(false));
     }
 
@@ -211,11 +221,18 @@ export default function CollaborationContainer({ navigation }) {
         }
     }
 
+    const handlePressImage = (image, local) => {
+        navigation.navigate("imageZoom", {
+            image: image,
+            local: local
+        });
+    }
+
     return (
         <ImageBackground
             source={require('../../../../assets/auth_background.jpg')}
             style={ containerStyle.backgroundHover100 }>
-            { loadingDemandeSend && <LoadingGeneral/> }
+            { loadingDemandeSend && <LoadingGeneral titre={"Chargement en cours ..."}/> }
 
             <View style={getStyleBoutonTop()}>
                 {
@@ -272,6 +289,7 @@ export default function CollaborationContainer({ navigation }) {
                                             setPhotoPrise={setPhotoPrise}
                                             formValid={formValid}
                                             handleSendDemande={handleSendDemande}
+                                            handlePressImage={handlePressImage}
                                             setFormValid={setFormValid}
                                             regionSelected={regionSelected}
                                             zoneSelected={zoneSelected}

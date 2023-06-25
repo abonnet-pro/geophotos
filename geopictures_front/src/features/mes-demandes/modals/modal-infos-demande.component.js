@@ -6,6 +6,7 @@ import {TypeDemande} from "../enums/type-demande.enum";
 import LoadingView from "../../../commons/component/loading.component";
 import {URL_API} from "../../../utils/url.utils";
 import {Image} from "@rneui/themed";
+import {formatDate} from "../../../utils/date.utils";
 
 const ModalInfosDemande = ({ modal: { closeModal, getParam }}) => {
 
@@ -46,11 +47,14 @@ const ModalInfosDemande = ({ modal: { closeModal, getParam }}) => {
                 <Text style={style.title}>Votre demande</Text>
             </View>
             <View style={style.descriptionContainer}>
-                <Text style={style.dateDemande}>Envoyé le : {new Date(demande?.dateDemande).toLocaleDateString('fr')}</Text>
+                <Text style={style.dateDemande}>Envoyé le : {formatDate(demande?.dateDemande)}</Text>
                 <View style={style.typeLibelleContainer}>
                     <Image style={ style.image } source={getSource()}/>
                     <Text style={style.libelle}>{demande?.libelle}</Text>
                 </View>
+                {demande?.typeDemande === TypeDemande.PHOTO && <Text style={style.indice}>Indice : {demande?.indice ? demande?.indice : "Aucun indice"}</Text>}
+                {demande?.typeDemande === TypeDemande.PHOTO && <Text style={style.indice}>Zone : {demande?.zone}</Text>}
+                <Text style={style.indice}>Region : {demande?.region}</Text>
                 {
                     demande?.image ?
                         <View style={style.photoContainer}>
@@ -111,6 +115,10 @@ const style = StyleSheet.create({
         color:'white',
         alignSelf:'center',
         margin:10
+    },
+    indice: {
+        marginTop:10,
+        color:'white',
     },
     boutonContainer: {
         flexDirection:'row',

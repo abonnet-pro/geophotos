@@ -109,6 +109,18 @@ public class CollaborationService extends UtilisateurHolder {
                 .build();
     }
 
+    public List<DemandeDTO> demandesEnAttente() {
+        List<DemandePhoto> demandesPhotos = demandePhotoRepository.findAllByEtatDemandeOrderByCreatedDesc(EtatDemande.EN_ATTENTE);
+        List<DemandeZone> demandesZones = demandeZoneRepository.findAllByEtatDemandeOrderByCreatedDesc(EtatDemande.EN_ATTENTE);
+
+        List<DemandeDTO> demandesPhotosDTO = demandesPhotos.stream().map(DemandePhotoMapper.INSTANCE::demandePhotoToDto).collect(Collectors.toList());
+        List<DemandeDTO> demandesZonesDTO = demandesZones.stream().map(DemandeZoneMapper.INSTANCE::demandeZoneToDto).collect(Collectors.toList());
+
+        demandesPhotosDTO.addAll(demandesZonesDTO);
+
+        return demandesPhotosDTO;
+    }
+
     public DemandeDTO annulationDemandeZone(Long demandeId) throws Exception {
         Optional<DemandeZone> optDemandeZone = demandeZoneRepository.findById(demandeId);
 

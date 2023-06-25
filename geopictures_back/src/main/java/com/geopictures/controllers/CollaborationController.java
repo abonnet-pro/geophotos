@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("collaboration")
 public class CollaborationController {
@@ -36,6 +38,11 @@ public class CollaborationController {
     @GetMapping("/demandes")
     public DemandesDTO mesDemandes() {
         return collaborationService.mesDemandes();
+    }
+
+    @GetMapping("/demandes/attente")
+    public List<DemandeDTO> demandesEnAttente() {
+        return collaborationService.demandesEnAttente();
     }
 
     @PostMapping("demande/annulation/photo/{id}")

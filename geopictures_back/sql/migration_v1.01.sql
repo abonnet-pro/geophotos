@@ -6,3 +6,10 @@ alter table demande_photo add column longitude varchar(255);
 alter table demande_photo add column commentaire varchar(255);
 
 alter table demande_zone add column image varchar(255);
+alter table demande_zone add column commentaire varchar(255);
+
+alter table utilisateur add column google_id varchar(255);
+
+alter table utilisateur add column date_derniere_connexion timestamp;
+alter table utilisateur add column raison_suspension varchar(255);
+alter table utilisateur add column date_suspension timestamp;

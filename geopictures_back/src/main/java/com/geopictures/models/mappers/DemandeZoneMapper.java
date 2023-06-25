@@ -11,6 +11,8 @@ public interface DemandeZoneMapper {
     DemandeZoneMapper INSTANCE = Mappers.getMapper( DemandeZoneMapper.class );
 
     @Mapping(source = "entity.created", target = "dateDemande")
+    @Mapping(source = "entity.joueur.utilisateur.nom", target = "nomJoueur")
+    @Mapping(source = "entity.region.libelle", target = "region")
     @Mapping(constant = "ZONE", target = "typeDemande")
     DemandeDTO demandeZoneToDto(DemandeZone entity);
 }

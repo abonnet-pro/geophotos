@@ -30,6 +30,12 @@ public class DataLoader implements CommandLineRunner {
     @Value("${upload.files}")
     private String pathToUpload;
 
+    @Value("${spring.security.admin.name}")
+    private String adminEmail;
+
+    @Value("${spring.security.admin.id}")
+    private String adminId;
+
     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
@@ -85,35 +91,21 @@ public class DataLoader implements CommandLineRunner {
             initUtilisateur();
         }
 
-        Optional<Joueur> joueurOpt = joueurRepository.findById(44L);
-
-        if(!joueurOpt.isPresent()) {
-            return;
-        }
-
         if(photoRepository.count() == 0) {
-            initPhotos(joueurOpt.get());
+            initPhotos();
         }
 
         if(gadgetRepository.count() == 0) {
-            initGadget(joueurOpt.get());
+            initGadget();
         }
     }
 
-    private void initGadget(Joueur joueur) {
+    private void initGadget() {
         Gadget gps = Gadget.builder()
                 .code(GadgetCode.GPS)
                 .libelle("Le gadget vous indique la position Gps exacte de la photo")
                 .gadgetDetenus(new HashSet<>())
                 .build();
-
-        GadgetJoueur gadgetJoueur = GadgetJoueur.builder()
-                .gadget(gps)
-                .joueur(joueur)
-                .quantite(2)
-                .build();
-
-        gps.getGadgetDetenus().add(gadgetJoueur);
 
         gadgetRepository.save(gps);
 
@@ -123,14 +115,6 @@ public class DataLoader implements CommandLineRunner {
                 .gadgetDetenus(new HashSet<>())
                 .build();
 
-        GadgetJoueur gadgetJoueur2 = GadgetJoueur.builder()
-                .gadget(direction)
-                .joueur(joueur)
-                .quantite(2)
-                .build();
-
-        direction.getGadgetDetenus().add(gadgetJoueur2);
-
         gadgetRepository.save(direction);
 
         Gadget distance = Gadget.builder()
@@ -138,14 +122,6 @@ public class DataLoader implements CommandLineRunner {
                 .libelle("Le gadget vous indique la distance vous séparant de la photo")
                 .gadgetDetenus(new HashSet<>())
                 .build();
-
-        GadgetJoueur gadgetJoueur3 = GadgetJoueur.builder()
-                .gadget(distance)
-                .joueur(joueur)
-                .quantite(2)
-                .build();
-
-        distance.getGadgetDetenus().add(gadgetJoueur3);
 
         gadgetRepository.save(distance);
 
@@ -155,14 +131,6 @@ public class DataLoader implements CommandLineRunner {
                 .gadgetDetenus(new HashSet<>())
                 .build();
 
-        GadgetJoueur gadgetJoueur4 = GadgetJoueur.builder()
-                .gadget(succes)
-                .joueur(joueur)
-                .quantite(2)
-                .build();
-
-        succes.getGadgetDetenus().add(gadgetJoueur4);
-
         gadgetRepository.save(succes);
 
         Gadget top = Gadget.builder()
@@ -170,14 +138,6 @@ public class DataLoader implements CommandLineRunner {
                 .libelle("Le gadget vous montre la photo prise par le joueur ayant fait le meilleur score sur la photo")
                 .gadgetDetenus(new HashSet<>())
                 .build();
-
-        GadgetJoueur gadgetJoueur5 = GadgetJoueur.builder()
-                .gadget(top)
-                .joueur(joueur)
-                .quantite(2)
-                .build();
-
-        top.getGadgetDetenus().add(gadgetJoueur5);
 
         gadgetRepository.save(top);
 
@@ -187,14 +147,6 @@ public class DataLoader implements CommandLineRunner {
                 .gadgetDetenus(new HashSet<>())
                 .build();
 
-        GadgetJoueur gadgetJoueur6 = GadgetJoueur.builder()
-                .gadget(indice)
-                .joueur(joueur)
-                .quantite(2)
-                .build();
-
-        indice.getGadgetDetenus().add(gadgetJoueur6);
-
         gadgetRepository.save(indice);
 
         Gadget recommencer = Gadget.builder()
@@ -202,14 +154,6 @@ public class DataLoader implements CommandLineRunner {
                 .libelle("Le gadget vous permet de reprendre une photo déjà prise (Attention l'ancienne photo sera ecrasé)")
                 .gadgetDetenus(new HashSet<>())
                 .build();
-
-        GadgetJoueur gadgetJoueur7 = GadgetJoueur.builder()
-                .gadget(recommencer)
-                .joueur(joueur)
-                .quantite(2)
-                .build();
-
-        recommencer.getGadgetDetenus().add(gadgetJoueur7);
 
         gadgetRepository.save(recommencer);
     }
@@ -401,6 +345,8 @@ public class DataLoader implements CommandLineRunner {
                 .nom("Geopictures")
                 .actif(true)
                 .role(Role.ADMIN)
+                .email(adminEmail)
+                .googleId(adminId)
                 .build();
 
         Joueur joueurAdmin = Joueur.builder()
@@ -412,7 +358,7 @@ public class DataLoader implements CommandLineRunner {
         joueurRepository.save(joueurAdmin);
     }
 
-    private void initPhotos(Joueur joueur) {
+    private void initPhotos() {
         Zone marseille = zoneRepository.findByLibelle("Marseille");
         Zone maisonAnthony = zoneRepository.findByLibelle("Maison Anthony");
         Utilisateur admin = utilisateurRepository.findByNom("Geopictures");
@@ -428,17 +374,6 @@ public class DataLoader implements CommandLineRunner {
                 .titulaire(admin.getJoueur())
                 .photosJoues(new HashSet<>())
                 .build();
-
-        PhotoJoueur photoJoueur1 = PhotoJoueur.builder()
-                .joueur(joueur)
-                .photo(photo1)
-                .imageJoue("test_1.jpg")
-                .score(new BigDecimal(100))
-                .succesGps(true)
-                .succesGlobale(true)
-                .build();
-
-        photo1.getPhotosJoues().add(photoJoueur1);
 
         photoRepository.save(photo1);
 
@@ -466,17 +401,6 @@ public class DataLoader implements CommandLineRunner {
                 .titulaire(admin.getJoueur())
                 .photosJoues(new HashSet<>())
                 .build();
-
-        PhotoJoueur photoJoueur3 = PhotoJoueur.builder()
-                .joueur(joueur)
-                .photo(photo3)
-                .imageJoue("test_1.jpg")
-                .score(new BigDecimal("68.52"))
-                .succesGps(false)
-                .succesGlobale(false)
-                .build();
-
-        photo3.getPhotosJoues().add(photoJoueur3);
 
         photoRepository.save(photo3);
 
@@ -517,17 +441,6 @@ public class DataLoader implements CommandLineRunner {
                 .titulaire(admin.getJoueur())
                 .photosJoues(new HashSet<>())
                 .build();
-
-        PhotoJoueur photoJoueur6 = PhotoJoueur.builder()
-                .joueur(joueur)
-                .photo(photo6)
-                .imageJoue("test_1.jpg")
-                .score(new BigDecimal("22.36"))
-                .succesGps(false)
-                .succesGlobale(false)
-                .build();
-
-        photo6.getPhotosJoues().add(photoJoueur6);
 
         photoRepository.save(photo6);
 

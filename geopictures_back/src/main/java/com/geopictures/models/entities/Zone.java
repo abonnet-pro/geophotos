@@ -32,7 +32,7 @@ public class Zone {
     @JoinColumn(name="region_id")
     private Region region;
 
-    @OneToMany(mappedBy = "zone", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "zone", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Photo> photos = new HashSet<>();
 
     @PrePersist

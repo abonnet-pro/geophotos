@@ -38,6 +38,8 @@ public class DemandeZone {
     private EtatDemande etatDemande;
     @Column(name="libelle")
     private String libelle;
+    @Column(name="commentaire")
+    private String commentaire;
 
     @PrePersist
     public void onPrePersit() {

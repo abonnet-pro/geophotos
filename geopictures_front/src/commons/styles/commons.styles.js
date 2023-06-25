@@ -4,6 +4,7 @@ export const primary1 = '#005202';
 export const primary2 = '#048506';
 export const secondary1 = '#0f7c81';
 export const secondary2 = '#17b2b7';
+export const danger = '#9d0011';
 
 export const backgroundForm = '#bba98b';
 
@@ -54,7 +55,13 @@ export const commonsStyle = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: 'white',
-    }
+    },
+    boutonDanger: {
+        backgroundColor: danger,
+        borderStyle: 'solid',
+        borderWidth: 2,
+        borderColor: 'white',
+    },
 });
 
 export const font = (size, weight, align) => {

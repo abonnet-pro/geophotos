@@ -30,4 +30,10 @@ public class UploaderService {
 
         return file.getOriginalFilename();
     }
+
+    public boolean deleteFile(String filename) {
+        File dir = new File(pathToUpload);
+        File serverFile = new File(dir.getAbsolutePath() + File.separator + filename);
+        return serverFile.delete();
+    }
 }

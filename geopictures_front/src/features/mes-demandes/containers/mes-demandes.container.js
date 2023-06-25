@@ -10,6 +10,8 @@ import {modalfy} from "react-native-modalfy";
 import {TOUS} from "../../../commons/consts/filtre-type.const";
 import {EtatDemande} from "../enums/etat-demande.enum";
 import Toast from "react-native-root-toast";
+import {getValueFor, JOUEUR} from "../../../utils/store.utils";
+import {handleError} from "../../../utils/http.utils";
 
 
 export default function MesDemandesContainer({ navigation }) {
@@ -19,16 +21,21 @@ export default function MesDemandesContainer({ navigation }) {
     const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
     const [selectedTypes, setSelectedTypes] = useState(TOUS);
     const [selectedEtat, setSelectedEtat] = useState(EtatDemande.TOUS);
+    const [isAdmin, setAdmin] = useState(false);
 
     const init = () => {
         load();
+        getValueFor(JOUEUR).then(joueur => setAdmin(joueur.isAdmin));
     }
 
     const load = () => {
         setLoadingDemandes(true);
         loadDemandes()
             .then(demandes => setDemandes(demandes.data.mesDemandes))
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingDemandes(false))
     }
 
@@ -66,7 +73,10 @@ export default function MesDemandesContainer({ navigation }) {
         setLoadingDemandes(true);
         annulationDemande(demande)
             .then(res => load())
-            .catch(err => Toast.show("Une erreur est survenu"))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
             .finally(() => setLoadingDemandes(false))
     }
 
@@ -77,13 +87,22 @@ export default function MesDemandesContainer({ navigation }) {
             source={require('../../../../assets/auth_background.jpg')}
             style={ containerStyle.backgroundHover100 }>
             { loadingDemandes && <LoadingGeneral titre={"Chargement en cours"}/> }
-            <View>
+            <View style={{...style.boutonsHeaderContainer, justifyContent:`${isAdmin ? "space-between" : "flex-end"}`}}>
+                {
+                    isAdmin && <Button
+                        onPress={() => navigation.navigate("administration-demandes-container")}
+                        title="Administration"
+                        raised={true}
+                        radius={20}
+                        titleStyle={ font(15, 'bold') }
+                        buttonStyle={ commonsStyle.boutonDanger }/>
+                }
+
                 <Button
                     onPress={() => navigation.navigate("collaboration-container")}
                     title="Nouvelle demande"
                     raised={true}
                     radius={20}
-                    containerStyle={ style.containerBoutonNavigation }
                     titleStyle={ font(15, 'bold') }
                     buttonStyle={ commonsStyle.boutonSuccess }/>
             </View>
@@ -103,17 +122,18 @@ export default function MesDemandesContainer({ navigation }) {
 }
 
 const style = StyleSheet.create({
-    containerBoutonNavigation: {
-       alignSelf:"flex-end",
-        marginTop:10,
-        marginRight:10,
-        marginBottom:5,
-    },
     containerMesDemandes: {
         marginTop:5,
         marginRight:10,
         marginLeft:10,
         marginBottom:10,
         flex:1
-    }
+    },
+    boutonsHeaderContainer: {
+        flexDirection: "row",
+        marginTop:10,
+        marginRight:10,
+        marginLeft:10,
+        marginBottom:5,
+    },
 });

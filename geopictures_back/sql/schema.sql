@@ -270,6 +270,7 @@ create table if not exists photo_joueur
     constraint fk_photo_joueur_photo
     foreign key (photo_id)
     references photo(id)
+    on delete cascade
     );
 
 alter table photo_joueur
@@ -413,6 +414,7 @@ create table if not exists gadget_photo_joueur
     constraint fk_gadget_photo_joueur_photo
         foreign key (photo_id)
             references photo(id)
+            on delete cascade
 );
 
 alter table gadget_photo_joueur

@@ -6,14 +6,9 @@ import {EtatDemande, getEtatDemandeLibelle} from "../enums/etat-demande.enum";
 import {getTypeDemandeLibelle} from "../enums/type-demande.enum";
 import Picker from "@ouroboros/react-native-picker";
 import {PHOTO, ZONE, TOUS} from "../../../commons/consts/filtre-type.const";
+import {formatDate} from "../../../utils/date.utils";
 
 export default function MesDemandes({ demandes, openModal, handleSelectedTypes, selectedTypes, selectedEtat, handleSelectedEtat, handleAnnulationDemande }) {
-
-    function getDate(date) {
-        const event = new Date(date);
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return event.toLocaleDateString('fr-FR', options);
-    }
 
     function getLibelle(libelle) {
         return libelle.length > 5 ? libelle.slice(0, 5) + "..." : libelle;
@@ -81,7 +76,7 @@ export default function MesDemandes({ demandes, openModal, handleSelectedTypes, 
                             demandes.map((demande, index) => {
                                 return(
                                     <TouchableOpacity key={index} style={style.demandeContainer} onPress={() => handleOpenModal(demande)}>
-                                        <Text style={getStyleLigne(demande.etatDemande)}>{getDate(demande.dateDemande)}</Text>
+                                        <Text style={getStyleLigne(demande.etatDemande)}>{formatDate(demande.dateDemande)}</Text>
                                         <Text style={getStyleLigne(demande.etatDemande)}>{getTypeDemandeLibelle(demande.typeDemande)}</Text>
                                         <Text style={getStyleLigne(demande.etatDemande)}>{getLibelle(demande.libelle)}</Text>
                                         <Text style={getStyleLigne(demande.etatDemande)}>{getEtatDemandeLibelle(demande.etatDemande)}</Text>
@@ -123,7 +118,6 @@ const style = StyleSheet.create({
     titreDemandeContainer: {
         flexDirection: 'row',
         margin:10,
-
     },
     demandeContainer: {
         flexDirection: 'row',
@@ -136,7 +130,7 @@ const style = StyleSheet.create({
     ligneDemande: {
         flex:1,
         textAlign:'center',
-        fontSize:16,
+        fontSize:14,
     },
     titreDemande: {
         flex:1,
