@@ -34,7 +34,7 @@ public class ClassementService {
 
             ClassementLigneDTO ligneClassement = ClassementLigneDTO.builder()
                     .avatar(AvatarMapper.INSTANCE.avatarToDto(joueur.getAvatarActif()))
-                    .joueurId(joueur.getId())
+                    .joueurId(joueur.getUtilisateur().getId())
                     .joueurNom(joueur.getUtilisateur().getNom())
                     .score(scorePhotoJoueurByJoueur.getValue())
                     .build();

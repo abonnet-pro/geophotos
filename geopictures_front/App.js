@@ -2,7 +2,7 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 
 import { NavigationContainer } from '@react-navigation/native';
 import {useEffect} from "react";
-import {BackHandler} from "react-native";
+import {BackHandler, StatusBar} from "react-native";
 import ModalUseGadgetGps from "./src/features/jeu/modals/modal-use-gadget-gps.component";
 import { ModalProvider, createModalStack } from 'react-native-modalfy';
 import  ModalInfoSuccessGps  from "./src/commons/modals/modal-info-success-gps.component";
@@ -53,6 +53,7 @@ export default function App() {
     <RootSiblingParent>
       <ModalProvider stack={stack}>
         <NavigationContainer>
+          <StatusBar hidden={true}/>
           <AppNavigator/>
         </NavigationContainer>
       </ModalProvider>

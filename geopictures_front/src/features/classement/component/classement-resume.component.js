@@ -1,10 +1,9 @@
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import * as React from "react";
 import {URL_API} from "../../../utils/url.utils";
-import {Divider, Text, fonts} from "@rneui/base";
+import {Divider, Text} from "@rneui/base";
 import LoadingView from "../../../commons/component/loading.component";
 import {Image} from "@rneui/themed";
-import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default function ClassementResume({ rank, last, index, handleGoListeUser }) {
 
@@ -32,9 +31,9 @@ export default function ClassementResume({ rank, last, index, handleGoListeUser 
 
     return(
         <>
-        <TouchableOpacity onPress={ () => handleGoListeUser(rank.joueurId) }>
+        <TouchableOpacity>
             <View style={ style.zoneContainer }>
-            <View style={[style.indexContainer, { backgroundColor: checkIndexIsEven(index+1)}]}>
+                <View style={[style.indexContainer, { backgroundColor: checkIndexIsEven(index+1)}]}>
                     <Text style={ style.index }>{index + 1}</Text>
                 </View>
                 <View style={ style.image }>
@@ -112,6 +111,6 @@ const style = StyleSheet.create({
         padding: 5,
         overflow: 'hidden',
         borderColor: "black",
-        borderWidth: "1px",
+        borderWidth: 1,
     },
 });
