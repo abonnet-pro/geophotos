@@ -36,6 +36,7 @@ const style = StyleSheet.create({
         height: 20,
     },
     description: {
+        marginTop:5,
         fontWeight: "bold",
     }
 });

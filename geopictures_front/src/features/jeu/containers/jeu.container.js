@@ -10,11 +10,11 @@ import JeuValide from "../components/jeu-valide.component";
 import JeuScoreDetail from "../components/jeu-score-detail.component";
 import {Camera} from "expo-camera";
 import {modalfy} from "react-native-modalfy";
-import {getGadget, sendPhotoJouee, useGadgetRecommencer} from "../services/jeu.service";
+import {sendPhotoJouee, useGadgetRecommencer} from "../services/jeu.service";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 import * as Location from 'expo-location';
-import {Gadget} from "../enums/gadget.enum";
-import LoadingView from "../../../commons/component/loading.component";
+import {handleError} from "../../../utils/http.utils";
+import Toast from "react-native-root-toast";
 
 export default function JeuContainer({route, navigation}) {
 
@@ -23,17 +23,22 @@ export default function JeuContainer({route, navigation}) {
     const [location, setLocation] = useState(null);
     const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
     const [loadingSendPhoto, setLoadingSendPhoto] = useState(false);
-    const [loadingPermissionLocation, setLoadingPermissionLocation] = useState(false);
+    const [photoPrise, setPhotoPrise] = useState(null);
 
     const init = () => {
         const photo = route.params.photo;
         setPhoto(photo);
     }
 
-    const handlePressImage = (image) => {
+    const handlePressImage = (image, local) => {
         navigation.navigate("imageZoom", {
-            image: image
+            image: image,
+            local: local
         });
+
+        if(!photoPrise) {
+            setPermission(null);
+        }
     }
 
     const handlePressJouer = async () => {
@@ -51,11 +56,24 @@ export default function JeuContainer({route, navigation}) {
     }
 
     const handleSendPhoto = async (photoPrise) => {
-        setLoadingSendPhoto(true);
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
         const location = await Location.getCurrentPositionAsync({});
-        const photoJoue = await sendPhotoJouee(photo.id, photoPrise.uri, location);
-        setLoadingSendPhoto(false);
-        setPhoto(photoJoue.data);
+        setLoadingSendPhoto(true);
+
+        sendPhotoJouee(photo.id, photoPrise.uri, location)
+            .then(photoJoue => setPhoto(photoJoue.data))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
+            .finally(() => setLoadingSendPhoto(false))
     }
 
     const goBack = () => {
@@ -66,11 +84,11 @@ export default function JeuContainer({route, navigation}) {
     }
 
     const handlePressGadgetGps = async () => {
-        openModal("ModalUseGadgetGps", {photoId: photo.id});
+        openModal("ModalUseGadgetGps", {photoId: photo.id, navigation: navigation});
     }
 
     const handlePressGadgetIndice = async () => {
-        openModal("ModalUseGadgetIndice", {photoId: photo.id});
+        openModal("ModalUseGadgetIndice", {photoId: photo.id, navigation: navigation});
     }
 
 
@@ -79,7 +97,7 @@ export default function JeuContainer({route, navigation}) {
     }
 
     const handlePressGadgetDistance = async () => {
-        openModal("ModalUseGadgetDistance", {photoId: photo.id});
+        openModal("ModalUseGadgetDistance", {photoId: photo.id, navigation: navigation});
         const locationPermission = await Location.requestForegroundPermissionsAsync();
         setLocation(locationPermission);
 
@@ -89,11 +107,11 @@ export default function JeuContainer({route, navigation}) {
         }
 
         const location = await Location.getCurrentPositionAsync({});
-        closeAllModals(() => openModal("ModalUseGadgetDistance", {photoId: photo.id, location: location}));
+        closeAllModals(() => openModal("ModalUseGadgetDistance", {photoId: photo.id, location: location, navigation: navigation}));
     }
 
     const handlePressGadgetDirection = async () => {
-        openModal("ModalUseGadgetDirection", {photoId: photo.id});
+        openModal("ModalUseGadgetDirection", {photoId: photo.id, navigation: navigation});
         const locationPermission = await Location.requestForegroundPermissionsAsync();
         setLocation(locationPermission);
 
@@ -103,11 +121,11 @@ export default function JeuContainer({route, navigation}) {
         }
 
         const location = await Location.getCurrentPositionAsync({});
-        closeAllModals(() => openModal("ModalUseGadgetDirection", {photoId: photo.id, location: location}));
+        closeAllModals(() => openModal("ModalUseGadgetDirection", {photoId: photo.id, location: location, navigation: navigation}));
     }
 
     const handlePressGadgetSuccessGps = async () => {
-        openModal("ModalUseGadgetSuccesGps", {photoId: photo.id});
+        openModal("ModalUseGadgetSuccesGps", {photoId: photo.id, navigation: navigation});
         const locationPermission = await Location.requestForegroundPermissionsAsync();
         setLocation(locationPermission);
 
@@ -117,12 +135,16 @@ export default function JeuContainer({route, navigation}) {
         }
 
         const location = await Location.getCurrentPositionAsync({});
-        closeAllModals(() => openModal("ModalUseGadgetSuccesGps", {photoId: photo.id, location: location}));
+        closeAllModals(() => openModal("ModalUseGadgetSuccesGps", {photoId: photo.id, location: location, navigation: navigation}));
     }
 
     const handleValidRecommencer = async (photoId) => {
-        const photo = await useGadgetRecommencer(photoId);
-        setPhoto(photo.data);
+        useGadgetRecommencer(photoId)
+            .then(photo => setPhoto(photo.data))
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show("Une erreur est survenu, veuillez contacter le support")
+            })
     }
 
     useEffect(init, []);
@@ -159,7 +181,13 @@ export default function JeuContainer({route, navigation}) {
                         photo?.score ?
                             <JeuValide photo={photo} handlePressImage={ handlePressImage }/>
                             :
-                            <JeuNonValide location={location} permission={permission} handlePressJouer={ handlePressJouer } handleSendPhoto={ handleSendPhoto }/>
+                            <JeuNonValide location={location}
+                                          permission={permission}
+                                          handlePressJouer={ handlePressJouer }
+                                          handleSendPhoto={ handleSendPhoto }
+                                          photoPrise={photoPrise}
+                                          setPhotoPrise={setPhotoPrise}
+                                          handlePressImage={handlePressImage}/>
                     }
                 </View>
             </ImageBackground>

@@ -44,6 +44,7 @@ const style = StyleSheet.create({
         padding: 20,
         borderRadius: 20,
         borderWidth:2,
+        margin:20
     },
     titleContainer: {
         alignSelf:'center',
@@ -53,6 +54,7 @@ const style = StyleSheet.create({
         fontWeight:'bold',
         color:'white',
         fontSize:20,
+        textAlign:'center'
     },
     descriptionContainer: {
         margin:5

@@ -30,14 +30,17 @@ export default function ClassementContainer({ navigation }) {
 
         setLoadingClassement(true);
         loadClassement()
-            .then(classementInformations => { setClassementInformations(classementInformations.data); setClassementPlayerInformations(classementInformations.data) })
+            .then(classementInformations => {
+                setClassementInformations(classementInformations.data);
+                setClassementPlayerInformations(classementInformations.data)
+            })
             .catch(err => console.log(err))
             .finally(() => setLoadingClassement(false));
     }
 
     const playerClassement = () => {
         if (classementPlayerInformations !== null) {
-            return classementPlayerInformations.classement?.filter(classement => classement.joueurId == userActifId);
+            return classementPlayerInformations.classement?.filter(classement => classement.joueurId === userActifId);
         }
     }
 
@@ -52,7 +55,7 @@ export default function ClassementContainer({ navigation }) {
             return classementInformations;
         }
 
-        if(selectedRegion == "TOUTES") {
+        if(selectedRegion === "TOUTES") {
             return classementInformations
         }
         else {

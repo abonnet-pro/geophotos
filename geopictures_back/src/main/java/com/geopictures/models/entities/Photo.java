@@ -54,7 +54,7 @@ public class Photo {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo", orphanRemoval = true)
     private Set<PhotoJoueur> photosJoues = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo", orphanRemoval = true)
     private Set<GadgetPhotoJoueur> gadgetsUtilisesPhoto = new HashSet<>();
 
     public Coordonnees getCoordonnes() {
@@ -72,5 +72,9 @@ public class Photo {
     @PreUpdate
     public void onPreUpdate() {
         setUpdated(LocalDateTime.now());
+    }
+
+    public void removePhotoJoueur(PhotoJoueur photoJoueur) {
+        this.photosJoues.remove(photoJoueur);
     }
 }

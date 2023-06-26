@@ -4,7 +4,7 @@ import * as React from "react";
 import {Text} from "@rneui/base";
 import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 
-export default function ZoneList({ zones, handleGoListePhoto }) {
+export default function ZoneList({ zones, handleGoListePhoto, handlePressDeleteZone, isAdmin }) {
     return(
         <ImageBackground
             source={ BACKGROUND_ASSETS.bordure } style={{ width: "100%", height:"100%"}} borderRadius={20}>
@@ -16,7 +16,7 @@ export default function ZoneList({ zones, handleGoListePhoto }) {
                                 zones && zones.length > 0 ? zones.map((zone, index) => {
                                     return(
                                         <View key={ zone.id }>
-                                            <ZoneResume handleGoListePhoto={ handleGoListePhoto } zone={zone} last={ index === zones.length - 1 }/>
+                                            <ZoneResume isAdmin={isAdmin} handlePressDeleteZone={handlePressDeleteZone} handleGoListePhoto={ handleGoListePhoto } zone={zone} last={ index === zones.length - 1 }/>
                                         </View>
                                     )
                                 }) :
@@ -24,7 +24,7 @@ export default function ZoneList({ zones, handleGoListePhoto }) {
                             }
                         </View>
                         {
-                            zones.length > 0 ? null :
+                            zones && zones.length > 0 ? null :
                                 <View  style={ style.noZoneContainer }>
                                     <Text style={ style.noZone }>{`Aucune zone de jeu trouvé.\nCréer votre propre zone depuis l'onglet collaboration pour faire jouer votre région !`}</Text>
                                 </View>

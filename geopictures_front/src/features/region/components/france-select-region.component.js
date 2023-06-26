@@ -3,7 +3,7 @@ import Svg, { G, Path } from "react-native-svg"
 import {Button, Text} from "@rneui/base";
 import {ImageBackground, StyleSheet, View} from "react-native";
 import {containerStyle, primary1} from "../../../commons/styles/commons.styles";
-import {Region, RegionLibelle} from "../enums/regions.enum";
+import {Region, RegionLibelle} from "../../../commons/enums/regions.enum";
 import {BACKGROUND_ASSETS} from "../../../utils/store.utils";
 
 export default function FranceSelectRegion({ regionSelected, setRegionSelected }) {

@@ -20,3 +20,11 @@ ICONS DESIGN
 <a href="https://www.flaticon.com/free-icons/wrong" title="wrong icons">Wrong icons created by Freepik - Flaticon</a>  
 <a href="https://www.flaticon.com/free-icons/copy-link" title="copy link icons">Copy link icons created by Ahmad Zalat - Flaticon</a>  
 <a href="https://www.flaticon.com/free-icons/cancel" title="cancel icons">Cancel icons created by Smashicons - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/geo" title="geo icônes">Geo icônes créées par Good Ware - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/camera" title="caméra icônes">Caméra icônes créées par justicon - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/sablier" title="sablier icônes">Sablier icônes créées par nawicon - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/annuler" title="annuler icônes">Annuler icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/google" title="google icônes">Google icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/cocher" title="cocher icônes">Cocher icônes créées par Freepik - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/chevron" title="chevron icônes">Chevron icônes créées par Ridho Imam Prayogi - Flaticon</a>  
+<a href="https://www.flaticon.com/fr/icones-gratuites/erreur" title="erreur icônes">Erreur icônes créées par zafdesign - Flaticon</a>  

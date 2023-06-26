@@ -35,8 +35,16 @@ public class Utilisateur {
     private Role role;
     @Column(name="actif")
     private boolean actif;
+    @Column(name="google_id")
+    private String googleId;
+    @Column(name="date_derniere_connexion")
+    private LocalDateTime dateDerniereConnexion;
+    @Column(name="raison_suspension")
+    private String raisonSuspension;
+    @Column(name="date_suspension")
+    private LocalDateTime dateSuspension;
 
-    @OneToOne(mappedBy = "utilisateur")
+    @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.REMOVE)
     private Joueur joueur;
 
     @PrePersist

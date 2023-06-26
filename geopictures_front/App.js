@@ -1,7 +1,6 @@
 import { RootSiblingParent } from 'react-native-root-siblings';
 
 import { NavigationContainer } from '@react-navigation/native';
-import {StatusBar} from "expo-status-bar";
 import {useEffect} from "react";
 import {BackHandler} from "react-native";
 import ModalUseGadgetGps from "./src/features/jeu/modals/modal-use-gadget-gps.component";
@@ -20,6 +19,7 @@ import ModalUseGadgetIndice from "./src/features/jeu/modals/modal-use-gadget-ind
 import ModalChoixValid from "./src/commons/modals/modal-choix-valid.component";
 import ModalInfoGadget from "./src/features/profil/modals/modal-info-gadget.component";
 import AppNavigator from "./app-navigator";
+import ModalInfosDemande from "./src/features/mes-demandes/modals/modal-infos-demande.component";
 
 const modalConfig = {
   ModalInfoSuccessGps,
@@ -35,7 +35,8 @@ const modalConfig = {
   ModalUseGadgetIndice,
   ModalChoixValid,
   ModalClassementPhoto,
-  ModalInfoGadget
+  ModalInfoGadget,
+  ModalInfosDemande
 }
 
 const stack = createModalStack(modalConfig, {backdropOpacity: 0.6});
@@ -52,7 +53,6 @@ export default function App() {
     <RootSiblingParent>
       <ModalProvider stack={stack}>
         <NavigationContainer>
-          <StatusBar hidden/>
           <AppNavigator/>
         </NavigationContainer>
       </ModalProvider>

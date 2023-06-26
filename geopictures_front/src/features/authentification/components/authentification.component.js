@@ -1,9 +1,8 @@
 import {Image, ImageBackground, View, StyleSheet} from "react-native";
 import {commonsStyle, containerStyle, font, primary1} from "../../../commons/styles/commons.styles";
 import { Button } from "@rneui/themed";
-import {getUserData} from "../services/authentification.service";
 
-export default function Authentification({ navigation, accessToken, promptAsync }) {
+export default function Authentification({ navigation, handleConnexionGoogle, handlePressJouer }) {
     return(
             <ImageBackground
                 source={require('../../../../assets/auth_background.jpg')}
@@ -14,16 +13,16 @@ export default function Authentification({ navigation, accessToken, promptAsync 
                         style={style.logo}
                     />
                     <Button
-                        onPress={ () => navigation.navigate('creation') }
+                        onPress={ handlePressJouer }
                         title="JOUER"
                         raised={true}
                         radius={20}
                         titleStyle={ font(50, 'bold') }
                         buttonStyle={ commonsStyle.boutonSuccess }/>
                     <Button
-                        title={accessToken ? "   Get info" : "   Se connecter avec Google"}
-                        onPress={accessToken ? getUserData : () => { promptAsync({showInRecents : true})}}
-                        icon={<Image source={{uri: 'https://cdn-icons-png.flaticon.com/512/2991/2991148.png'}} style={{width:20, height:20}}/>}
+                        title={"Se connecter avec Google"}
+                        onPress={handleConnexionGoogle}
+                        icon={<Image source={{uri: 'https://cdn-icons-png.flaticon.com/512/2991/2991148.png'}} style={style.iconGoogle}/>}
                         buttonStyle={style.buttonGoogleAuth }
                         titleStyle={style.textGoogleAuth}/>
                 </View>
@@ -56,4 +55,9 @@ const style = StyleSheet.create({
     textGoogleAuth: {
         color: 'grey'
     },
+    iconGoogle: {
+        width:20,
+        height:20,
+        marginRight:10
+    }
 });
