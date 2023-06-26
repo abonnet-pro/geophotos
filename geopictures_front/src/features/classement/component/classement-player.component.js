@@ -23,6 +23,12 @@ export default function ClassementPlayer({ handleGoListeUser, classement }) {
                                     null
                             }
                         </View>
+                        {
+                            classement.length > 0 ? null :
+                                <View>
+                                    <Text style={ style.noZone }>{`Vous n'avez pas encore joué une photo. Jouez-en une pour faire augmenter votre score global`}</Text>
+                                </View>
+                        }
                     </ScrollView>
 
                 </ImageBackground>
@@ -37,11 +43,8 @@ const style = StyleSheet.create({
         height: '100%'
     },
     noZone: {
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: "bold",
         textAlign: 'center',
     },
-    noZoneContainer: {
-        marginTop: 20,
-    }
 });
