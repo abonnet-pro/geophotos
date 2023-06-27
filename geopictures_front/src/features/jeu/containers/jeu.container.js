@@ -71,7 +71,7 @@ export default function JeuContainer({route, navigation}) {
             .then(photoJoue => setPhoto(photoJoue.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingSendPhoto(false))
     }
@@ -143,7 +143,7 @@ export default function JeuContainer({route, navigation}) {
             .then(photo => setPhoto(photo.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
     }
 

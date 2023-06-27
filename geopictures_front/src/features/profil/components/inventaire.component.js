@@ -8,7 +8,7 @@ import BorduresList from "./bordures-list.component";
 import TitresList from "./titres-list.component";
 import GadgetsList from "./gadgets-list.component";
 
-export default function Inventaire({ profil, onSaveAvatar, onSaveBordure, onSaveTitre }) {
+export default function Inventaire({ profil, onSaveAvatar, onSaveBordure, onSaveTitre, navigation }) {
 
     const [selectedTab, setSelectedTab] = useState(0);
     const items = ['Avatars', 'Bordures', 'Titres', 'Gadgets'];
@@ -36,7 +36,7 @@ export default function Inventaire({ profil, onSaveAvatar, onSaveBordure, onSave
                                     { selectedTab === 0 && <AvatarsList avatars={profil?.mesAvatars} avatarActif={profil?.avatarActif} onSaveAvatar={onSaveAvatar}></AvatarsList>}
                                     { selectedTab === 1 && <BorduresList bordures={profil?.mesBordures} onSaveBordure={onSaveBordure}></BorduresList>}
                                     { selectedTab === 2 && <TitresList titres={profil?.mesTitres} onSaveTitre={onSaveTitre}></TitresList>}
-                                    { selectedTab === 3 && <GadgetsList gadgets={profil?.mesGadgets}></GadgetsList>}
+                                    { selectedTab === 3 && <GadgetsList navigation={navigation} gadgets={profil?.mesGadgets}></GadgetsList>}
                                 </View>
                             </ScrollView>
                         </View>

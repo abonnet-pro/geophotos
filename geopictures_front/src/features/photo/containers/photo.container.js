@@ -45,7 +45,7 @@ export default function PhotoContainer({ navigation, route }) {
             .then(photos => setPhotos(photos.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingPhotos(false))
     }

@@ -6,36 +6,36 @@ import {Gadget} from "../../jeu/enums/gadget.enum";
 import Touchable from "react-native-material-tabs/src/components/Touchable";
 import {modalfy} from "react-native-modalfy";
 
-export default function GadgetsList({ gadgets }) {
+export default function GadgetsList({ gadgets, navigation }) {
 
     const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
 
     const handlePressGps = () => {
-        openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.GPS)});
+        openModal("ModalInfoGadget", {navigation: navigation, gadget: gadgets.find(gadget => gadget.code === Gadget.GPS)});
     }
 
     const handlePressDistance = () => {
-        openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.DISTANCE)})
+        openModal("ModalInfoGadget", {navigation: navigation, gadget: gadgets.find(gadget => gadget.code === Gadget.DISTANCE)})
     }
 
     const handlePressDirection = () => {
-        openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.DIRECTION)})
+        openModal("ModalInfoGadget", {navigation: navigation, gadget: gadgets.find(gadget => gadget.code === Gadget.DIRECTION)})
     }
 
     const handlePressPremier = () => {
-        openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.TOP_1)})
+        openModal("ModalInfoGadget", {navigation: navigation, gadget: gadgets.find(gadget => gadget.code === Gadget.TOP_1)})
     }
 
     const handlePressSuccess = () => {
-        openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.SUCCESS_ZONE)})
+        openModal("ModalInfoGadget", {navigation: navigation, gadget: gadgets.find(gadget => gadget.code === Gadget.SUCCESS_ZONE)})
     }
 
     const handlePressIndice = () => {
-        openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.INDICE)})
+        openModal("ModalInfoGadget", {navigation: navigation, gadget: gadgets.find(gadget => gadget.code === Gadget.INDICE)})
     }
 
     const handlePressRecommencer = () => {
-        openModal("ModalInfoGadget", {gadget: gadgets.find(gadget => gadget.code === Gadget.RECOMMENCER)})
+        openModal("ModalInfoGadget", {navigation: navigation, gadget: gadgets.find(gadget => gadget.code === Gadget.RECOMMENCER)})
     }
 
     function getQuantite(codeGadget) {
