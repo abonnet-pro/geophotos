@@ -40,6 +40,8 @@ export default function ClassementContainer({ navigation }) {
 
     const playerClassement = () => {
         if (classementPlayerInformations !== null) {
+            const index = classementPlayerInformations.classement.findIndex(x => x.joueurId === userActifId)
+            classementInformations.classement[index].index = index
             return classementPlayerInformations.classement?.filter(classement => classement.joueurId === userActifId);
         }
     }

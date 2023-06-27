@@ -47,7 +47,7 @@ export default function ClassementResume({ rank, last, index, handleGoListeUser 
                     <Text style={ style.nomJoueur }>{rank.joueurNom}</Text>
                 </View>
                 <View style={ style.scoreContainer }>
-                    <Text style={ style.scoreJoueur }>{rank.score}</Text>
+                    <Text style={ style.scoreJoueur }>{rank.score.toFixed(2)}</Text>
                 </View>
             </View>
             </TouchableOpacity>
@@ -61,7 +61,10 @@ export default function ClassementResume({ rank, last, index, handleGoListeUser 
 const style = StyleSheet.create({
     zoneContainer: {
         flexDirection: "row",
-        margin: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 10,
+        marginTop: 5,
         width: '100%',
     },
     image: {
