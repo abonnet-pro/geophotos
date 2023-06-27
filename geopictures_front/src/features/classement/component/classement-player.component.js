@@ -5,7 +5,6 @@ import {BACKGROUND_ASSETS, JOUEUR, getValueFor} from "../../../utils/store.utils
 import ClassementResume from "./classement-resume.component";
 
 export default function ClassementPlayer({ handleGoListeUser, classement }) {
-    console.log(classement)
     return(
         <ImageBackground
             source={ BACKGROUND_ASSETS.bordure } style={{ width: "100%", height:"100%"}} borderRadius={20}>

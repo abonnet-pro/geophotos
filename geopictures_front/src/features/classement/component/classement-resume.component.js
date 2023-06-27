@@ -31,7 +31,7 @@ export default function ClassementResume({ rank, last, index, handleGoListeUser 
 
     return(
         <>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleGoListeUser(rank.joueurId)}>
             <View style={ style.zoneContainer }>
                 <View style={[style.indexContainer, { backgroundColor: checkIndexIsEven(index+1)}]}>
                     <Text style={ style.index }>{index + 1}</Text>

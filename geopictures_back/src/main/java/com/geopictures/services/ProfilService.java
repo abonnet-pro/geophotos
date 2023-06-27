@@ -1,6 +1,9 @@
 package com.geopictures.services;
 
+import com.geopictures.controllers.ProfilController;
 import com.geopictures.controllers.UtilisateurHolder;
+import com.geopictures.models.dtos.classement.ClassementLigneDTO;
+import com.geopictures.models.dtos.profil.ProfilCarteVisiteDTO;
 import com.geopictures.models.dtos.profil.ProfilDTO;
 import com.geopictures.models.dtos.profil.SaveProfilDTO;
 import com.geopictures.models.entities.*;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,6 +41,22 @@ public class ProfilService extends UtilisateurHolder {
 
     public ProfilDTO getProfil() {
         return buildDto(utilisateur());
+    }
+
+    public ProfilCarteVisiteDTO getCarteVisiteJoueur(Long joueurId) throws Exception {
+        Optional<Joueur> joueur = joueurRepository.findById(joueurId);
+        if(!joueur.isPresent()) {
+            throw new Exception("Joueur introuvable");
+        }
+        ProfilCarteVisiteDTO profilJoueur = ProfilCarteVisiteDTO.builder()
+                .nom(joueur.get().getUtilisateur().getNom())
+                .niveau(joueur.get().getNiveau())
+                .avatarActif(AvatarMapper.INSTANCE.avatarToDto(joueur.get().getAvatarActif()))
+                .bordureActive(BordureMapper.INSTANCE.bordureToDto(joueur.get().getBordureActif()))
+                .titreActif(TitreMapper.INSTANCE.titreToDto(joueur.get().getTitreActif()))
+                .build();
+
+                return profilJoueur;
     }
 
     public ProfilDTO saveProfil(SaveProfilDTO saveProfilDTO) throws Exception {

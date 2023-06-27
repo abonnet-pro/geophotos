@@ -7,8 +7,11 @@ import LoadingGeneral from "../../../commons/component/loading-general.component
 import { JOUEUR, getValueFor } from "../../../utils/store.utils";
 import ClassementPlayer from "../component/classement-player.component";
 import ClassementFiltre from "../component/classement-filtre.component";
+import { modalfy } from 'react-native-modalfy'
 
 export default function ClassementContainer({ navigation }) {
+
+    const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
 
     const [classementInformations, setClassementInformations] = useState(null);
     const [classementPlayerInformations, setClassementPlayerInformations] = useState(null);
@@ -71,9 +74,7 @@ export default function ClassementContainer({ navigation }) {
     }
 
     const handleGoListeUser = async (joueurId) => {
-        navigation.navigate("profil", {
-            userId: joueurId
-        })
+        openModal('ModalCarteVisiteClassement', {joueurId: joueurId})
     }
 
     useEffect(init, []);
