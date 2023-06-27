@@ -1,6 +1,6 @@
 package com.geopictures.models.dtos.gadget;
 
-import com.geopictures.models.enums.GadgetCode;
+import com.geopictures.models.dtos.enums.GadgetCode;
 import lombok.*;
 
 @Builder

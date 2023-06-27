@@ -2,7 +2,7 @@ package com.geopictures.models.mappers;
 
 import com.geopictures.models.dtos.photo.PhotoDTO;
 import com.geopictures.models.entities.*;
-import com.geopictures.models.enums.GadgetCode;
+import com.geopictures.models.dtos.enums.GadgetCode;
 import com.geopictures.repositories.PhotoJoueurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.geopictures.models.entities;
 
-import com.geopictures.models.enums.Role;
+import com.geopictures.models.dtos.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;

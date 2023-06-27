@@ -6,7 +6,6 @@ import {useEffect, useState} from "react";
 import Inventaire from "../components/inventaire.component";
 import CarteVisite from "../components/carte-visite.component";
 import {loadProfil, saveProfil} from "../services/profil.service";
-import {Image} from "@rneui/themed";
 import Toast from "react-native-root-toast";
 import {handleError} from "../../../utils/http.utils";
 
@@ -21,7 +20,7 @@ export default function ProfilContainer({ navigation }) {
             .then(profil => setProfil(profil.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingProfil(false))
     }
@@ -39,7 +38,7 @@ export default function ProfilContainer({ navigation }) {
             .then(profil => setProfil(profil.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingProfil(false))
     }
@@ -57,7 +56,7 @@ export default function ProfilContainer({ navigation }) {
             .then(profil => setProfil(profil.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingProfil(false))
     }
@@ -75,7 +74,7 @@ export default function ProfilContainer({ navigation }) {
             .then(profil => setProfil(profil.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingProfil(false))
     }
@@ -92,7 +91,7 @@ export default function ProfilContainer({ navigation }) {
                     <CarteVisite profil={profil}></CarteVisite>
                 </View>
                 <View style={ style.inventaireContainer }>
-                    <Inventaire profil={profil} onSaveAvatar={onSaveAvatar} onSaveBordure={onSaveBordure} onSaveTitre={onSaveTitre}></Inventaire>
+                    <Inventaire navigation={navigation} profil={profil} onSaveAvatar={onSaveAvatar} onSaveBordure={onSaveBordure} onSaveTitre={onSaveTitre}></Inventaire>
                 </View>
             </ImageBackground>
         </>

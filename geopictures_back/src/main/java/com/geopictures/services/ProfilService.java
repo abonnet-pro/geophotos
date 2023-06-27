@@ -1,6 +1,7 @@
 package com.geopictures.services;
 
 import com.geopictures.controllers.UtilisateurHolder;
+import com.geopictures.models.dtos.gadget.MesGadgetsDTO;
 import com.geopictures.models.dtos.profil.ProfilDTO;
 import com.geopictures.models.dtos.profil.SaveProfilDTO;
 import com.geopictures.models.entities.*;
@@ -34,6 +35,9 @@ public class ProfilService extends UtilisateurHolder {
 
     @Autowired
     private JoueurRepository joueurRepository;
+
+    @Autowired
+    private GadgetRepository gadgetRepository;
 
     public ProfilDTO getProfil() {
         return buildDto(utilisateur());
@@ -115,6 +119,8 @@ public class ProfilService extends UtilisateurHolder {
     private ProfilDTO buildDto(Utilisateur utilisateur) {
         List<Avatar> avatars = avatarService.getAllAvatarFree();
         avatars.addAll(utilisateur.getJoueur().getAvatars());
+        List<Gadget> gadgets = gadgetRepository.findAll();
+        List<MesGadgetsDTO> mesGadgets = gadgets.stream().map(this::buildMesGadgets).collect(Collectors.toList());
 
         return ProfilDTO.builder()
                 .avatarActif(AvatarMapper.INSTANCE.avatarToDto(utilisateur.getJoueur().getAvatarActif()))
@@ -125,7 +131,18 @@ public class ProfilService extends UtilisateurHolder {
                 .mesAvatars(avatars.stream().map(AvatarMapper.INSTANCE::avatarToDto).collect(Collectors.toList()))
                 .mesBordures(utilisateur.getJoueur().getBordures().stream().sorted(Comparator.comparing(Bordure::getId)).map(BordureMapper.INSTANCE::bordureToDto).collect(Collectors.toList()))
                 .mesTitres(utilisateur.getJoueur().getTitres().stream().sorted(Comparator.comparing(Titre::getId)).map(TitreMapper.INSTANCE::titreToDto).collect(Collectors.toList()))
-                .mesGadgets(utilisateur.getJoueur().getMesGadgets().stream().map(GadgetMapper.INSTANCE::gadgetToDto).collect(Collectors.toList()))
+                .mesGadgets(mesGadgets)
+                .build();
+    }
+
+    private MesGadgetsDTO buildMesGadgets(Gadget gadget) {
+        Optional<GadgetJoueur> optGadget = utilisateur().getJoueur().getMesGadgets().stream().filter(gadgetJoueur -> gadgetJoueur.getGadget().getId().equals(gadget.getId())).findFirst();
+        Integer quantiteGadgetJouer = optGadget.isPresent() ? optGadget.get().getQuantite() : 0;
+
+        return MesGadgetsDTO.builder()
+                .code(gadget.getCode())
+                .libelle(gadget.getLibelle())
+                .quantite(quantiteGadgetJouer)
                 .build();
     }
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BordureRepository extends JpaRepository<Bordure, Long> {
+    Bordure findByCode(String code);
 }

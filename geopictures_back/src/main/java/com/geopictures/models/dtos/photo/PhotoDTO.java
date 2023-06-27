@@ -1,6 +1,6 @@
 package com.geopictures.models.dtos.photo;
 
-import com.geopictures.models.enums.Difficulte;
+import com.geopictures.models.dtos.enums.Difficulte;
 import lombok.*;
 
 import java.math.BigDecimal;

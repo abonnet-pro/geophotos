@@ -7,7 +7,7 @@ import com.geopictures.models.dtos.utilisateur.UtilisateurDTO;
 import com.geopictures.models.entities.Avatar;
 import com.geopictures.models.entities.Joueur;
 import com.geopictures.models.entities.Utilisateur;
-import com.geopictures.models.enums.Role;
+import com.geopictures.models.dtos.enums.Role;
 import com.geopictures.repositories.AvatarRepository;
 import com.geopictures.repositories.JoueurRepository;
 import com.geopictures.repositories.UtilisateurRepository;

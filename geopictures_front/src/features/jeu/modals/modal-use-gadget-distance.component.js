@@ -28,7 +28,7 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
             .then(res => setGadget(res.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoading(false));
     }
@@ -42,7 +42,7 @@ const ModalUseGadgetDistance = ({ modal: { closeModal, getParam  }}) => {
             .then(res => setGadget(res.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoading(false));
     }

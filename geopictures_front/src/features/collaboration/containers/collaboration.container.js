@@ -64,7 +64,7 @@ export default function CollaborationContainer({ navigation }) {
             })
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => {
                 setFormValid(regionSelected && zoneSelected && difficulteSelected && titre && indice && photoPrise);
@@ -165,7 +165,7 @@ export default function CollaborationContainer({ navigation }) {
             })
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingDemandeSend(false));
     }
@@ -188,7 +188,7 @@ export default function CollaborationContainer({ navigation }) {
             })
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingDemandeSend(false));
     }

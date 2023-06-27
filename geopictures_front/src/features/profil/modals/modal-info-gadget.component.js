@@ -5,10 +5,16 @@ import {Gadget} from "../../jeu/enums/gadget.enum";
 const ModalInfoGadget = ({ modal: { closeModal, getParam  }}) => {
 
     const [gadget, setGadget] = useState(null);
+    const [showAction, setShowAction] = useState(true);
+    const [navigation, setNavigation] = useState(null);
 
     const init = () => {
         const gadget = getParam("gadget", null);
         setGadget(gadget);
+        const showAction = getParam("showAction", true);
+        setShowAction(showAction);
+        const navigation = getParam("navigation", null);
+        setNavigation(navigation);
     }
 
     function getImage() {
@@ -30,18 +36,42 @@ const ModalInfoGadget = ({ modal: { closeModal, getParam  }}) => {
         }
     }
 
+    function getTitre() {
+        switch (gadget?.code) {
+            case Gadget.GPS:
+                return "Gps";
+            case Gadget.DISTANCE:
+                return "Distance";
+            case Gadget.INDICE:
+                return "Indice";
+            case Gadget.TOP_1:
+                return "Top 1";
+            case Gadget.RECOMMENCER:
+                return "Recommencer";
+            case Gadget.SUCCESS_ZONE:
+                return "Succès zone";
+            case Gadget.DIRECTION:
+                return "Direction";
+        }
+    }
+
+    const handlePressNavigation = () => {
+        navigation.navigate("boutique");
+        closeModal();
+    }
+
     useEffect(init, []);
 
     return(
         <>
             <View style={ style.modalContainer }>
-                <Text style={style.title}>Gadget Gps</Text>
+                <Text style={style.title}>Gadget {getTitre()}</Text>
                 <View style={style.descriptionContainer}>
                     <Image style={style.image} source={getImage()}></Image>
                     <Text style={style.descriptionText}>{gadget?.libelle}</Text>
                 </View>
-                <Text style={style.stock}>En stock : {gadget?.quantite}</Text>
-                <Button title={"Acheter"} color={"green"}></Button>
+                {showAction && <Text style={style.stock}>En stock : {gadget?.quantite}</Text>}
+                { showAction && <Button title={"Acheter"} color={"green"} onPress={handlePressNavigation}></Button>}
             </View>
         </>
 

@@ -36,7 +36,7 @@ export default function ZoneContainer({ navigation, route }) {
             })
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingZone(false))
     }

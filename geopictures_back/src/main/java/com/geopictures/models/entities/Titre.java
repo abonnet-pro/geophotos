@@ -35,6 +35,9 @@ public class Titre {
     @ManyToMany(mappedBy = "titres")
     Set<Joueur> joueurs;
 
+    @OneToOne(mappedBy = "titre", cascade = CascadeType.REMOVE)
+    private TitreBoutique titreInBoutique;
+
     @PrePersist
     public void onPrePersit() {
         setCreated(LocalDateTime.now());

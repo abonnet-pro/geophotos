@@ -6,7 +6,7 @@ import com.geopictures.models.dtos.collaboration.DemandePhotoDTO;
 import com.geopictures.models.dtos.collaboration.DemandeZoneDTO;
 import com.geopictures.models.dtos.collaboration.DemandesDTO;
 import com.geopictures.models.entities.*;
-import com.geopictures.models.enums.EtatDemande;
+import com.geopictures.models.dtos.enums.EtatDemande;
 import com.geopictures.models.mappers.DemandePhotoMapper;
 import com.geopictures.models.mappers.DemandeZoneMapper;
 import com.geopictures.repositories.DemandePhotoRepository;

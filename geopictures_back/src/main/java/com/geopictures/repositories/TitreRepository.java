@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TitreRepository extends JpaRepository<Titre, Long> {
+    Titre findByCode(String code);
 }

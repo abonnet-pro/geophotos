@@ -3,7 +3,7 @@ package com.geopictures.controllers;
 import com.geopictures.models.dtos.administration.AdministrationDemandeUpdateRequest;
 import com.geopictures.models.dtos.administration.AdministrationSuspensionRequest;
 import com.geopictures.models.dtos.profil.ProfildminDTO;
-import com.geopictures.models.enums.TypeDemande;
+import com.geopictures.models.dtos.enums.TypeDemande;
 import com.geopictures.services.AdministrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

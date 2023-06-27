@@ -1,6 +1,6 @@
 package com.geopictures.models.dtos.administration;
 
-import com.geopictures.models.enums.TypeDemande;
+import com.geopictures.models.dtos.enums.TypeDemande;
 import lombok.*;
 
 @Builder

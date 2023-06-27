@@ -1,7 +1,7 @@
 package com.geopictures.services;
 
 import com.geopictures.models.entities.Utilisateur;
-import com.geopictures.models.enums.Role;
+import com.geopictures.models.dtos.enums.Role;
 import com.geopictures.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

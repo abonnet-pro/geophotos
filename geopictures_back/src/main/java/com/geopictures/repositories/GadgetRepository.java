@@ -1,7 +1,7 @@
 package com.geopictures.repositories;
 
 import com.geopictures.models.entities.Gadget;
-import com.geopictures.models.enums.GadgetCode;
+import com.geopictures.models.dtos.enums.GadgetCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
