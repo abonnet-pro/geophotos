@@ -1,6 +1,5 @@
 package com.geopictures.models.entities;
 
-import com.geopictures.models.enums.RegionCode;
 import lombok.*;
 
 import javax.persistence.*;

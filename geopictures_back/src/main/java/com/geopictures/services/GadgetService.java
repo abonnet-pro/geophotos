@@ -6,7 +6,7 @@ import com.geopictures.models.dtos.gadget.GadgetRequest;
 import com.geopictures.models.dtos.gadget.GadgetRequestLocation;
 import com.geopictures.models.dtos.photo.PhotoDTO;
 import com.geopictures.models.entities.*;
-import com.geopictures.models.enums.GadgetCode;
+import com.geopictures.models.dtos.enums.GadgetCode;
 import com.geopictures.models.mappers.PhotoMapper;
 import com.geopictures.models.pojos.Coordonnees;
 import com.geopictures.repositories.GadgetRepository;
@@ -16,7 +16,6 @@ import com.geopictures.repositories.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

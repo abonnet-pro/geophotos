@@ -1,10 +1,10 @@
 package com.geopictures.seeder;
 
 import com.geopictures.models.entities.*;
-import com.geopictures.models.enums.Difficulte;
-import com.geopictures.models.enums.GadgetCode;
-import com.geopictures.models.enums.RegionCode;
-import com.geopictures.models.enums.Role;
+import com.geopictures.models.dtos.enums.Difficulte;
+import com.geopictures.models.dtos.enums.GadgetCode;
+import com.geopictures.models.dtos.enums.RegionCode;
+import com.geopictures.models.dtos.enums.Role;
 import com.geopictures.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,11 +15,10 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.List;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -63,6 +62,18 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private GadgetRepository gadgetRepository;
 
+    @Autowired
+    private GadgetBoutiqueRepository gadgetBoutiqueRepository;
+
+    @Autowired
+    private TitreBoutiqueRepository titreBoutiqueRepository;
+
+    @Autowired
+    private AvatarBoutiqueRepository avatarBoutiqueRepository;
+
+    @Autowired
+    private BordureBoutiqueRepository bordureBoutiqueRepository;
+
     @Override
     public void run(String... args) throws IOException {
         initDirPhotoJoueur();
@@ -98,6 +109,134 @@ public class DataLoader implements CommandLineRunner {
         if(gadgetRepository.count() == 0) {
             initGadget();
         }
+
+        if(gadgetBoutiqueRepository.count() == 0) {
+            initGadgetBoutique();
+        }
+
+        if(titreBoutiqueRepository.count() == 0) {
+            initTitreBoutique();
+        }
+
+        if(bordureBoutiqueRepository.count() == 0) {
+            initBordureBoutique();
+        }
+
+        if(avatarBoutiqueRepository.count() == 0) {
+            initAvatarBoutique();
+        }
+    }
+
+    private void initAvatarBoutique() {
+        List<Avatar> avatarsNotFree = avatarRepository.findAllByFree(false);
+
+        AvatarBoutique avatarBoutique1 = AvatarBoutique.builder()
+                .avatar(avatarsNotFree.get(0))
+                .prix(5000)
+                .build();
+
+        avatarBoutiqueRepository.save(avatarBoutique1);
+
+        AvatarBoutique avatarBoutique2 = AvatarBoutique.builder()
+                .avatar(avatarsNotFree.get(1))
+                .prix(5000)
+                .build();
+
+        avatarBoutiqueRepository.save(avatarBoutique2);
+
+        AvatarBoutique avatarBoutique3 = AvatarBoutique.builder()
+                .avatar(avatarsNotFree.get(2))
+                .prix(5000)
+                .build();
+
+        avatarBoutiqueRepository.save(avatarBoutique3);
+    }
+
+    private void initBordureBoutique() {
+        Bordure bronze = bordureRepository.findByCode("bronze");
+        Bordure silver = bordureRepository.findByCode("silver");
+        Bordure gold = bordureRepository.findByCode("gold");
+
+        BordureBoutique bordureBoutiqueBronze = BordureBoutique.builder()
+                .bordure(bronze)
+                .prix(5000)
+                .build();
+
+        bordureBoutiqueRepository.save(bordureBoutiqueBronze);
+
+        BordureBoutique bordureBoutiqueSilver = BordureBoutique.builder()
+                .bordure(silver)
+                .prix(20000)
+                .build();
+
+        bordureBoutiqueRepository.save(bordureBoutiqueSilver);
+
+        BordureBoutique bordureBoutiqueOr = BordureBoutique.builder()
+                .bordure(gold)
+                .prix(100000)
+                .build();
+
+        bordureBoutiqueRepository.save(bordureBoutiqueOr);
+    }
+
+    private void initTitreBoutique() {
+        Titre fan = titreRepository.findByCode("fan");
+        Titre supp = titreRepository.findByCode("supp");
+        Titre actionnaire = titreRepository.findByCode("actionnaire");
+
+        TitreBoutique titreBoutiqueFan = TitreBoutique.builder()
+                .titre(fan)
+                .prix(5000)
+                .build();
+
+        titreBoutiqueRepository.save(titreBoutiqueFan);
+
+        TitreBoutique titreBoutiqueSupp = TitreBoutique.builder()
+                .titre(supp)
+                .prix(20000)
+                .build();
+
+        titreBoutiqueRepository.save(titreBoutiqueSupp);
+
+        TitreBoutique titreBoutiqueActionnaire = TitreBoutique.builder()
+                .titre(actionnaire)
+                .prix(100000)
+                .build();
+
+        titreBoutiqueRepository.save(titreBoutiqueActionnaire);
+    }
+
+    private void initGadgetBoutique() {
+        List<Gadget> gadgets = gadgetRepository.findAll();
+
+        for(Gadget gadget : gadgets) {
+            GadgetBoutique gadgetBoutique = GadgetBoutique.builder()
+                    .gadget(gadget)
+                    .enVente(true)
+                    .prix(getPrixGadgetBoutique(gadget))
+                    .build();
+
+            gadgetBoutiqueRepository.save(gadgetBoutique);
+        }
+    }
+
+    private Integer getPrixGadgetBoutique(Gadget gadget) {
+        switch (gadget.getCode()) {
+            case GPS:
+                return 10000;
+            case DISTANCE:
+                return 5000;
+            case DIRECTION:
+                return 7500;
+            case TOP_1:
+                return 100;
+            case SUCCESS_ZONE:
+            case INDICE:
+                return 250;
+            case RECOMMENCER:
+                return 1000;
+        }
+        return null;
     }
 
     private void initGadget() {

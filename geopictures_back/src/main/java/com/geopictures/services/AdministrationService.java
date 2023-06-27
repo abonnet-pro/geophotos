@@ -4,8 +4,8 @@ import com.geopictures.models.dtos.administration.AdministrationDemandeUpdateReq
 import com.geopictures.models.dtos.administration.AdministrationSuspensionRequest;
 import com.geopictures.models.dtos.profil.ProfildminDTO;
 import com.geopictures.models.entities.*;
-import com.geopictures.models.enums.EtatDemande;
-import com.geopictures.models.enums.Role;
+import com.geopictures.models.dtos.enums.EtatDemande;
+import com.geopictures.models.dtos.enums.Role;
 import com.geopictures.models.mappers.ProfilAdminMapper;
 import com.geopictures.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;

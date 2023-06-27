@@ -1,4 +1,4 @@
-package com.geopictures.models.enums;
+package com.geopictures.models.dtos.enums;
 
 public enum RegionCode {
     HAUT_DE_FRANCE("HDF"),

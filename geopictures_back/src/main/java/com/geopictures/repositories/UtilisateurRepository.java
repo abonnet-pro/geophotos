@@ -1,7 +1,7 @@
 package com.geopictures.repositories;
 
 import com.geopictures.models.entities.Utilisateur;
-import com.geopictures.models.enums.Role;
+import com.geopictures.models.dtos.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

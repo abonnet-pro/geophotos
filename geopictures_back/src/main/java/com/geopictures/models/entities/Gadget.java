@@ -1,6 +1,6 @@
 package com.geopictures.models.entities;
 
-import com.geopictures.models.enums.GadgetCode;
+import com.geopictures.models.dtos.enums.GadgetCode;
 import lombok.*;
 
 import javax.persistence.*;

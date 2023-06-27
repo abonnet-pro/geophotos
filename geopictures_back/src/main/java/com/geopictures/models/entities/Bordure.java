@@ -37,6 +37,9 @@ public class Bordure {
     @ManyToMany(mappedBy = "bordures")
     Set<Joueur> joueurs;
 
+    @OneToOne(mappedBy = "bordure", cascade = CascadeType.REMOVE)
+    private BordureBoutique bordureInBoutique;
+
     @PrePersist
     public void onPrePersit() {
         setCreated(LocalDateTime.now());
