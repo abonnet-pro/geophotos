@@ -1,6 +1,5 @@
 package com.geopictures.services;
 
-import com.geopictures.models.dtos.avatar.AvatarDTO;
 import com.geopictures.models.dtos.classement.ClassementDTO;
 import com.geopictures.models.dtos.classement.ClassementLigneDTO;
 import com.geopictures.models.entities.Joueur;
@@ -11,7 +10,6 @@ import com.geopictures.repositories.PhotoJoueurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,7 +32,7 @@ public class ClassementService {
 
             ClassementLigneDTO ligneClassement = ClassementLigneDTO.builder()
                     .avatar(AvatarMapper.INSTANCE.avatarToDto(joueur.getAvatarActif()))
-                    .joueurId(joueur.getUtilisateur().getId())
+                    .utilisateurId(joueur.getUtilisateur().getId())
                     .joueurNom(joueur.getUtilisateur().getNom())
                     .score(scorePhotoJoueurByJoueur.getValue())
                     .build();

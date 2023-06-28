@@ -39,24 +39,29 @@ public class ProfilService extends UtilisateurHolder {
     @Autowired
     private JoueurRepository joueurRepository;
 
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
+
     public ProfilDTO getProfil() {
         return buildDto(utilisateur());
     }
 
-    public ProfilCarteVisiteDTO getCarteVisiteJoueur(Long joueurId) throws Exception {
-        Optional<Joueur> joueur = joueurRepository.findById(joueurId);
-        if(!joueur.isPresent()) {
+    public ProfilCarteVisiteDTO getCarteVisiteJoueur(Long utilisateurId) throws Exception {
+
+        Optional<Utilisateur> optUtilisateur = utilisateurRepository.findById(utilisateurId);
+        if(!optUtilisateur.isPresent()) {
             throw new Exception("Joueur introuvable");
         }
-        ProfilCarteVisiteDTO profilJoueur = ProfilCarteVisiteDTO.builder()
-                .nom(joueur.get().getUtilisateur().getNom())
-                .niveau(joueur.get().getNiveau())
-                .avatarActif(AvatarMapper.INSTANCE.avatarToDto(joueur.get().getAvatarActif()))
-                .bordureActive(BordureMapper.INSTANCE.bordureToDto(joueur.get().getBordureActif()))
-                .titreActif(TitreMapper.INSTANCE.titreToDto(joueur.get().getTitreActif()))
-                .build();
 
-                return profilJoueur;
+        Utilisateur utilisateur = optUtilisateur.get();
+
+        return ProfilCarteVisiteDTO.builder()
+                .nom(utilisateur.getNom())
+                .niveau(utilisateur.getJoueur().getNiveau())
+                .avatarActif(AvatarMapper.INSTANCE.avatarToDto(utilisateur.getJoueur().getAvatarActif()))
+                .bordureActive(BordureMapper.INSTANCE.bordureToDto(utilisateur.getJoueur().getBordureActif()))
+                .titreActif(TitreMapper.INSTANCE.titreToDto(utilisateur.getJoueur().getTitreActif()))
+                .build();
     }
 
     public ProfilDTO saveProfil(SaveProfilDTO saveProfilDTO) throws Exception {

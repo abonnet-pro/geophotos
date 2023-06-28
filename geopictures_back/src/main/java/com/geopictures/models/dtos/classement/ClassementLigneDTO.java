@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassementLigneDTO {
-    private Long joueurId;
+    private Long utilisateurId;
     private String joueurNom;
     private Double score;
     private AvatarDTO avatar;

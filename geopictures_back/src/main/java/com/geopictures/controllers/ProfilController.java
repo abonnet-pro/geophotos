@@ -33,9 +33,9 @@ public class ProfilController {
     public ProfilDTO saveProfil(@RequestBody SaveProfilDTO saveProfilDTO) throws Exception {
         return profilService.saveProfil(saveProfilDTO);
     }
-    @GetMapping("joueur/{joueurId}")
-    public ProfilCarteVisiteDTO getCarteVisiteJoueur(@PathVariable("joueurId") Long joueurId) throws Exception {
-        return profilService.getCarteVisiteJoueur(joueurId);
+    @GetMapping("joueur/{utilisateurId}")
+    public ProfilCarteVisiteDTO getCarteVisiteJoueur(@PathVariable("utilisateurId") Long utilisateurId) throws Exception {
+        return profilService.getCarteVisiteJoueur(utilisateurId);
     }
 
 }
