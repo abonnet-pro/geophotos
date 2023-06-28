@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import { containerStyle } from "../../../commons/styles/commons.styles";
 import ClassementList from "../component/classement-list.component";
-import { loadClassement, getAllRegion, getClassementByCodeRegion } from "../services/classement.service";
+import {
+    loadClassement,
+    getAllRegion,
+    getClassementByCodeRegion,
+    getClassementByZoneIdAndCodeRegion
+} from "../services/classement.service";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import LoadingGeneral from "../../../commons/component/loading-general.component";
 import { JOUEUR, getValueFor } from "../../../utils/store.utils";
 import ClassementPlayer from "../component/classement-player.component";
 import ClassementFiltre from "../component/classement-filtre.component";
 import { modalfy } from 'react-native-modalfy'
+import {loadZonesByCode} from "../../zone/services/zone.service";
+import {handleError} from "../../../utils/http.utils";
+import Toast from "react-native-root-toast";
 
 export default function ClassementContainer({ navigation }) {
 
@@ -15,8 +23,10 @@ export default function ClassementContainer({ navigation }) {
     const [classementInformations, setClassementInformations] = useState(null);
     const [loadingClassement, setLoadingClassement] = useState(false);
     const [userActifId, setUserActifId] = useState(null);
-    const [selectedRegion, setSelectedRegion] = useState("TOUTES");
     const [classementPlayer, setClassementPlayer] = useState(null);
+    const [selectedRegion, setSelectedRegion] = useState("TOUTES");
+    const [zoneSelected, setZoneSelected] = useState("TOUTES");
+    const [zonesOptions, setZonesOptions] = useState(null);
 
     const init = () => {
         getValueFor(JOUEUR).then(userId => {
@@ -52,14 +62,58 @@ export default function ClassementContainer({ navigation }) {
 
     const handleRegionSelected = (regionSelected) => {
         setSelectedRegion(regionSelected);
+        setZonesOptions(null);
+        setZoneSelected("TOUTES")
 
         if(regionSelected === "TOUTES") {
             load(userActifId);
             return;
         }
 
+        loadByRegion(regionSelected);
+    }
+
+    const loadByRegion = (regionSelected) => {
         setLoadingClassement(true);
         getClassementByCodeRegion(regionSelected)
+            .then(classementInformations => {
+                setClassementInformations(classementInformations.data);
+                getPlayerClassement(classementInformations.data, userActifId);
+                loadZones(regionSelected);
+            })
+            .catch(err => console.log(err))
+            .finally(() => setLoadingClassement(false));
+    }
+
+    const loadZones = (regionSelected) => {
+        loadZonesByCode(regionSelected)
+            .then(zones => {
+                setZonesOptions(buildOptionsZonePicker(zones.data));
+            })
+            .catch(err => {
+                handleError(err, navigation);
+                Toast.show(err.response.data);
+            })
+    }
+
+    function buildOptionsZonePicker(zones) {
+        const options = [{text: "Toutes", value: "TOUTES"}];
+        zones.forEach(zone => options.push({
+            text:zone.libelle, value: zone.id
+        }));
+        return options;
+    }
+
+    const handleZoneSelected = (zoneSelected) => {
+        setZoneSelected(zoneSelected);
+
+        if(zoneSelected === "TOUTES") {
+            loadByRegion(selectedRegion);
+            return;
+        }
+
+        setLoadingClassement(true);
+        getClassementByZoneIdAndCodeRegion(zoneSelected, selectedRegion)
             .then(classementInformations => {
                 setClassementInformations(classementInformations.data);
                 getPlayerClassement(classementInformations.data, userActifId);
@@ -79,7 +133,12 @@ export default function ClassementContainer({ navigation }) {
                     :
                     <>
                         <View style={style.pickers}>
-                            <ClassementFiltre handleRegionSelected={handleRegionSelected} selectedRegion={selectedRegion}></ClassementFiltre>
+                            <ClassementFiltre zonesOptions={zonesOptions}
+                                              handleRegionSelected={handleRegionSelected}
+                                              selectedRegion={selectedRegion}
+                                              zoneSelected={zoneSelected}
+                                              handleZoneSelected={handleZoneSelected}>
+                            </ClassementFiltre>
                         </View>
                         <View style={style.playerContainer} key={1}>
                             <ClassementPlayer handleGoListeUser={handleGoListeUser} classement={classementPlayer}/>
