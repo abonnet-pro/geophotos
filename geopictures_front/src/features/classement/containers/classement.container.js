@@ -54,7 +54,7 @@ export default function ClassementContainer({ navigation }) {
         setSelectedRegion(regionSelected);
 
         if(regionSelected === "TOUTES") {
-            load();
+            load(userActifId);
             return;
         }
 
