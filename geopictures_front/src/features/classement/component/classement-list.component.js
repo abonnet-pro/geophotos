@@ -13,10 +13,10 @@ export default function ClassementList({ handleGoListeUser, classement }) {
                     <ScrollView style={ style.zones } showsVerticalScrollIndicator={false}>
                         <View style={{ marginBottom: 10}}>
                             {
-                                classement && classement.classement.length > 0 ? classement.classement.slice(0, 50).map((rank, index) => {
+                                classement && classement?.classement.length > 0 ? classement?.classement.slice(0, 50).map((rank, index) => {
                                     return(
-                                        <View key={ rank.joueurId}>
-                                            <ClassementResume handleGoListeUser={ handleGoListeUser } rank={rank} index={index} last={ index === classement.classement.length - 1 }/>
+                                        <View key={ rank.utilisateurId}>
+                                            <ClassementResume handleGoListeUser={ handleGoListeUser } rank={rank} index={index} last={ index === classement?.classement.length - 1 }/>
                                         </View>
                                     )
                                 }) :
@@ -24,7 +24,7 @@ export default function ClassementList({ handleGoListeUser, classement }) {
                             }
                         </View>
                         {
-                            classement.classement.length > 0 ? null :
+                            classement?.classement.length > 0 ? null :
                                 <View  style={ style.noZoneContainer }>
                                     <Text style={ style.noZone }>{`Donnée insuffisante pour créer un classement. Joue une partie et soit le premier à en faire partie !`}</Text>
                                 </View>

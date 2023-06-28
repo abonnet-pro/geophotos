@@ -8,8 +8,8 @@ import {Image} from "@rneui/themed";
 export default function ClassementResume({ rank, last, index, handleGoListeUser }) {
 
     function getUri() {
-        if(rank.avatar !== null) {
-            return { uri: `${URL_API}/images/${rank.avatar.image}` }
+        if(rank?.avatar !== null) {
+            return { uri: `${URL_API}/images/${rank?.avatar.image}` }
         } else {
             return require('../../../../assets/geopictures_logo_1.png');
         }
@@ -31,7 +31,7 @@ export default function ClassementResume({ rank, last, index, handleGoListeUser 
 
     return(
         <>
-        <TouchableOpacity onPress={() => handleGoListeUser(rank.joueurId)}>
+        <TouchableOpacity onPress={() => handleGoListeUser(rank?.utilisateurId)}>
             <View style={ style.zoneContainer }>
                 <View style={[style.indexContainer, { backgroundColor: checkIndexIsEven(index+1)}]}>
                     <Text style={ style.index }>{index + 1}</Text>
@@ -44,10 +44,10 @@ export default function ClassementResume({ rank, last, index, handleGoListeUser 
                     />
                 </View>
                 <View style={ style.descriptionContainer }>
-                    <Text style={ style.nomJoueur }>{rank.joueurNom}</Text>
+                    <Text style={ style.nomJoueur }>{rank?.joueurNom}</Text>
                 </View>
                 <View style={ style.scoreContainer }>
-                    <Text style={ style.scoreJoueur }>{rank.score.toFixed(2)}</Text>
+                    <Text style={ style.scoreJoueur }>{rank?.score.toFixed(2)}</Text>
                 </View>
             </View>
             </TouchableOpacity>

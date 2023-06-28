@@ -12,69 +12,60 @@ import { modalfy } from 'react-native-modalfy'
 export default function ClassementContainer({ navigation }) {
 
     const {currentModal,openModal,closeModal,closeModals,closeAllModals} = modalfy();
-
     const [classementInformations, setClassementInformations] = useState(null);
-    const [classementPlayerInformations, setClassementPlayerInformations] = useState(null);
-    const [recherche, setRecherche] = useState(null);
     const [loadingClassement, setLoadingClassement] = useState(false);
     const [userActifId, setUserActifId] = useState(null);
-    const [regionsInformation, setRegionsInformation] = useState(null);
-    const [selectedRegion, setSelectedRegion] = useState("PACA");
-
+    const [selectedRegion, setSelectedRegion] = useState("TOUTES");
+    const [classementPlayer, setClassementPlayer] = useState(null);
 
     const init = () => {
+        getValueFor(JOUEUR).then(userId => {
+            setUserActifId(userId.id);
+            load(userId.id);
+        })
+    }
 
-        getValueFor(JOUEUR).then(userId => setUserActifId(userId.id))
-
-        getAllRegion()
-            .then(regionInformation => setRegionsInformation(regionInformation.data))
-            .catch(err => console.log(err))
-            .finally(() => setLoadingClassement(false));
-
+    const load = (userId) => {
         setLoadingClassement(true);
         loadClassement()
             .then(classementInformations => {
                 setClassementInformations(classementInformations.data);
-                setClassementPlayerInformations(classementInformations.data)
+                getPlayerClassement(classementInformations.data, userId);
             })
             .catch(err => console.log(err))
             .finally(() => setLoadingClassement(false));
     }
 
-    const playerClassement = () => {
-        if (classementPlayerInformations !== null) {
-            const index = classementPlayerInformations.classement.findIndex(x => x.joueurId === userActifId)
-            classementInformations.classement[index].index = index
-            return classementPlayerInformations.classement?.filter(classement => classement.joueurId === userActifId);
-        }
+    const getPlayerClassement = (classementInformations, userId) => {
+            const index = classementInformations.classement.findIndex(x => x.utilisateurId === userId)
+            if(index !== -1) {
+                classementInformations.classement[index].index = index;
+                setClassementPlayer(classementInformations.classement[index]);
+            } else {
+                setClassementPlayer(null);
+            }
     }
 
-    const regionFiltered = () => {
-        if (regionsInformation !== null) {
-            return regionsInformation;
-        }
+    const handleGoListeUser = async (utilisateurId) => {
+        openModal('ModalCarteVisiteClassement', {utilisateurId: utilisateurId})
     }
 
-    const filterClassement = (recherche) => {
-        if (!recherche) {
-            return classementInformations;
+    const handleRegionSelected = (regionSelected) => {
+        setSelectedRegion(regionSelected);
+
+        if(regionSelected === "TOUTES") {
+            load();
+            return;
         }
 
-        if(selectedRegion === "TOUTES") {
-            return classementInformations
-        }
-        else {
-            getClassementByCodeRegion(selectedRegion)
-            .then(newClassement => {setClassementInformations(newClassement)})
+        setLoadingClassement(true);
+        getClassementByCodeRegion(regionSelected)
+            .then(classementInformations => {
+                setClassementInformations(classementInformations.data);
+                getPlayerClassement(classementInformations.data, userActifId);
+            })
             .catch(err => console.log(err))
             .finally(() => setLoadingClassement(false));
-
-            return classementInformations
-        }
-    }
-
-    const handleGoListeUser = async (joueurId) => {
-        openModal('ModalCarteVisiteClassement', {joueurId: joueurId})
     }
 
     useEffect(init, []);
@@ -88,19 +79,13 @@ export default function ClassementContainer({ navigation }) {
                     :
                     <>
                         <View style={style.pickers}>
-                            {
-                                regionFiltered() ? <ClassementFiltre regionsInformation={regionFiltered()} setSelectedRegion={setSelectedRegion} selectedRegion={selectedRegion}></ClassementFiltre> : null
-                            }
+                            <ClassementFiltre handleRegionSelected={handleRegionSelected} selectedRegion={selectedRegion}></ClassementFiltre>
                         </View>
                         <View style={style.playerContainer} key={1}>
-                            {
-                                playerClassement() ? <ClassementPlayer handleGoListeUser={handleGoListeUser} classement={playerClassement()} /> : null
-                            }
+                            <ClassementPlayer handleGoListeUser={handleGoListeUser} classement={classementPlayer}/>
                         </View>
                         <View style={style.zonesContainer} key={2}>
-                            {
-                                filterClassement(recherche) ? <ClassementList handleGoListeUser={handleGoListeUser} classement={filterClassement(recherche)} /> : null
-                            }
+                            <ClassementList handleGoListeUser={handleGoListeUser} classement={classementInformations} />
                         </View>
                     </>
             }
@@ -134,6 +119,7 @@ const style = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        marginTop: 10
     },
 });

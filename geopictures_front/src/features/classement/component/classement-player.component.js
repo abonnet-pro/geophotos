@@ -10,27 +10,19 @@ export default function ClassementPlayer({ handleGoListeUser, classement }) {
             source={ BACKGROUND_ASSETS.bordure } style={{ width: "100%", height:"100%"}} borderRadius={20}>
             <View style={{padding:5}}>
                 <ImageBackground source={ BACKGROUND_ASSETS.background } style={{ width: "100%", height:"100%"}} borderRadius={20}>
-                    <ScrollView style={ style.zones } showsVerticalScrollIndicator={false}>
-                        <View style={{ marginBottom: 10}}>
-                            {
-                                classement ? classement.map((rank, index) => {
-                                    return(
-                                        <View key={ rank.joueurId }>
-                                            <ClassementResume handleGoListeUser={ handleGoListeUser } rank={rank} index={rank.index}/>
-                                        </View>
-                                    )
-                                }) :
-                                    null
-                            }
-                        </View>
+                    <View style={ style.zones }>
                         {
-                            classement.length > 0 ? null :
-                                <View>
-                                    <Text style={ style.noZone }>{`Vous n'avez pas encore joué une photo. Jouez-en une pour faire augmenter votre score global`}</Text>
+                            classement ?
+                                <View key={classement?.utilisateurId}>
+                                    <ClassementResume handleGoListeUser={handleGoListeUser} rank={classement}
+                                                      index={classement?.index} last={true}/>
+                                </View>
+                                :
+                                <View style={style.noClassemmentContainer}>
+                                    <Text style={style.noZone}>{`vous n'êtes pas encore classé`}</Text>
                                 </View>
                         }
-                    </ScrollView>
-
+                    </View>
                 </ImageBackground>
             </View>
         </ImageBackground>
@@ -40,7 +32,13 @@ export default function ClassementPlayer({ handleGoListeUser, classement }) {
 const style = StyleSheet.create({
     zones: {
         padding: 10,
-        height: '100%'
+        height: '100%',
+    },
+    noClassemmentContainer: {
+        marginTop:'auto',
+        marginBottom:'auto',
+        marginLeft:'auto',
+        marginRight:'auto',
     },
     noZone: {
         fontSize: 15,

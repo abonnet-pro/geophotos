@@ -13,7 +13,7 @@ export async function saveProfil(profilActif) {
     return axios.post(`${URL_API}/profil`, profilActif, header(joueur.token));
 }
 
-export async function getJoueurProfil(joueurId) {
+export async function getJoueurProfil(utilisateurId) {
     const joueur = await getValueFor(JOUEUR);
-    return axios.get(`${URL_API}/profil/joueur/${joueurId}`, header(joueur.token));
+    return axios.get(`${URL_API}/profil/joueur/${utilisateurId}`, header(joueur.token));
 }

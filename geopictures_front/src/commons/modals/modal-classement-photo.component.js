@@ -14,7 +14,6 @@ const ModalClassementPhoto = ({ modal: { closeModal, getParam }}) => {
         getClassementByPhotoId(photoId)
             .then(classementPhoto => setClassementPhoto(classementPhoto.data.classement))
             .catch(err => console.log(err))
-            .finally(() => setLoadingClassement(false));
     }
 
     useEffect(init, []);
@@ -30,7 +29,7 @@ const ModalClassementPhoto = ({ modal: { closeModal, getParam }}) => {
                             {
                                 classementPhoto && classementPhoto.length > 0 ? classementPhoto.slice(0, 3).map((rank, index) => {
                                     return(
-                                        <View key={ rank.joueurId}>
+                                        <View key={ rank.utilisateurId}>
                                             <ClassementResume rank={rank} index={index} last={ index === classementPhoto.length - 1 }/>
                                         </View>
                                     )

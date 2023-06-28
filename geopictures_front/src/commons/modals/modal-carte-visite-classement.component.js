@@ -12,8 +12,8 @@ const ModalCarteVisiteClassement = ({ modal: { closeModal, getParam }}) => {
     const [joueurProfil, setJoueurProfil] = useState("");
 
     const init = () => {
-        const joueurId = getParam("joueurId", "");
-        getJoueurProfil(joueurId)
+        const utilisateurId = getParam("utilisateurId", "");
+        getJoueurProfil(utilisateurId)
             .then(joueurProfil => setJoueurProfil(joueurProfil.data))
             .catch(err => console.log(err));
     }
