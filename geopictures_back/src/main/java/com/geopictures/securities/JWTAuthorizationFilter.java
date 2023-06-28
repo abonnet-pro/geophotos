@@ -59,6 +59,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             if (nom != null) {
                 Utilisateur utilisateur = utilisateurService.getByNom(nom);
 
+                if(utilisateur == null) {
+                    return null;
+                }
+
                 if(!utilisateur.isActif()) {
                     return null;
                 }
