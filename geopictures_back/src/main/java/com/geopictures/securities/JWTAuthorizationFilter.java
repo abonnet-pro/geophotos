@@ -59,7 +59,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             if (nom != null) {
                 Utilisateur utilisateur = utilisateurService.getByNom(nom);
 
-                if(utilisateur != null && !utilisateur.isActif()) {
+                if(utilisateur == null) {
+                    return new UsernamePasswordAuthenticationToken(null, null, null);
+                }
+
+                if(!utilisateur.isActif()) {
                     return null;
                 }
 
