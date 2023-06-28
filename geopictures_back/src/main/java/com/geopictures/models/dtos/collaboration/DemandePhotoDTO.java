@@ -1,6 +1,6 @@
 package com.geopictures.models.dtos.collaboration;
 
-import com.geopictures.models.enums.Difficulte;
+import com.geopictures.models.dtos.enums.Difficulte;
 import lombok.*;
 
 @Builder

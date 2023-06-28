@@ -5,7 +5,7 @@ import com.geopictures.models.dtos.authentification.CheckGoogleDTO;
 import com.geopictures.models.dtos.authentification.CreateJoueurDTO;
 import com.geopictures.models.dtos.utilisateur.UtilisateurDTO;
 import com.geopictures.models.entities.Joueur;
-import com.geopictures.models.enums.Role;
+import com.geopictures.models.dtos.enums.Role;
 import com.geopictures.services.AuthentificationService;
 import com.geopictures.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;

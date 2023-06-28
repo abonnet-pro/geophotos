@@ -1,13 +1,12 @@
 package com.geopictures.models.entities;
 
-import com.geopictures.models.enums.Difficulte;
+import com.geopictures.models.dtos.enums.Difficulte;
 import com.geopictures.models.pojos.Coordonnees;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,10 +1,7 @@
 package com.geopictures.models.dtos.collaboration;
 
-import com.geopictures.models.dtos.zone.ZoneDTO;
-import com.geopictures.models.entities.Joueur;
-import com.geopictures.models.entities.Region;
-import com.geopictures.models.enums.EtatDemande;
-import com.geopictures.models.enums.TypeDemande;
+import com.geopictures.models.dtos.enums.EtatDemande;
+import com.geopictures.models.dtos.enums.TypeDemande;
 import lombok.*;
 
 import java.util.Date;

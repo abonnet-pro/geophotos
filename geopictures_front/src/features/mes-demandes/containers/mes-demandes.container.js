@@ -34,7 +34,7 @@ export default function MesDemandesContainer({ navigation }) {
             .then(demandes => setDemandes(demandes.data.mesDemandes))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingDemandes(false))
     }
@@ -75,7 +75,7 @@ export default function MesDemandesContainer({ navigation }) {
             .then(res => load())
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingDemandes(false))
     }

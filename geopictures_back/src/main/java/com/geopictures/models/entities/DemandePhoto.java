@@ -1,7 +1,7 @@
 package com.geopictures.models.entities;
 
-import com.geopictures.models.enums.Difficulte;
-import com.geopictures.models.enums.EtatDemande;
+import com.geopictures.models.dtos.enums.Difficulte;
+import com.geopictures.models.dtos.enums.EtatDemande;
 import lombok.*;
 
 import javax.persistence.*;

@@ -38,7 +38,7 @@ export default function AccueilContainer({ navigation }) {
             .then(joueurInformations => setJoueurInformations(joueurInformations.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support");
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingAccuil(false))
     }
@@ -92,7 +92,7 @@ export default function AccueilContainer({ navigation }) {
                 })
                 .catch(err => {
                     handleError(err, navigation);
-                    Toast.show("Une erreur est survenu, veuillez contacter le support")
+                    Toast.show(err.response.data);
                 })
                 .finally(() => setLoadingAccuil(false));
         }
@@ -124,7 +124,7 @@ export default function AccueilContainer({ navigation }) {
             .then(joueurInformations => setJoueurInformations(joueurInformations.data))
             .catch(err => {
                 handleError(err, navigation);
-                Toast.show("Une erreur est survenu, veuillez contacter le support")
+                Toast.show(err.response.data);
             })
             .finally(() => setLoadingAccuil(false))
     }
