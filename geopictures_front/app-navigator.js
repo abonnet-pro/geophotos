@@ -22,7 +22,6 @@ import AdministrationDemandesContainer from "./src/features/administration/conta
 import AdministrationProfilsContainer from "./src/features/administration/containers/administration-profils.container";
 
 const screenOption = {
-    // statubsBarHidden: true,
     statusBarColor:"black",
     navigationBarHidden: true,
     headerShown: false,

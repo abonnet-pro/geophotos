@@ -2,12 +2,12 @@ package com.geopictures.services;
 
 import com.geopictures.controllers.UtilisateurHolder;
 import com.geopictures.models.dtos.gadget.MesGadgetsDTO;
+import com.geopictures.models.dtos.profil.ProfilCarteVisiteDTO;
 import com.geopictures.models.dtos.profil.ProfilDTO;
 import com.geopictures.models.dtos.profil.SaveProfilDTO;
 import com.geopictures.models.entities.*;
 import com.geopictures.models.mappers.AvatarMapper;
 import com.geopictures.models.mappers.BordureMapper;
-import com.geopictures.models.mappers.GadgetMapper;
 import com.geopictures.models.mappers.TitreMapper;
 import com.geopictures.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +39,29 @@ public class ProfilService extends UtilisateurHolder {
     @Autowired
     private GadgetRepository gadgetRepository;
 
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
+
     public ProfilDTO getProfil() {
         return buildDto(utilisateur());
+    }
+
+    public ProfilCarteVisiteDTO getCarteVisiteJoueur(Long utilisateurId) throws Exception {
+
+        Optional<Utilisateur> optUtilisateur = utilisateurRepository.findById(utilisateurId);
+        if(!optUtilisateur.isPresent()) {
+            throw new Exception("Joueur introuvable");
+        }
+
+        Utilisateur utilisateur = optUtilisateur.get();
+
+        return ProfilCarteVisiteDTO.builder()
+                .nom(utilisateur.getNom())
+                .niveau(utilisateur.getJoueur().getNiveau())
+                .avatarActif(AvatarMapper.INSTANCE.avatarToDto(utilisateur.getJoueur().getAvatarActif()))
+                .bordureActive(BordureMapper.INSTANCE.bordureToDto(utilisateur.getJoueur().getBordureActif()))
+                .titreActif(TitreMapper.INSTANCE.titreToDto(utilisateur.getJoueur().getTitreActif()))
+                .build();
     }
 
     public ProfilDTO saveProfil(SaveProfilDTO saveProfilDTO) throws Exception {

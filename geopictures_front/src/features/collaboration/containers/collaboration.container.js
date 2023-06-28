@@ -144,6 +144,15 @@ export default function CollaborationContainer({ navigation }) {
 
     const sendDemandePhoto = async () => {
         setLoadingDemandeSend(true);
+
+        const locationPermission = await Location.requestForegroundPermissionsAsync();
+        setLocation(locationPermission);
+
+        if(locationPermission.status !== 'granted') {
+            openModal("ModalInfoDroitLocation");
+            return;
+        }
+
         const location = await Location.getCurrentPositionAsync({});
 
         const demandePhotoRequest = {

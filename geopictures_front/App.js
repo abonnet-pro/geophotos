@@ -2,10 +2,12 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 
 import { NavigationContainer } from '@react-navigation/native';
 import {useEffect} from "react";
-import {BackHandler} from "react-native";
+import {BackHandler, StatusBar} from "react-native";
 import ModalUseGadgetGps from "./src/features/jeu/modals/modal-use-gadget-gps.component";
 import { ModalProvider, createModalStack } from 'react-native-modalfy';
 import  ModalInfoSuccessGps  from "./src/commons/modals/modal-info-success-gps.component";
+import ModalClassementPhoto from "./src/commons/modals/modal-classement-photo.component";
+import ModalCarteVisiteClassement from "./src/commons/modals/modal-carte-visite-classement.component"
 import  ModalInfoSuccessGlobale  from "./src/commons/modals/modal-info-success-global.component";
 import ModalInfoDroitCamera from "./src/commons/modals/modal-info-droit-camera.component";
 import ModalInfoDroitLocation from "./src/commons/modals/modal-info-droit-location.component";
@@ -33,6 +35,8 @@ const modalConfig = {
   ModalUseGadgetTop1,
   ModalUseGadgetIndice,
   ModalChoixValid,
+  ModalClassementPhoto,
+  ModalCarteVisiteClassement,
   ModalInfoGadget,
   ModalInfosDemande
 }
@@ -51,6 +55,7 @@ export default function App() {
     <RootSiblingParent>
       <ModalProvider stack={stack}>
         <NavigationContainer>
+          <StatusBar hidden={true}/>
           <AppNavigator/>
         </NavigationContainer>
       </ModalProvider>

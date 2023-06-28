@@ -48,6 +48,8 @@ export default function PhotoContainer({ navigation, route }) {
                 Toast.show(err.response.data);
             })
             .finally(() => setLoadingPhotos(false))
+
+            
     }
 
     const goBack = () => {

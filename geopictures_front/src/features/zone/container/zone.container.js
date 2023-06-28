@@ -88,18 +88,25 @@ export default function ZoneContainer({ navigation, route }) {
             <ImageBackground
                 source={require('../../../../assets/auth_background.jpg')}
                 style={ containerStyle.backgroundHover100 }>
-                {loadingZones && <LoadingGeneral titre={"Chargement en cours ..."}></LoadingGeneral>}
+
                 <View style={ style.backContainer }>
                     <TouchableOpacity onPress={ () => goBack() }>
                         <Image style={ style.back } source={require('../../../../assets/back.png')}></Image>
                     </TouchableOpacity>
                 </View>
-                <View style={ style.zonesContainer }>
-                    <ZoneList isAdmin={isAdmin} handlePressDeleteZone={handlePressDeleteZone} handleGoListePhoto={ handleGoListePhoto } zones={filterZones(recherche)}/>
-                </View>
-                <View style={{ flex: 1, marginBottom:5 }}>
-                    <ZoneRecherche recherche={ recherche } setRecherche={ setRecherche }/>
-                </View>
+                {
+                    loadingZones ? <LoadingGeneral titre={"Chargement en cours ..."}></LoadingGeneral>
+                        :
+                        <>
+                            <View style={ style.zonesContainer }>
+                                <ZoneList isAdmin={isAdmin} handlePressDeleteZone={handlePressDeleteZone} handleGoListePhoto={ handleGoListePhoto } zones={filterZones(recherche)}/>
+                            </View>
+                            <View style={{ flex: 1, marginBottom:5 }}>
+                                <ZoneRecherche recherche={ recherche } setRecherche={ setRecherche }/>
+                            </View>
+                        </>
+                }
+
             </ImageBackground>
         </>
     )
