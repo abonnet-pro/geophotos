@@ -4,11 +4,11 @@ import {Text} from "@rneui/base";
 import Picker from '@ouroboros/react-native-picker';
 import {Region, RegionLibelle} from "../../../commons/enums/regions.enum";
 
-export default function ClassementFiltre({ selectedRegion, handleRegionSelected }) {
+export default function ClassementFiltre({ zoneSelected, handleZoneSelected, selectedRegion, handleRegionSelected, zonesOptions }) {
 
     return(
-        <>
-            <View style={ style.pickerJouesContainer}>
+        <View style={style.pickersContainer}>
+            <View style={ style.pickerContainer}>
                 <Picker
                     onChanged={handleRegionSelected}
                     options={[
@@ -31,24 +31,34 @@ export default function ClassementFiltre({ selectedRegion, handleRegionSelected 
                     value={selectedRegion}
                 />
             </View>
-        </>
+
+                {
+                    zonesOptions && zonesOptions.length > 1 &&
+                        <View style={ style.pickerContainer}>
+                            <Picker
+                                onChanged={handleZoneSelected}
+                                options={zonesOptions}
+                                style={{padding: 5}}
+                                value={zoneSelected}
+                            />
+                        </View>
+                }
+        </View>
     )
 }
 
 const style = StyleSheet.create({
-    pickerJouesContainer: {
-        marginRight:5,
+    pickerContainer: {
+        marginRight:10,
         marginTop: 5,
+        marginLeft: 5,
         width: 100,
         paddingLeft:5,
         backgroundColor: 'white',
         color: 'black',
         borderRadius: 20
     },
-    pickerDifficulteContainer: {
-        flex:1,
-        marginLeft:5,
-        backgroundColor: 'white',
-        borderRadius: 20
-    },
+    pickersContainer : {
+        flexDirection : "row"
+    }
 });
